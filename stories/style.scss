@@ -1,0 +1,47 @@
+html, body, #root, #root > div{
+  height:100%; margin: 0; padding: 0;
+}
+
+.flex {
+  display: flex;
+}
+.col {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.scroll {
+  overflow: scroll;
+}
+
+.form-editor {
+  width: 100%;
+  height: 100%;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-size: 14px;
+  font-weight:600;
+
+  &__message {
+    font-family: Arial;
+    height: 20px;
+    padding: 4px;
+    color: white;
+    display: block;
+    &--valid {
+      background-color: green;
+    }
+    &--error {
+      background-color: red;
+    }
+  }
+}
+
+.ReactCodeMirror {
+  height: calc(100% - 28px);
+
+}
+
+.CodeMirror, .cm-s-default {
+  width: 500px;
+  height: 100% !important;
+}

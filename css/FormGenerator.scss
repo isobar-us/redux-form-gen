@@ -1,0 +1,32 @@
+.generated-form {
+  padding:20px;
+}
+
+.generated-form__header {
+  font-size:26px;
+}
+
+.wrapper {
+  display: flex;
+
+  &--inline {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &--stacked {
+    flex-direction: column;
+  }
+
+  &--hidden {
+    display:none;
+  }
+
+  &--hidden-path {
+    display:none;
+  }
+}
+
+.section--hidden {
+  display:none;
+}
