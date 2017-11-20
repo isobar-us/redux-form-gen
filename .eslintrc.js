@@ -17,8 +17,7 @@ module.exports = {
   },
   globals: {
     __DEVTOOLS__: false,
-    __COVERAGE__: false,
-    Frag: false
+    __COVERAGE__: false
   },
   parserOptions: {
     ecmaVersion: '6',

@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import {FormSection} from 'redux-form';
 
+import Frag from '../../Frag';
 import {consumeGenContext} from '../../contextUtils';
 import GenField from '../../GenField';
 import {getDefaultValues} from '../../utils';

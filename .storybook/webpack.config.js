@@ -17,12 +17,7 @@ module.exports = {
         test: /\.(css|scss)$/,
         loaders: ['style-loader', 'css-loader', 'sass-loader'],
         include: path.resolve(__dirname, '../')
-      },
-    ],
-  },
-  plugins: [
-    new webpack.ProvidePlugin({
-      Frag: [path.join(__dirname, '../src/Frag.js'), 'default']
-    })
-  ],
+      }
+    ]
+  }
 };

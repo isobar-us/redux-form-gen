@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 // import {injectIntl, FormattedMessage} from 'react-intl';
 // import cn from 'classnames';
 import {consumeReduxFormContext, genContext} from './contextUtils';
+import Frag from './Frag';
 
 import GenField from './GenField';
 

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Frag from '../../Frag';
 
 class FieldMetaMessages extends Component {
   render() {

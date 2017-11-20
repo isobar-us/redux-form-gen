@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const pkg = require('./package.json');
-const path = require('path');
 
 const env = process.env.NODE_ENV;
 const config = {
@@ -27,9 +26,6 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env)
-    }),
-    new webpack.ProvidePlugin({
-      Frag: [path.join(__dirname, 'src/Frag.js'), 'default']
     })
   ],
   externals: {

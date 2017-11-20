@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
 import FieldMetaMessages from './FieldMetaMessages';
+import Frag from '../../Frag';
 
 class RadioField extends Component {
   onChange = (e) => {

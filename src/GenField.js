@@ -12,6 +12,7 @@ import {consumeGenContext} from './contextUtils';
 import GenCondField from './GenCondField';
 import GenChildField from './GenChildField';
 import GenCondClearField from './GenCondClearField';
+import Frag from './Frag';
 
 import {isCondField, condDependentFields} from './conditionalUtils';
 

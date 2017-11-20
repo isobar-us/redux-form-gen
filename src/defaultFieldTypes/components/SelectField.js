@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {isNilOrEmpty} from '../../validators';
 import FieldMetaMessages from './FieldMetaMessages';
+import Frag from '../../Frag';
 
 class SelectField extends Component {
   render() {
