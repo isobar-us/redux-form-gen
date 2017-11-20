@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.5.1
+
+#### Bug Fixes
+
+* add missing dependencies (classnames, lodash, prop-types)
+* import Frag explicitly instead of using webpack.ProvidePlugin
+
 ## v0.5.0
 
 * 🎉 First open source release 🎉
