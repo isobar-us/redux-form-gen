@@ -66,12 +66,14 @@ const MyForm = () =>
 
 | Property                                | Type      | Description                                                                                           |
 | --------------------------------------- | --------- | ----------------------------------------------------------------------------------------------------- |
-| `_genFieldComponent`                    | Component | This is the `reduxForm` field component that this should use to render                                |
-| `_genDisplayComponent`                  | Component | the React Component used for static display of a value                                                |
+| `_genFieldComponent`                    | Component | This is the `redux-form` `Field`, `Fields`, or `FieldArray` component that this should use to render  |
+| `_genComponent`                         | Component | the Component used if not using `_genFieldComponent`                                                  |
 | `_genLabelComponent`                    | Component | the Component used to render the field label. defaults to `GenericRequiredLabel`                      |
 | `_genChildren`                          | array     | used to override the default `childFields` when iterating only (not rendering)                        |
-| `_genDefaultValue`                      | any       | used to calculate initialValues for a `reduxForm` component                                           |
+| `_genDefaultValue`                      | any       | used when calculating the initialValues with `getDefaultValues()` for a `reduxForm` component         |
 | `_genIsFilled`                          | func      | `fn({data, field, lookupTable, customFieldTypes}) => bool`                                            |
+| `_genIsValid`                           | func      | `fn({data, field, lookupTable, customFieldTypes}) => bool`                                            |
+| `_genSectionErrors`                     | func      | `fn({errors, data, field, lookupTable, customFieldTypes}) => void` set in `errors`                    |
 | `_genTraverseChildren`                  | func      | `fn({iterator, data, lookupTable}) => something.map((field) => iterator({field, data, lookupTable}))` |
 | `_genSkipChildren`                      | bool      | skip rendering of `childFields`                                                                       |
 | `_genHidden`                            | bool      | skip rendering of this field and all it's children.                                                   |
