@@ -201,6 +201,35 @@ describe('isSectionValid', () => {
         }
       ]
     });
+
+    const customRequiredMessage = 'Custom Required Message';
+    const customInvalidMessage = 'Custom Invalid Message';
+
+    const customErrors = isSectionValid({
+      fields,
+      data,
+      customFieldTypes: exampleFieldTypes,
+      lookupTable,
+      messages: {
+        requiredMessage: customRequiredMessage,
+        invalidMessage: customInvalidMessage
+      }
+    });
+
+    expect(customErrors).toEqual({
+      // child_foo: REQUIRED_MESSAGE,
+      baz: [
+        {
+          bar: customRequiredMessage,
+          nested_baz: [
+            undefined, // eslint-disable-line no-undefined
+            {
+              nested_foo: customInvalidMessage
+            }
+          ]
+        }
+      ]
+    });
   });
 
   it('should message for invalid fields', () => {

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+#### Features
+
+* Add support for custom global required and invalid error messages to `isSectionValid()` & `isFieldValid()`
+
 #### Bug Fixes
 
 * Fixed a bug where when using `<FormGenerator ... disabled />`, fields were childFields wouldn't re-enable

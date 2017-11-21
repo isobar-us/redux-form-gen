@@ -74,10 +74,22 @@ export const isFieldValid = (options) => {
     // customFieldTypes
     // data
     errors: {},
+    messages: {
+      requiredMessage: REQUIRED_MESSAGE,
+      invalidMessage: INVALID_MESSAGE,
+      ...options.messages
+    },
     ...options
   };
 
-  const {field, customFieldTypes, pathPrefix, data, parentQuestionId} = options;
+  const {
+    field,
+    customFieldTypes,
+    pathPrefix,
+    data,
+    parentQuestionId,
+    messages: {requiredMessage, invalidMessage}
+  } = options;
   let {errors} = options;
 
   const fieldOptions = getFieldOptions({field, customFieldTypes});
@@ -123,9 +135,9 @@ export const isFieldValid = (options) => {
           required === true &&
           (has(fieldOptions, '_genIsFilled') ? !fieldOptions._genIsFilled(options) : isNilOrEmpty(value))
         ) {
-          set(errors, path, REQUIRED_MESSAGE);
+          set(errors, path, requiredMessage);
         } else if (has(fieldOptions, '_genIsValid') && !fieldOptions._genIsValid(options)) {
-          set(errors, path, INVALID_MESSAGE);
+          set(errors, path, invalidMessage);
         } else if (has(fieldOptions, '_genSectionErrors')) {
           fieldOptions._genSectionErrors(options);
         } else if (
@@ -136,7 +148,7 @@ export const isFieldValid = (options) => {
             ...(field.questionId && {valueKey: field.questionId})
           })
         ) {
-          set(errors, path, INVALID_MESSAGE);
+          set(errors, path, invalidMessage);
         } else {
           keys(ops).map((op) => {
             if (has(field, op)) {
@@ -145,7 +157,7 @@ export const isFieldValid = (options) => {
                 throw new Error(`[FormGenerator] Unknown validation operator "${op}"`);
               }
               if (!operator(value, field[op])) {
-                set(errors, path, INVALID_MESSAGE);
+                set(errors, path, invalidMessage);
               }
             }
           });
@@ -158,8 +170,8 @@ export const isFieldValid = (options) => {
         //   const fieldErrors = fieldOptions._genIsValid({
         //     ...options,
         //     messages: {
-        //       invalid: INVALID_MESSAGE,
-        //       required: REQUIRED_MESSAGE
+        //       invalid: invalidMessage,
+        //       required: requiredMessage
         //     }
         //   });
         //   if (!isEmpty(fieldErrors)) {
