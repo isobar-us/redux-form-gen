@@ -5,12 +5,8 @@ import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import has from 'lodash/has';
-import hasIn from 'lodash/hasIn';
-import keys from 'lodash/keys';
 import omit from 'lodash/omit';
 import values from 'lodash/values';
-import isNumber from 'lodash/isNumber';
-import isEqual from 'lodash/isEqual';
 import isPlainObject from 'lodash/isPlainObject';
 import isArray from 'lodash/isArray';
 // import merge from 'lodash/merge';
@@ -18,25 +14,6 @@ import isArray from 'lodash/isArray';
 import {evalCond, evalCondValid, evalCondRequired} from './conditionalUtils';
 import {getFieldOptions} from './defaultFieldTypes';
 import {mergePaths} from './utils';
-
-const ops = {
-  greaterThan: (v, p) => (isNumber(v) ? v > p : parseFloat(v) > p),
-  lessThan: (v, p) => (isNumber(v) ? v < p : parseFloat(v) < p),
-  min: (v, p) => (isNumber(v) ? v >= p : parseFloat(v) >= p),
-  max: (v, p) => (isNumber(v) ? v <= p : parseFloat(v) <= p),
-  greaterThanEqual: (v, p) => (isNumber(v) ? v >= p : parseFloat(v) >= p),
-  lessThanEqual: (v, p) => (isNumber(v) ? v <= p : parseFloat(v) <= p),
-  length: (v, p) => (hasIn(v, 'length') ? v.length === p : true),
-  minLength: (v, p) => (hasIn(v, 'length') ? v.length >= p : true),
-  maxLength: (v, p) => (hasIn(v, 'length') ? v.length <= p : true),
-  equals: (v, p) => isEqual(v, p),
-  pobox: (v, p) => (p ? /p.*o.* box/gi.test(v) : true),
-  email: (v, p) => (p ? /\S+@\S+\.\S+/.test(v) : true),
-  regex: (v, p) => RegExp(p).test(v)
-  // dateBeforeFuture: (v, p) => moment(v).startOf('day').isBefore(moment().startOf('day').add(...p))
-};
-
-ops.phone = (v, p) => (p ? ops.length(v, 10) : true);
 
 export const isNilOrEmpty = (value) =>
   isNil(value) || isEmpty(trim(value)) || ((isPlainObject(value) || isArray(value)) && isEmpty(value));
@@ -149,18 +126,6 @@ export const isFieldValid = (options) => {
           })
         ) {
           set(errors, path, invalidMessage);
-        } else {
-          keys(ops).map((op) => {
-            if (has(field, op)) {
-              const operator = ops[op];
-              if (isNil(operator)) {
-                throw new Error(`[FormGenerator] Unknown validation operator "${op}"`);
-              }
-              if (!operator(value, field[op])) {
-                set(errors, path, invalidMessage);
-              }
-            }
-          });
         }
       } else {
         // // if there is no questionId, and the is _genIsValid,

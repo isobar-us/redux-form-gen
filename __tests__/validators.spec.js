@@ -92,7 +92,9 @@ describe('isSectionValid', () => {
       type: 'text',
       questionId: 'foo',
       required: true,
-      pobox: true,
+      conditionalValid: {
+        pobox: true
+      },
       childFields: [
         {
           type: 'text',
@@ -136,20 +138,26 @@ describe('isSectionValid', () => {
           {
             type: 'text',
             questionId: 'bar',
-            greaterThan: 10,
+            conditionalValid: {
+              greaterThan: 10
+            },
             required: true
           },
           {
             type: 'array',
             questionId: 'nested_baz',
-            length: 2,
+            conditionalValid: {
+              length: 2
+            },
             item: {
               type: 'arrayItem',
               childFields: [
                 {
                   type: 'text',
                   questionId: 'nested_foo',
-                  regex: '[^!]hello',
+                  conditionalValid: {
+                    regex: '[^!]hello'
+                  },
                   required: true
                 }
               ]

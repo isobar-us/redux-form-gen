@@ -12,6 +12,7 @@
 
 #### ⚠️ Breaking Changes ⚠️
 
+* Officially remove field level validation operators in favor of using `conditionalValid` operators
 * Removed `evalCondRequired()` from default exports, since it's equal to `evalCond()`
 * `evalCond()` & `evalCondValid()` no longer take `_parentValue` mixed in with data. You now use `valueKey` option to
   pass the questionId of the value data, and it will `get(data, valueKey)`. (is affected by reduxFormDeep option).
