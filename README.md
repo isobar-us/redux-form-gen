@@ -1,6 +1,6 @@
 # redux-form-gen
 
-[![NPM Version](https://img.shields.io/npm/v/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/redux-form)
+[![NPM Version](https://img.shields.io/npm/v/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A pluggable form generator for redux-form.
