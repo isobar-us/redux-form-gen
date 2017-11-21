@@ -33,6 +33,22 @@ beforeEach(() => {
 });
 
 describe('<FormGenerator/>', () => {
+  it('should render null when no fields passed, and error on PropTypes', () => {
+    const errorSpy = jest.spyOn(console, 'error');
+    errorSpy.mockImplementation(() => {}); // suppress error log
+    mount(
+      <FormDecorator>
+        <FormGenerator />
+      </FormDecorator>
+    );
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    expect(errorSpy).toHaveBeenCalledWith(
+      'Warning: Failed prop type: The prop `fields` is marked as required in `FormGenerator`, but its value is `undefined`.\n    in FormGenerator (created by ContextConsumer)' // eslint-disable-line
+    );
+    errorSpy.mockReset();
+    errorSpy.mockRestore();
+  });
+
   it('should not render any fields', () => {
     const wrapper = mount(
       <FormDecorator>

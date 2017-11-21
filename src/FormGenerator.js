@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-// import {Field, Fields, FieldArray, FormSection} from 'redux-form';
-// import {injectIntl, FormattedMessage} from 'react-intl';
-// import cn from 'classnames';
 import {consumeReduxFormContext, genContext} from './contextUtils';
 import Frag from './Frag';
 
@@ -12,23 +9,6 @@ import omit from 'lodash/omit';
 import set from 'lodash/set';
 import get from 'lodash/get';
 import cloneDeep from 'lodash/cloneDeep';
-
-export const migrateGen4 = (fields) =>
-  fields.map((field) => {
-    let res = field;
-    if (field.type === 'array') {
-      res = omit(field, ['fields', 'itemLabel']);
-      res.item = {
-        type: 'arrayItem',
-        label: field.itemLabel,
-        childFields: [...field.fields]
-      };
-    }
-    if (field.childFields) {
-      res.childFields = migrateGen4(field.childFields);
-    }
-    return res;
-  });
 
 class FormGenerator extends Component {
   static childContextTypes = genContext;
@@ -85,10 +65,9 @@ class FormGenerator extends Component {
 
   render() {
     let {fields, children} = this.props;
-
     let path = 'fields';
 
-    return (
+    return fields ? (
       <Frag>
         <div className='generated-form'>
           {fields.map((field, index) => (
@@ -97,7 +76,7 @@ class FormGenerator extends Component {
         </div>
         {children}
       </Frag>
-    );
+    ) : null;
   }
 }
 
