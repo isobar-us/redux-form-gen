@@ -12,7 +12,7 @@ import {getDefaultValues, buildLookupTable} from './utils';
 
 import {consumeGenContext} from './contextUtils';
 
-import {evalCond, evalCondRequired, evalCondValid} from './conditionalUtils';
+import {evalCond, evalCondValid} from './conditionalUtils';
 
 import GenField from './GenField';
 
@@ -38,7 +38,6 @@ export {
   consumeGenContext,
   // conditionalUtils
   evalCond,
-  evalCondRequired,
   evalCondValid,
   // internals
   GenField

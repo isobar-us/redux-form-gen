@@ -10,7 +10,8 @@ import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import {isNilOrEmpty, isFieldValid} from './validators';
 
-export const isCondField = (field) => has(field, 'conditionalVisible');
+export const isCondField = (field) =>
+  has(field, 'conditionalVisible') || has(field, 'conditionalRequired') || has(field, 'conditionalDisabled');
 export const omitCondProps = (field) => omit(field, 'conditionalVisible');
 
 /*
@@ -73,7 +74,7 @@ ops.value = ops.equals;
 
 const defaultElseHandler = ({value}) => !isNilOrEmpty(value); // TODO should point to ops.filled
 
-const defaultValueKey = '_parentValue';
+const defaultValueKey = '_value';
 
 export const evalCond = (opts) => {
   const options = {elseHandler: defaultElseHandler, valueKey: defaultValueKey, ...opts};
@@ -81,7 +82,7 @@ export const evalCond = (opts) => {
 
   const value = has(cond, 'questionId')
     ? reduxFormDeep ? get(data, `${cond.questionId}.input.value`) : get(data, cond.questionId)
-    : data[valueKey];
+    : reduxFormDeep ? get(data, `${valueKey}.input.value`) : get(data, valueKey);
   const conds = keys(omit(cond, 'questionId'));
   return conds.length > 0
     ? conds.reduce((result, key) => {
@@ -104,12 +105,9 @@ const condValidElseHandler = (options) => {
 };
 export const evalCondValid = (args) =>
   evalCond({
-    ...args,
     elseHandler: condValidElseHandler,
-    valueKey: '_parentValue' // TODO change _parentValue to _value only for conditionalValid
+    ...args
   });
-
-export const evalCondRequired = evalCond;
 
 export default {
   evalCond,

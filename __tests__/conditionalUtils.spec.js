@@ -132,12 +132,13 @@ describe('evalCond()', () => {
     // });
   });
 
-  describe('_parentValue', () => {
+  describe('valueKey', () => {
     it('should return true if parent filled out', () => {
       expect(
         evalCond({
           cond: {equals: 'bar'},
-          data: {_parentValue: 'bar'}
+          data: {foo: 'bar'},
+          valueKey: 'foo'
         })
       ).toBe(true);
     });
@@ -146,7 +147,8 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo'},
-          data: {_parentValue: ''}
+          data: {foo: ''},
+          valueKey: 'foo'
         })
       ).toBe(false);
     });

@@ -26,7 +26,6 @@ describe('index exports', () => {
     expect(main.consumeGenContext).toBeDefined();
 
     expect(main.evalCond).toBeDefined();
-    expect(main.evalCondRequired).toBeDefined();
     expect(main.evalCondValid).toBeDefined();
 
     expect(main.GenField).toBeDefined();

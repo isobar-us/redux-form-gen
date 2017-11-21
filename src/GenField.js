@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {Field, Fields} from 'redux-form';
+import {Fields} from 'redux-form';
 import cn from 'classnames';
 
 import has from 'lodash/has';
@@ -10,7 +10,6 @@ import isNil from 'lodash/isNil';
 
 import {consumeGenContext} from './contextUtils';
 import GenCondField from './GenCondField';
-import GenChildField from './GenChildField';
 import GenCondClearField from './GenCondClearField';
 import Frag from './Frag';
 
@@ -53,7 +52,7 @@ class _GenField extends Component {
   };
 
   render() {
-    const {gen, field, _parentValue, visible = true, /* disabled = false, */ path} = this.props || {};
+    const {gen, field, parentQuestionId, visible = true, /* disabled = false, */ path} = this.props || {};
 
     const fieldOptions = getFieldOptions({...this.props, customFieldTypes: this.props.gen.customFieldTypes});
     if (isNil(fieldOptions)) {
@@ -103,25 +102,26 @@ class _GenField extends Component {
     // find `cond` prefixed props automatically
     const condDependentFieldNames = [
       ...(field.questionId ? [field.questionId] : []),
+      ...(parentQuestionId ? [parentQuestionId] : []),
       ...(field.conditionalVisible ? condDependentFields(field.conditionalVisible) : []),
       ...(field.conditionalRequired ? condDependentFields(field.conditionalRequired) : []),
       ...(field.conditionalDisabled ? condDependentFields(field.conditionalDisabled) : [])
     ];
 
     return (
-      ((isCondField(field) || has(field, 'conditionalRequired') || has(field, 'conditionalDisabled')) && // a wrapper to evaluate conditional visibility
+      (isCondField(field) && // a wrapper to evaluate conditional visibility
         (condDependentFieldNames.length > 0 ? (
           <Fields
             names={condDependentFieldNames}
             field={field}
-            _parentValue={_parentValue}
+            {...parentQuestionId && {parentQuestionId}}
             parentVisible={visible}
             path={path}
-            get={gen} // forces Fields component to re-render if gen updates, since it implements a shouldComponentUpdate
+            gen={gen} // forces Fields component to re-render if gen updates, since it implements a shouldComponentUpdate
             component={GenCondField}
           />
         ) : (
-          <GenCondField {...{field, path, _parentValue, parentVisible: visible}} />
+          <GenCondField {...{field, path, parentVisible: visible, ...(parentQuestionId && {parentQuestionId})}} />
         ))) || (
         <div
           /* TODO refactor these divs used to hide for visibility/path. */
@@ -150,22 +150,17 @@ class _GenField extends Component {
           </div>
           {!fieldOptions._genSkipChildren &&
             field.childFields &&
-            field.childFields.map(
-              (childField, index) =>
-                field.questionId ? ( // if parent is a field, then link parent and child fields
-                  // TODO: should probably pass parentQuestionId instead of parentValue, to avoid additional re-renders...
-                  <Field
-                    key={index}
-                    name={field.questionId} // send parent name
-                    component={GenChildField}
-                    field={childField}
-                    visible={visible} // send parent visibility to children
-                    path={`${path}.childFields[${index}]`}
-                  />
-                ) : (
-                  <GenField key={index} {...{field: childField, visible, path: `${path}.childFields[${index}]`}} />
-                )
-            )}
+            field.childFields.map((childField, index) => (
+              <GenField
+                key={index}
+                {...{
+                  field: childField,
+                  visible,
+                  path: `${path}.childFields[${index}]`,
+                  ...(field.questionId && {parentQuestionId: field.questionId})
+                }}
+              />
+            ))}
         </div>
         // )
       )

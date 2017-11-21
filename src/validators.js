@@ -45,6 +45,7 @@ export const isNilOrEmpty = (value) =>
 // # Valid
 // ####################################################
 
+// options = {fields, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
 export const isSectionValid = (options) => {
   options = {
     // fields
@@ -54,18 +55,19 @@ export const isSectionValid = (options) => {
     ...options
   };
 
-  const {fields, parent, data} = options;
+  const {fields, parent} = options;
   let {errors} = options;
 
-  const _parentValue = parent && get(data, parent.questionId);
+  const parentQuestionId = parent && parent.questionId;
 
-  fields.map((field) => isFieldValid({...options, _parentValue, field}));
+  fields.map((field) => isFieldValid({...options, parentQuestionId, field}));
   return errors;
 };
 
 export const INVALID_MESSAGE = 'Invalid Field';
 export const REQUIRED_MESSAGE = 'Required Field';
 
+// options = {field, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
 export const isFieldValid = (options) => {
   options = {
     // field
@@ -75,7 +77,7 @@ export const isFieldValid = (options) => {
     ...options
   };
 
-  const {field, customFieldTypes, pathPrefix, data, _parentValue} = options;
+  const {field, customFieldTypes, pathPrefix, data, parentQuestionId} = options;
   let {errors} = options;
 
   const fieldOptions = getFieldOptions({field, customFieldTypes});
@@ -85,7 +87,13 @@ export const isFieldValid = (options) => {
     const visible = has(fieldOptions, '_genHidden') ? !fieldOptions._genHidden : true;
 
     if (has(field, 'conditionalVisible')) {
-      if (evalCond({cond: field.conditionalVisible, data: {...data, _parentValue}})) {
+      if (
+        evalCond({
+          ...options,
+          cond: field.conditionalVisible,
+          ...(parentQuestionId && {valueKey: parentQuestionId})
+        })
+      ) {
         isFieldValid({...options, field: omit(field, 'conditionalVisible')});
       }
     } else if (visible) {
@@ -96,7 +104,7 @@ export const isFieldValid = (options) => {
           evalCond({
             ...options,
             cond: field.conditionalDisabled,
-            data: {...data, _parentValue}
+            ...(parentQuestionId && {valueKey: parentQuestionId})
           }));
       const required =
         (!disabled && (has(field, 'required') && field.required)) ||
@@ -104,7 +112,7 @@ export const isFieldValid = (options) => {
           evalCondRequired({
             ...options,
             cond: field.conditionalRequired,
-            data: {...data, _parentValue}
+            ...(parentQuestionId && {valueKey: parentQuestionId})
           }));
 
       if (has(fieldOptions, 'name')) {
@@ -122,7 +130,11 @@ export const isFieldValid = (options) => {
           fieldOptions._genSectionErrors(options);
         } else if (
           has(field, 'conditionalValid') &&
-          !evalCondValid({...options, cond: field.conditionalValid, data: {...data, _parentValue}})
+          !evalCondValid({
+            ...options,
+            cond: field.conditionalValid,
+            ...(field.questionId && {valueKey: field.questionId})
+          })
         ) {
           set(errors, path, INVALID_MESSAGE);
         } else {
@@ -176,23 +188,29 @@ export const isFieldValid = (options) => {
 // # Filled
 // ####################################################
 
+// options = {field, data, lookupTable, customFieldTypes, parentQuestionId}
 export const isFieldFilled = (options) => {
-  const {field, data, lookupTable, _parentValue} = options;
+  const {field, parentQuestionId} = options;
   let fieldFilled = true;
 
   if (has(field, 'conditionalVisible')) {
-    if (evalCond({cond: field.conditionalVisible, data: {...data, _parentValue}})) {
-      fieldFilled =
-        fieldFilled &&
-        isFieldFilled({...options, field: omit(field, 'conditionalVisible'), data, lookupTable, _parentValue});
+    if (
+      evalCond({
+        ...options,
+        cond: field.conditionalVisible,
+        ...(parentQuestionId && {valueKey: parentQuestionId})
+      })
+    ) {
+      fieldFilled = fieldFilled && isFieldFilled({...options, field: omit(field, 'conditionalVisible')});
     }
   } else {
     const required =
       (has(field, 'required') && field.required) ||
       (has(field, 'conditionalRequired') &&
         evalCondRequired({
+          ...options,
           cond: field.conditionalRequired,
-          data: {...data, _parentValue}
+          ...(parentQuestionId && {valueKey: parentQuestionId})
         }));
 
     const fieldOptions = getFieldOptions(options);
@@ -205,16 +223,14 @@ export const isFieldFilled = (options) => {
         fieldFilled = fieldFilled && fieldOptions._genIsFilled({...options});
       } else {
         let conditionalRequiredValid = {
-          questionId: field.questionId,
           filled: true
         };
         fieldFilled =
           fieldFilled &&
           evalCondValid({
+            ...options,
             cond: conditionalRequiredValid,
-            data: {...data, _parentValue},
-            lookupTable,
-            customFieldTypes: options.customFieldTypes
+            ...(field.questionId && {valueKey: field.questionId})
           });
       }
     }
@@ -225,17 +241,16 @@ export const isFieldFilled = (options) => {
       fieldFilled =
         fieldFilled &&
         evalCondValid({
+          ...options,
           cond: conditionalValid,
-          data: {...data, _parentValue},
-          lookupTable,
-          customFieldTypes: options.customFieldTypes
+          ...(field.questionId && {valueKey: field.questionId})
         });
     }
 
     // console.log('is field filled', fieldFilled);
 
     // if (required && has(field, 'conditionalValid')) {
-    //   fieldFilled = fieldFilled && evalConditionalValid(field.conditionalValid, {...data, _parentValue}, lookupTable, {shallow: true});
+    //   fieldFilled = fieldFilled && evalConditionalValid(field.conditionalValid, data, valueKey: field.questionId, lookupTable, {shallow: true});
     // }
 
     // TODO: not sure if we need this exactly, might push into _genOperators.filled ? similar to _genOperators.valid? or is that just condValid?
@@ -275,9 +290,9 @@ export const isFieldFilled = (options) => {
 // returns true if a section has any fields that have been filled out, false otherwise
 // lookupTable is required if you have fields that are conditionalValid.
 export const isSectionFilled = ({data, fields, lookupTable = {}, parent, ...options}) => {
-  const _parentValue = parent && get(data, parent.questionId);
+  const parentQuestionId = parent && parent.questionId;
   return fields.reduce((valid, field) => {
-    return valid && isFieldFilled({...options, field, data, lookupTable, _parentValue});
+    return valid && isFieldFilled({...options, field, data, lookupTable, parentQuestionId});
   }, true);
 };
 

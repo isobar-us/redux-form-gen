@@ -104,6 +104,7 @@ describe('isSectionValid', () => {
               questionId: 'child_child_foo',
               required: true,
               conditionalValid: {
+                questionId: 'child_foo',
                 value: 'cond'
               }
             }

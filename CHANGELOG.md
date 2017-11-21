@@ -1,5 +1,20 @@
 # Changelog
 
+## Unreleased
+
+#### Bug Fixes
+
+* Fixed a bug where when using `<FormGenerator ... disabled />`, fields were childFields wouldn't re-enable
+
+#### ⚠️ Breaking Changes ⚠️
+
+* Removed `evalCondRequired()` from default exports, since it's equal to `evalCond()`
+* `evalCond()` & `evalCondValid()` no longer take `_parentValue` mixed in with data. You now use `valueKey` option to
+  pass the questionId of the value data, and it will `get(data, valueKey)`. (is affected by reduxFormDeep option).
+* `_value` is the new default `valueKey` for `evalCond()` & `evalCondValid()`
+* When running any validation helpers like `isSectionValid()`, `evalCondValid()` defaults the `valueKey` to the current
+  field questionId, not the parent like it used to.
+
 ## v0.5.3
 
 #### Bug Fixes
