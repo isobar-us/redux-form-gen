@@ -242,7 +242,54 @@ storiesOf('FormGenerator', module)
     );
   })
   .add('wizard form example', () => <Wizard />)
-  .add('form editor', () => <FormEditor />);
+  .add('form editor', () => <FormEditor />)
+  .add('entire disabled form', () => <DisabledForm />);
+
+const disabledFormFields = [
+  {
+    type: 'radio',
+    questionId: 'tacos',
+    label: 'Do you like tacos?',
+    required: true,
+    options: [
+      {
+        label: 'Yes',
+        value: 'yes'
+      },
+      {
+        label: 'No',
+        value: 'no'
+      }
+    ]
+  },
+  {
+    type: 'text',
+    questionId: 'favoriteKind',
+    label: "What's your favorite kind of taco?",
+    required: true,
+    conditionalVisible: {
+      questionId: 'tacos',
+      value: 'yes'
+    }
+  }
+];
+class DisabledForm extends React.Component {
+  state = {
+    disabled: true
+  };
+
+  handleToggleDisabled = () => this.setState({disabled: !this.state.disabled});
+
+  render() {
+    // const {fields} = this.props;
+    return (
+      <BaseForm fields={disabledFormFields} initialValues={{tacos: 'yes'}}>
+        <button onClick={this.handleToggleDisabled}>{this.state.disabled ? 'Enable' : 'Disable'} Form</button>
+        <FormGenerator fields={disabledFormFields} disabled={this.state.disabled} />
+      </BaseForm>
+    );
+  }
+}
 
 class Wizard extends React.Component {
   state = {

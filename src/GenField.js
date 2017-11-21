@@ -117,6 +117,7 @@ class _GenField extends Component {
             _parentValue={_parentValue}
             parentVisible={visible}
             path={path}
+            get={gen} // forces Fields component to re-render if gen updates, since it implements a shouldComponentUpdate
             component={GenCondField}
           />
         ) : (

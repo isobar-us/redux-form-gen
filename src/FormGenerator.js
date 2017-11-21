@@ -70,9 +70,7 @@ class FormGenerator extends Component {
     return fields ? (
       <Frag>
         <div className='generated-form'>
-          {fields.map((field, index) => (
-            <GenField key={index} {...{field, path: `${path}[${index}]`, gen: this.props}} />
-          ))}
+          {fields.map((field, index) => <GenField key={index} {...{field, path: `${path}[${index}]`}} />)}
         </div>
         {children}
       </Frag>
