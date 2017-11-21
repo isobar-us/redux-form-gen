@@ -6,8 +6,7 @@ import {Provider, connect} from 'react-redux';
 
 import FormGenerator from '../src/FormGenerator';
 import {genericFieldProps} from '../src/defaultFieldTypes';
-import {isSectionValid} from '../src/validators';
-import {buildLookupTable, getDefaultValues} from '../src/utils';
+import injectGenProps from '../src/injectGenProps';
 
 import './style.scss';
 import 'codemirror/lib/codemirror.css';
@@ -24,83 +23,25 @@ const ExampleForm = reduxForm({
   form: 'exampleForm'
 })(({children, className, valid, error, dirty}) => (
   <div className={className}>
-    <p>{valid ? 'valid' : error}</p>
+    <p>validation: {valid ? 'valid' : error || 'invalid'}</p>
     <p>{dirty ? 'dirty' : 'pristine'}</p>
     {children}
   </div>
 ));
 
-class BaseForm extends React.Component {
-  state = {
-    initialValues: {},
-    lookupTable: {}
-  };
-
-  componentWillMount() {
-    this.calculateState(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.calculateState(nextProps);
-  }
-
-  calculateState = (props) => {
-    const {data = {}, fields, customFieldTypes = {}} = props;
-    const lookupTable = buildLookupTable({fields, customFieldTypes});
-    this.setState({
-      lookupTable,
-      initialValues: getDefaultValues({
-        fields,
-        lookupTable,
-        data: data,
-        initialValues: data,
-        customFieldTypes
-      })
-    });
-  };
-
-  validate = (formValues, props) => {
-    // console.log('lookupTable', lookupTable);
-    let errors = {};
-    const {fields, customFieldTypes} = this.props;
-    // const isFilled = isSectionFilled({
-    //   data: formValues,
-    //   fields,
-    //   customFieldTypes,
-    //   lookupTable: this.state.lookupTable
-    // });
-
-    isSectionValid({
-      fields,
-      customFieldTypes,
-      data: formValues,
-      lookupTable: this.state.lookupTable,
-      errors
-    });
-    // if (!isFilled) {
-    //   errors._error = 'Missing Required Fields';
-    // }
-    return errors;
-  };
-
-  render() {
-    const {children, childColumns} = this.props;
-    // console.log(this.state.initialValues);
-    return (
-      <ExampleForm validate={this.validate} initialValues={this.state.initialValues}>
-        <div className='flex'>
-          {childColumns ? children : <div className='col'>{children}</div>}
-          <div className='col'>
-            <ExampleFormValues />
-          </div>
-        </div>
-      </ExampleForm>
-    );
-  }
-}
-
 const ExampleFormValues = connect((state) => ({formValues: getFormValues('exampleForm')(state)}))(({formValues}) => (
   <pre>{JSON.stringify(formValues, null, 2)}</pre>
+));
+
+const BaseForm = injectGenProps(({children, childColumns, ...props}) => (
+  <ExampleForm {...props}>
+    <div className='flex'>
+      {childColumns ? children : <div className='col'>{children}</div>}
+      <div className='col'>
+        <ExampleFormValues />
+      </div>
+    </div>
+  </ExampleForm>
 ));
 
 const ReduxDecorator = (story) => <Provider store={store}>{story()}</Provider>;
@@ -150,6 +91,11 @@ storiesOf('FormGenerator', module)
     <BaseForm fields={allFieldsStructure} customFieldTypes={customFieldTypes}>
       <FormGenerator fields={allFieldsStructure} customFieldTypes={customFieldTypes} />
     </BaseForm>
+  ))
+  .add('empty generator', () => (
+    <ExampleForm>
+      <FormGenerator />
+    </ExampleForm>
   ))
   .add('progressive disclosure', () => {
     const progressiveDisclosureStructure = [
@@ -298,8 +244,6 @@ storiesOf('FormGenerator', module)
   .add('wizard form example', () => <Wizard />)
   .add('form editor', () => <FormEditor />);
 
-const DateField = ({input}) => <input type='text' {...input} />;
-
 class Wizard extends React.Component {
   state = {
     structure: wizardStructure,
@@ -360,16 +304,9 @@ class FormEditor extends React.Component {
     }
   };
 
-  customFieldTypes = {
-    date: ({field}) => ({
-      ...genericFieldProps({field}),
-      component: DateField
-    })
-  };
-
   render() {
     return (
-      <BaseForm fields={this.state.structure} childColumns>
+      <BaseForm fields={this.state.structure} customFieldTypes={customFieldTypes} childColumns>
         <div className='col'>
           <CodeMirror
             value={this.state.rawStructure}
@@ -386,7 +323,7 @@ class FormEditor extends React.Component {
           )) || <div className='form-editor__message form-editor__message--valid'>Valid JSON</div>}
         </div>
         <div className='col scroll'>
-          <FormGenerator fields={this.state.structure} customFieldTypes={this.customFieldTypes} />
+          <FormGenerator fields={this.state.structure} customFieldTypes={customFieldTypes} />
         </div>
       </BaseForm>
     );

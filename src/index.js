@@ -4,6 +4,7 @@ export default FormGenerator;
 import defaultFieldTypes, {getFieldOptions, genericFieldProps} from './defaultFieldTypes';
 import GenericRequiredLabel from './defaultFieldTypes/components/GenericRequiredLabel';
 import RequiredIndicator from './defaultFieldTypes/components/RequiredIndicator';
+import injectGenProps from './injectGenProps';
 
 import {isSectionEmpty, isSectionFilled, isFieldFilled, isSectionValid, isFieldValid, isNilOrEmpty} from './validators';
 
@@ -22,6 +23,7 @@ export {
   RequiredIndicator,
   GenericRequiredLabel,
   genericFieldProps,
+  injectGenProps,
   // validators
   isSectionEmpty,
   isSectionFilled,

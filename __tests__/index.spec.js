@@ -11,6 +11,7 @@ describe('index exports', () => {
     expect(main.RequiredIndicator).toBeDefined();
     expect(main.GenericRequiredLabel).toBeDefined();
     expect(main.genericFieldProps).toBeDefined();
+    expect(main.injectGenProps).toBeDefined();
 
     expect(main.isSectionEmpty).toBeDefined();
     expect(main.isSectionFilled).toBeDefined();
