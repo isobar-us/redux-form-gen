@@ -4,7 +4,7 @@ import {isSectionValid} from './validators';
 import {buildLookupTable, getDefaultValues} from './utils';
 
 const injectGenProps = (FormComponent) => {
-  class GenHookedForm extends Component {
+  class InjectedGenProps extends Component {
     static propTypes = {
       fields: PropTypes.array.isRequired,
       customFieldTypes: PropTypes.object,
@@ -24,22 +24,22 @@ const injectGenProps = (FormComponent) => {
       if (
         this.props.fields !== nextProps.fields ||
         this.props.customFieldTypes !== nextProps.customFieldTypes ||
-        this.props.data !== nextProps.data
+        this.props.initialValues !== nextProps.initialValues
       ) {
         this.calculateState(nextProps);
       }
     }
 
     calculateState = (props) => {
-      const {data = {}, fields, customFieldTypes = {}} = props;
+      const {initialValues = {}, fields, customFieldTypes = {}} = props;
       const lookupTable = buildLookupTable({fields, customFieldTypes});
       this.setState({
         lookupTable,
         initialValues: getDefaultValues({
           fields,
           lookupTable,
-          data: data,
-          initialValues: data,
+          data: initialValues,
+          initialValues,
           customFieldTypes
         })
       });
@@ -73,7 +73,7 @@ const injectGenProps = (FormComponent) => {
     }
   }
 
-  return GenHookedForm;
+  return InjectedGenProps;
 };
 
 export default injectGenProps;
