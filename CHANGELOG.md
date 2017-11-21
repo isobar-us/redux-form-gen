@@ -1,10 +1,11 @@
 # Changelog
 
-## Unreleased
+## v0.6.0
 
 #### Features
 
 * Add support for custom global required and invalid error messages to `isSectionValid()` & `isFieldValid()`
+* Major refactor of `evalCond()` data flow. see Breaking Changes below.
 
 #### Bug Fixes
 
@@ -19,6 +20,8 @@
 * `_value` is the new default `valueKey` for `evalCond()` & `evalCondValid()`
 * When running any validation helpers like `isSectionValid()`, `evalCondValid()` defaults the `valueKey` to the current
   field questionId, not the parent like it used to.
+
+---
 
 ## v0.5.3
 
