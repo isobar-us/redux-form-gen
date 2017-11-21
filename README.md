@@ -16,6 +16,12 @@ npm install --save @isobar-us/redux-form-gen
 
 ## Examples
 
+### 🏖 Code Sandboxes 🏖
+
+* [Basic Example](https://codesandbox.io/s/l27jx3or1q)
+* [Conditional Example](https://codesandbox.io/s/948386kpwy)
+* [Reactstrap Example](https://codesandbox.io/s/p1rwr7l37)
+
 ### Defining your own field types
 
 ```javascript
@@ -57,10 +63,6 @@ const fields = [
 const MyForm = () =>
   <FormGenerator fields={fields} customFieldTypes={customFieldTypes} />;
 ```
-
-### 🏖 Code Sandboxes 🏖
-
-* Coming Soon...
 
 ## Custom Field Type Options
 
