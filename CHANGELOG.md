@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.5.2
+
+#### Features
+
+* added `injectGenProps` HOC to take care of passing `validate` and `initialValues` to the `reduxForm` decorated
+  component.
+
+#### Bug Fixes
+
+* gracefully return `null` if required `fields` prop isn't passed to `<FormGenerator />`
+
 ## v0.5.1
 
 #### Bug Fixes
