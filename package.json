@@ -31,8 +31,23 @@
     "precommit": "npm run lint -q",
     "prepush": "npm run check -q"
   },
-  "author": "Isobar",
+  "author": "Isobar (http://github.com/isobar-us)",
   "license": "MIT",
+  "keywords": [
+    "redux-form",
+    "redux",
+    "form",
+    "generator",
+    "isobar",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/isobar-us/redux-form-gen"
+  },
+  "bugs": {
+    "url": "https://github.com/isobar-us/redux-form-gen/issues"
+  },
   "dependencies": {
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
