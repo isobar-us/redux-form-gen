@@ -123,7 +123,10 @@ class _GenField extends Component {
         ) : (
           <GenCondField {...{field, path, _parentValue, parentVisible: visible}} />
         ))) || (
-        <div className={cn('section', {'section--hidden': !visible})}>
+        <div
+          /* TODO refactor these divs used to hide for visibility/path. */
+          className={cn('section', {'section--hidden': !visible})}
+        >
           {' '}
           {/* hide if invisible */}
           <div className={cn({'wrapper--hidden-path': !isPathVisible})}>

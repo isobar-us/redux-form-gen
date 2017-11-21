@@ -49,21 +49,6 @@ class GenCondField extends Component {
                 reduxFormDeep: true
               })
             : false
-
-          // visible: parentVisible && (field.conditionalVisible ? evalCond({
-          //   cond: field.conditionalVisible,
-          //   data: {
-          //     ...fields,
-          //     _parentValue
-          //   }
-          // }) : true),
-          // required: field.conditionalRequired ? evalCondRequired({
-          //   cond: field.conditionalRequired,
-          //   data: {
-          //     ...fields,
-          //     _parentValue
-          //   }
-          // }) : false
         }}
       />
     );
