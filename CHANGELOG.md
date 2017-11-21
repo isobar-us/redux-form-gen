@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.5.3
+
+#### Bug Fixes
+
+* fixed a bug where when using `<FormGenerator ... disabled />`, fields with conditional operations wouldn't re-enable.
+
 ## v0.5.2
 
 #### Features
