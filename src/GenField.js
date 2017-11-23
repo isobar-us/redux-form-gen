@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {Fields} from 'redux-form';
 import cn from 'classnames';
 
 import has from 'lodash/has';
@@ -9,7 +8,7 @@ import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
 
 import {consumeGenContext} from './contextUtils';
-import GenCondField from './GenCondField';
+import GenCondEval from './GenCondEval';
 import GenCondClearField from './GenCondClearField';
 import Frag from './Frag';
 
@@ -111,17 +110,15 @@ class _GenField extends Component {
     return (
       (isCondField(field) && // a wrapper to evaluate conditional visibility
         (condDependentFieldNames.length > 0 ? (
-          <Fields
+          <GenCondEval
             names={condDependentFieldNames}
             field={field}
             {...parentQuestionId && {parentQuestionId}}
             parentVisible={visible}
             path={path}
-            gen={gen} // forces Fields component to re-render if gen updates, since it implements a shouldComponentUpdate
-            component={GenCondField}
           />
         ) : (
-          <GenCondField {...{field, path, parentVisible: visible, ...(parentQuestionId && {parentQuestionId})}} />
+          <GenCondEval {...{field, path, parentVisible: visible, ...(parentQuestionId && {parentQuestionId})}} />
         ))) || (
         <div
           /* TODO refactor these divs used to hide for visibility/path. */

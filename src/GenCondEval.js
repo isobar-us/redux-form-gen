@@ -1,14 +1,17 @@
-// import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import omit from 'lodash/omit';
-
-import {consumeGenContext} from './contextUtils';
-import {evalCond} from './conditionalUtils';
+import {consumeReduxFormContext, consumeGenContext} from './contextUtils';
+import {connect} from 'react-redux';
+import {getFormValues} from 'redux-form';
+import get from 'lodash/get';
+import set from 'lodash/set';
 import GenField from './GenField';
+import omit from 'lodash/omit';
+import {evalCond} from './conditionalUtils';
 
-class GenCondField extends Component {
+// TODO move this logic into GenField connect() ?
+class GenCondEval extends Component {
   render() {
-    const {field, parentQuestionId, parentVisible, path, gen: {customFieldTypes}, ...data} = this.props;
+    const {field, parentQuestionId, parentVisible, path, gen: {customFieldTypes}, formValues: data} = this.props;
     return (
       <GenField
         {...{
@@ -21,7 +24,7 @@ class GenCondField extends Component {
                   cond: field.conditionalVisible,
                   data,
                   customFieldTypes,
-                  reduxFormDeep: true,
+                  // reduxFormDeep: true,
                   ...(parentQuestionId && {valueKey: parentQuestionId})
                 })
               : true),
@@ -30,7 +33,7 @@ class GenCondField extends Component {
                 cond: field.conditionalRequired,
                 data,
                 customFieldTypes,
-                reduxFormDeep: true,
+                // reduxFormDeep: true,
                 ...(parentQuestionId && {valueKey: parentQuestionId})
               })
             : false,
@@ -39,7 +42,7 @@ class GenCondField extends Component {
                 cond: field.conditionalDisabled,
                 data,
                 customFieldTypes,
-                reduxFormDeep: true,
+                // reduxFormDeep: true,
                 ...(parentQuestionId && {valueKey: parentQuestionId})
               })
             : false
@@ -49,4 +52,14 @@ class GenCondField extends Component {
   }
 }
 
-export default consumeGenContext(GenCondField);
+export default consumeReduxFormContext(
+  consumeGenContext(
+    connect((state, {_reduxForm, names}) => {
+      const formName = _reduxForm.form;
+      const formValues = getFormValues(formName)(state);
+      return {
+        formValues: names.reduce((values, name) => set(values, name, get(formValues, name)), {})
+      };
+    })(GenCondEval)
+  )
+);
