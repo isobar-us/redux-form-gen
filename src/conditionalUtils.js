@@ -111,10 +111,10 @@ export const evalCondValid = (args) =>
 
 export default {
   evalCond,
-  evalCondRequired: evalCond,
-  evalCondValid: evalCondValid
+  evalCondValid
 };
 
+// TODO consider renaming to getCondDependentFieldNames or something similar
 export const condDependentFields = (cond) => {
   if (has(cond, 'questionId')) {
     return [cond.questionId];

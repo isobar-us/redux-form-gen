@@ -11,7 +11,7 @@ import isPlainObject from 'lodash/isPlainObject';
 import isArray from 'lodash/isArray';
 // import merge from 'lodash/merge';
 
-import {evalCond, evalCondValid, evalCondRequired} from './conditionalUtils';
+import {evalCond, evalCondValid} from './conditionalUtils';
 import {getFieldOptions} from './defaultFieldTypes';
 import {mergePaths} from './utils';
 
@@ -98,7 +98,7 @@ export const isFieldValid = (options) => {
       const required =
         (!disabled && (has(field, 'required') && field.required)) ||
         (has(field, 'conditionalRequired') &&
-          evalCondRequired({
+          evalCond({
             ...options,
             cond: field.conditionalRequired,
             ...(parentQuestionId && {valueKey: parentQuestionId})
@@ -184,7 +184,7 @@ export const isFieldFilled = (options) => {
     const required =
       (has(field, 'required') && field.required) ||
       (has(field, 'conditionalRequired') &&
-        evalCondRequired({
+        evalCond({
           ...options,
           cond: field.conditionalRequired,
           ...(parentQuestionId && {valueKey: parentQuestionId})
