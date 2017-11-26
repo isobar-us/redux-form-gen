@@ -1,10 +1,13 @@
+// @flow
 import React, {Component} from 'react';
 import omit from 'lodash/omit';
 import {consumeGenContext} from './contextUtils';
 import has from 'lodash/has';
 import isEqual from 'lodash/isEqual';
 
-class GenCondClearField extends Component {
+import type {Props} from './GenCondClearField.types';
+
+class GenCondClearField extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     if (has(nextProps, 'input')) {
       if (this.props.visible && !nextProps.visible) {

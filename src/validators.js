@@ -1,3 +1,4 @@
+// @flow
 import isNil from 'lodash/isNil';
 import trim from 'lodash/trim';
 import isEmpty from 'lodash/isEmpty';
@@ -15,15 +16,25 @@ import {evalCond, evalCondValid} from './conditionalUtils';
 import {getFieldOptions} from './defaultFieldTypes';
 import {mergePaths} from './utils';
 
-export const isNilOrEmpty = (value) =>
+export const isNilOrEmpty = (value: mixed) =>
+  // $FlowFixMe
   isNil(value) || isEmpty(trim(value)) || ((isPlainObject(value) || isArray(value)) && isEmpty(value));
 
 // ####################################################
 // # Valid
 // ####################################################
 
+import type {FieldsType} from './types';
+
+import type {
+  SectionValidOptions,
+  FieldValidOptions,
+  SectionFilledOptions,
+  FieldFilledOptions
+} from './validators.types';
+
 // options = {fields, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
-export const isSectionValid = (options) => {
+export const isSectionValid = (options: SectionValidOptions) => {
   options = {
     // fields
     // customFieldTypes
@@ -45,7 +56,7 @@ export const INVALID_MESSAGE = 'Invalid Field';
 export const REQUIRED_MESSAGE = 'Required Field';
 
 // options = {field, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
-export const isFieldValid = (options) => {
+export const isFieldValid = (options: FieldValidOptions) => {
   options = {
     // field
     // customFieldTypes
@@ -166,7 +177,7 @@ export const isFieldValid = (options) => {
 // ####################################################
 
 // options = {field, data, lookupTable, customFieldTypes, parentQuestionId}
-export const isFieldFilled = (options) => {
+export const isFieldFilled = (options: FieldFilledOptions) => {
   const {field, parentQuestionId} = options;
   let fieldFilled = true;
 
@@ -266,7 +277,7 @@ export const isFieldFilled = (options) => {
 
 // returns true if a section has any fields that have been filled out, false otherwise
 // lookupTable is required if you have fields that are conditionalValid.
-export const isSectionFilled = ({data, fields, lookupTable = {}, parent, ...options}) => {
+export const isSectionFilled = ({data, fields, lookupTable = {}, parent, ...options}: SectionFilledOptions) => {
   const parentQuestionId = parent && parent.questionId;
   return fields.reduce((valid, field) => {
     return valid && isFieldFilled({...options, field, data, lookupTable, parentQuestionId});
@@ -280,7 +291,7 @@ export const isSectionFilled = ({data, fields, lookupTable = {}, parent, ...opti
 // TODO needs rewrite
 
 // returns true if a section has any fields that have been filled out, false otherwise
-export const isSectionEmpty = (data, fields) => {
+export const isSectionEmpty = (data: Object, fields: FieldsType) => {
   return fields.reduce((empty, field) => {
     let fieldEmpty = true;
 

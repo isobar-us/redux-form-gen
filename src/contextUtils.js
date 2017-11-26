@@ -1,3 +1,4 @@
+// @flow
 // inspired by
 // https://medium.com/react-ecosystem/how-to-handle-react-context-a7592dfdcbc
 import React from 'react';
@@ -15,11 +16,11 @@ import PropTypes from 'prop-types';
 //   return ContextProvider;
 // };
 
-const consumeContext = (contextTypes) => (Component) => {
+const consumeContext = (contextTypes) => (Component: Function) => {
   /* The context is passed as props. This way the component is
    completely decoupled from the context API.
   */
-  const ContextConsumer = (props, context) => <Component {...props} {...context} />;
+  const ContextConsumer = (props: mixed, context: mixed) => <Component {...props} {...context} />;
   ContextConsumer.contextTypes = contextTypes;
   return ContextConsumer;
 };

@@ -1,3 +1,4 @@
+// @flow
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {consumeReduxFormContext, genContext} from './contextUtils';
@@ -10,7 +11,9 @@ import set from 'lodash/set';
 import get from 'lodash/get';
 import cloneDeep from 'lodash/cloneDeep';
 
-class FormGenerator extends Component {
+import type {Props, State} from './FormGenerator.types';
+
+class FormGenerator extends Component<Props, State> {
   static childContextTypes = genContext;
   getChildContext = () => {
     return {

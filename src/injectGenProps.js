@@ -1,14 +1,17 @@
+// @flow
 import React, {Component} from 'react';
+import type {ComponentType} from 'react';
 import PropTypes from 'prop-types';
 import {isSectionValid} from './validators';
 import {buildLookupTable, getDefaultValues} from './utils';
+import type {Props, State} from './injectGenProps.types';
 
-const injectGenProps = (FormComponent) => {
-  class InjectedGenProps extends Component {
+const injectGenProps = (FormComponent: ComponentType<*>) => {
+  class InjectedGenProps extends Component<Props, State> {
     static propTypes = {
       fields: PropTypes.array.isRequired,
       customFieldTypes: PropTypes.object,
-      data: PropTypes.object
+      initialValues: PropTypes.object
     };
 
     state = {
@@ -20,7 +23,7 @@ const injectGenProps = (FormComponent) => {
       this.calculateState(this.props);
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: Props) {
       if (
         this.props.fields !== nextProps.fields ||
         this.props.customFieldTypes !== nextProps.customFieldTypes ||
@@ -30,7 +33,7 @@ const injectGenProps = (FormComponent) => {
       }
     }
 
-    calculateState = (props) => {
+    calculateState = (props: Props) => {
       const {initialValues = {}, fields, customFieldTypes = {}} = props;
       const lookupTable = buildLookupTable({fields, customFieldTypes});
       this.setState({
@@ -45,7 +48,7 @@ const injectGenProps = (FormComponent) => {
       });
     };
 
-    validate = (formValues, props) => {
+    validate = (formValues: Object, props: Props) => {
       let errors = {};
       const {fields, customFieldTypes} = this.props;
       // const isFilled = isSectionFilled({

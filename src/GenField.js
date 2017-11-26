@@ -1,3 +1,4 @@
+// @flow
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import cn from 'classnames';
@@ -16,9 +17,13 @@ import {isCondField, condDependentFields} from './conditionalUtils';
 
 import {getFieldOptions} from './defaultFieldTypes';
 
-export const omitGenOptions = (fieldOptions) => omitBy(fieldOptions, (value, key) => startsWith(key, '_gen'));
+import type {Props} from './GenField.types';
+import type {FieldOptions} from './types';
 
-class _GenField extends Component {
+export const omitGenOptions = (fieldOptions: FieldOptions) =>
+  omitBy(fieldOptions, (value, key: string) => startsWith(key, '_gen'));
+
+class GenField extends Component<Props> {
   static propTypes = {
     field: PropTypes.shape({
       type: PropTypes.string.isRequired
@@ -148,7 +153,7 @@ class _GenField extends Component {
           {!fieldOptions._genSkipChildren &&
             field.childFields &&
             field.childFields.map((childField, index) => (
-              <GenField
+              <GenFieldWrapped
                 key={index}
                 {...{
                   field: childField,
@@ -165,6 +170,6 @@ class _GenField extends Component {
   }
 }
 
-const GenField = consumeGenContext(_GenField);
+const GenFieldWrapped = consumeGenContext(GenField);
 
-export default GenField;
+export default GenFieldWrapped;
