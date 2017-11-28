@@ -87,32 +87,6 @@ const MyForm = () =>
 
 **Note**: Any props with the `_gen` prefix are omitted when rendering the `_genFieldComponent`
 
-## Development
-
-This project uses [Yarn](https://yarnpkg.com/) for dependency management and [Storybook](https://storybook.js.org/) for
-development.
-
-```
-$ yarn install
-$ yarn run storybook
-```
-
-Visit <http://localhost:6006> in your browser to see the storybook development environment.
-
-## Build
-
-```
-$ yarn run clean
-$ yarn run check # Make sure tests and lints are passing
-$ yarn run build
-```
-
-Or simply use the following command which combines the 3 commands above:
-
-```
-$ yarn run prepublish
-```
-
 ## Known Bugs
 
 * built in `SelectField` can only take strings as option values, since they get converted to strings on the `<option>`
