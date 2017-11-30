@@ -1,3 +1,4 @@
+// @flow
 import set from 'lodash/set';
 import has from 'lodash/has';
 import isNil from 'lodash/isNil';
@@ -5,7 +6,9 @@ import compact from 'lodash/compact';
 import {getFieldOptions} from './defaultFieldTypes';
 import defaultsDeep from 'lodash/defaultsDeep';
 
-export const buildLookupTable = (options, table = {}) => {
+import type {BuildLookupTableOptions, GetDefaultValuesOptions, GetDefaultValueOptions} from './utils.types';
+
+export const buildLookupTable = (options: BuildLookupTableOptions, table: Object = {}) => {
   const {fields, customFieldTypes} = options;
   if (fields) {
     fields.map((field) => {
@@ -77,7 +80,7 @@ export const buildLookupTable = (options, table = {}) => {
   return table;
 };
 
-export const getDefaultValues = (options) => {
+export const getDefaultValues = (options: GetDefaultValuesOptions) => {
   options = {
     // defaultValues: {},
     ...options,
@@ -91,7 +94,7 @@ export const getDefaultValues = (options) => {
   return defaultValues;
 };
 
-const getDefaultValue = (options) => {
+const getDefaultValue = (options: GetDefaultValueOptions) => {
   options = {
     // defaultValues: {},
     ...options,
@@ -137,7 +140,7 @@ const getDefaultValue = (options) => {
 };
 
 // used to merge existing and null/undefined paths together correctly
-export const mergePaths = (...paths) => compact(paths).join('.');
+export const mergePaths = (...paths: Array<string>) => compact(paths).join('.');
 
 // export const traverseStructure = ({iterator, fields, parentField, values, fieldTypes}) => {
 //   fields.map((field) => {

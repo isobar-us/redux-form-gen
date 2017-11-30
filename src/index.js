@@ -1,3 +1,4 @@
+// @flow
 import FormGenerator from './FormGenerator';
 export default FormGenerator;
 
@@ -15,6 +16,8 @@ import {consumeGenContext} from './contextUtils';
 import {evalCond, evalCondValid} from './conditionalUtils';
 
 import GenField from './GenField';
+
+export type {FieldOptions, CustomFieldTypes} from './types';
 
 export {
   // defaultFieldTypes

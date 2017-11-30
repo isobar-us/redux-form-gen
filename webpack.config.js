@@ -31,6 +31,7 @@ const config = {
   externals: {
     // Don't package React with the component.
     react: 'react',
+    'react-dom': 'react-dom',
     'redux-form': 'redux-form'
     // If your component depends on external utility libraries like lodash,
     // you might want to add them here.

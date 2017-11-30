@@ -1,3 +1,4 @@
+// @flow
 import get from 'lodash/get';
 import has from 'lodash/has';
 import hasIn from 'lodash/hasIn';
@@ -10,14 +11,17 @@ import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
 import {isNilOrEmpty, isFieldValid} from './validators';
 
-export const isCondField = (field) =>
+import type {FieldType} from './types';
+
+export const isCondField = (field: FieldType) =>
   has(field, 'conditionalVisible') || has(field, 'conditionalRequired') || has(field, 'conditionalDisabled');
-export const omitCondProps = (field) => omit(field, 'conditionalVisible');
+export const omitCondProps = (field: FieldType) => omit(field, 'conditionalVisible');
+import type {ConditionalOperators, EvalCondOptions, ConditionalObject} from './conditionalUtils.types';
 
 /*
   Conditional Operators
  */
-const ops = {
+const ops: ConditionalOperators = {
   equals: ({value, param}) => isEqual(value, param),
   // cond
   and: ({value, param, ...options}) =>
@@ -76,7 +80,7 @@ const defaultElseHandler = ({value}) => !isNilOrEmpty(value); // TODO should poi
 
 const defaultValueKey = '_value';
 
-export const evalCond = (opts) => {
+export const evalCond = (opts: EvalCondOptions) => {
   const options = {elseHandler: defaultElseHandler, valueKey: defaultValueKey, ...opts};
   const {cond, data, elseHandler, reduxFormDeep, valueKey} = options;
 
@@ -103,7 +107,7 @@ const condValidElseHandler = (options) => {
   // if a dependent field doesn't have required:true, then it will always return true. we force it here.
   return isFieldValid({customFieldTypes, field: {...field, required: true}, data, lookupTable});
 };
-export const evalCondValid = (args) =>
+export const evalCondValid = (args: EvalCondOptions) =>
   evalCond({
     elseHandler: condValidElseHandler,
     ...args
@@ -115,13 +119,15 @@ export default {
 };
 
 // TODO consider renaming to getCondDependentFieldNames or something similar
-export const condDependentFields = (cond) => {
+export const condDependentFields = (cond: ConditionalObject) => {
   if (has(cond, 'questionId')) {
     return [cond.questionId];
-  } else if (has(cond, 'and')) {
+  } else if (has(cond, 'and') && Array.isArray(cond.and)) {
     return cond.and.reduce((a, subCond) => a.concat(condDependentFields(subCond)), []);
-  } else if (has(cond, 'or')) {
+  } else if (has(cond, 'or') && Array.isArray(cond.or)) {
     return cond.or.reduce((a, subCond) => a.concat(condDependentFields(subCond)), []);
+  } else if (has(cond, 'not') && cond.not) {
+    return condDependentFields(cond.not);
   }
   return [];
 };

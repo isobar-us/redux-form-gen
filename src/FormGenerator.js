@@ -1,3 +1,4 @@
+// @flow
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {consumeReduxFormContext, genContext} from './contextUtils';
@@ -10,7 +11,9 @@ import set from 'lodash/set';
 import get from 'lodash/get';
 import cloneDeep from 'lodash/cloneDeep';
 
-class FormGenerator extends Component {
+import type {Props, State} from './FormGenerator.types';
+
+class FormGenerator extends Component<Props, State> {
   static childContextTypes = genContext;
   getChildContext = () => {
     return {
@@ -27,7 +30,6 @@ class FormGenerator extends Component {
     customQuestionProps: PropTypes.object, // object key = questionId, value = an object of props for the specified questionId's
     visibleDepth: PropTypes.string, // dot-notation string, used to rendering fields after this path (startsWith)
     customFieldTypes: PropTypes.objectOf(PropTypes.func),
-    sectionArrayIndex: PropTypes.number,
     display: PropTypes.oneOf(['stacked', 'inline']),
     disabled: PropTypes.bool // if true, disables all fields in the form
   };

@@ -1,3 +1,4 @@
+// @flow
 import React, {Component} from 'react';
 import {consumeReduxFormContext, consumeGenContext} from './contextUtils';
 import {connect} from 'react-redux';
@@ -8,8 +9,10 @@ import GenField from './GenField';
 import omit from 'lodash/omit';
 import {evalCond} from './conditionalUtils';
 
+import {Props} from './GenCondEval.types';
+
 // TODO move this logic into GenField connect() ?
-class GenCondEval extends Component {
+class GenCondEval extends Component<Props> {
   render() {
     const {field, parentQuestionId, parentVisible, path, gen: {customFieldTypes}, formValues: data} = this.props;
     return (
@@ -24,7 +27,6 @@ class GenCondEval extends Component {
                   cond: field.conditionalVisible,
                   data,
                   customFieldTypes,
-                  // reduxFormDeep: true,
                   ...(parentQuestionId && {valueKey: parentQuestionId})
                 })
               : true),
@@ -33,7 +35,6 @@ class GenCondEval extends Component {
                 cond: field.conditionalRequired,
                 data,
                 customFieldTypes,
-                // reduxFormDeep: true,
                 ...(parentQuestionId && {valueKey: parentQuestionId})
               })
             : false,
@@ -42,7 +43,6 @@ class GenCondEval extends Component {
                 cond: field.conditionalDisabled,
                 data,
                 customFieldTypes,
-                // reduxFormDeep: true,
                 ...(parentQuestionId && {valueKey: parentQuestionId})
               })
             : false
