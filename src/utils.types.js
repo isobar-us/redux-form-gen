@@ -13,7 +13,7 @@ type DefaultOptions = {
   data?: Object,
   initialValues?: Object,
   customFieldTypes?: CustomFieldTypes,
-  lookupTable?: LookupTable,
+  lookupTable: LookupTable,
   pathPrefix?: string,
   parentQuestionId?: string
 };

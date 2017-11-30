@@ -1,4 +1,4 @@
-import {ElementType} from 'react';
+import * as React from 'react';
 import type {ConditionalObject} from './conditionalUtils';
 
 export type FieldType = {
@@ -11,17 +11,17 @@ export type FieldType = {
 export type FieldsType = Array<FieldType>;
 
 export type FieldOptions = {
-  _genFieldComponent?: ElementType,
-  _genLabelComponent?: ElementType,
-  _genComponent?: ElementType,
+  _genFieldComponent?: React.ElementType,
+  _genLabelComponent?: React.ElementType,
+  _genComponent?: React.ElementType,
   _genChildren?: FieldsType,
   _genDefaultValue?: mixed,
-  _genIsFilled: Function,
-  _genIsValid: Function,
-  _genSectionErrors: Function,
-  _genTraverseChildren: Function,
-  _genSkipChildren: boolean,
-  _genHidden: boolean
+  _genIsFilled?: Function,
+  _genIsValid?: Function,
+  _genSectionErrors?: Function,
+  _genTraverseChildren?: Function,
+  _genSkipChildren?: boolean,
+  _genHidden?: boolean
 };
 
 export type CustomFieldTypes = {

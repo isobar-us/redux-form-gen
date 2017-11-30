@@ -6,5 +6,6 @@ export type Props = {
   gen: GenContextProps,
   path: string,
   disabled?: boolean,
+  visible?: boolean,
   parentQuestionId?: string
 };

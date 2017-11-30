@@ -17,6 +17,8 @@ import {evalCond, evalCondValid} from './conditionalUtils';
 
 import GenField from './GenField';
 
+export type {FieldOptions, CustomFieldTypes} from './types';
+
 export {
   // defaultFieldTypes
   defaultFieldTypes,

@@ -3,7 +3,7 @@ import type {FieldType, FieldsType} from './types';
 type ValidatorOptions = {
   data: Object,
   customFieldTypes?: Object,
-  lookupTable?: Object,
+  lookupTable: Object,
   pathPrefix?: string,
   parentQuestionId?: string,
   messages?: {
