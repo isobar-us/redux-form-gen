@@ -17,6 +17,8 @@ or
 npm install --save @isobar-us/redux-form-gen
 ```
 
+## [API Docs](./API.md)
+
 ## Examples
 
 ### 🏖 Code Sandboxes 🏖

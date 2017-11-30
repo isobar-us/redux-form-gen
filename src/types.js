@@ -3,9 +3,12 @@ import type {ConditionalObject} from './conditionalUtils';
 
 export type FieldType = {
   type: string,
-  questionId?: ?string,
+  questionId?: string,
   childFields?: Array<FieldType>,
-  conditionalVisible: ConditionalObject
+  conditionalVisible?: ConditionalObject,
+  conditionalRequired?: ConditionalObject,
+  conditionalDisabled?: ConditionalObject,
+  conditionalValid?: ConditionalObject
 };
 
 export type FieldsType = Array<FieldType>;
