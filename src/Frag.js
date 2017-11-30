@@ -1,8 +1,8 @@
 // @flow
-// import type {ChildrenArray} from 'react';
+import * as React from 'react';
 
 type Props = {
-  children?: any // ChildrenArray<*>
+  children?: React.Node
 };
 
 const Frag = ({children}: Props) => children || null;
