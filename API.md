@@ -65,6 +65,7 @@
     * [`_genTraverseChildren?: Function`](#_gentraversechildren-function)
     * [`_genSkipChildren?: boolean`](#_genskipchildren-boolean)
     * [`_genHidden?: boolean`](#_genhidden-boolean)
+    * [(...) props for `_genFieldComponent`](#-props-for-_genfieldcomponent)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -148,6 +149,8 @@ GenField
 
 ## `ConditionalObject`
 
+An object, when evaluated against data, resolves to a `true` or `false` value.
+
 ### `questionId: string`
 
 defaults to the parent question, use this to override
@@ -158,15 +161,15 @@ lodash `_.isEqual(value, param)`
 
 ### `and?: Array<ConditionalObject>`
 
-an array of Conditional Objects that are logical AND\'d together
+an array of Conditional Objects that are logical `&&`'d together
 
 ### `or?: Array<ConditionalObject>`
 
-an array of Conditional Objects that are logical OR\'d together
+an array of Conditional Objects that are logical `||`'d together
 
 ### `not?: ConditionalObject`
 
-takes the opposite of the specified Conditional Object
+takes the opposite of the specified Conditional Object (`!` operation)
 
 ### `filled?: boolean`
 
@@ -230,22 +233,56 @@ text the value against the regex param
 
 ### `_genFieldComponent?: React.ElementType`
 
+This is the `redux-form` `Field`, `Fields`, or `FieldArray` component that this should use to render
+
 ### `_genLabelComponent?: React.ElementType`
+
+The component to use when rendering the label. Internally uses `GenericRequiredLabel`.
 
 ### `_genComponent?: React.ElementType`
 
+The component to use if you're not rendering a `redux-form` field component (using `_genFieldComponent`)
+
 ### `_genChildren?: FieldsType`
+
+If inner fields are not represented by `childFields`, you use this property to expose those inner fields to traversals.
 
 ### `_genDefaultValue?: mixed`
 
+The value to use when calculating default values for the form. (`getDefaultValues()`)
+
 ### `_genIsFilled?: Function`
+
+`fn({data, field, lookupTable, customFieldTypes}) => bool`
+
+Use this property to create a custom `isFieldFilled` function for this field type. Should return a boolean.
 
 ### `_genIsValid?: Function`
 
+`fn({data, field, lookupTable, customFieldTypes}) => bool`
+
+Use this property to create a custom `isFieldValue` function for this field type. Should return a boolean.
+
 ### `_genSectionErrors?: Function`
+
+`fn({errors, data, field, lookupTable, customFieldTypes}) => void` set in `errors`
+
+Allows a field type to set custom errors in the entire `errors` object during validation.
 
 ### `_genTraverseChildren?: Function`
 
+`fn({iterator, data, lookupTable}) => something.map((field) => iterator({field, data, lookupTable}))`
+
+Use the provided `iterator` to traverse over complex children.
+
 ### `_genSkipChildren?: boolean`
 
+skip rendering of `childFields`
+
 ### `_genHidden?: boolean`
+
+skip rendering of this field and all it's children.
+
+### (...) props for `_genFieldComponent`
+
+all props that aren't prefixed with `_gen` will get passed to the rendered `_genFieldComponent`. (such as `name`, `names`, `component`, etc).

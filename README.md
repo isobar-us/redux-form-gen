@@ -1,37 +1,79 @@
 # redux-form-gen
 
 [![NPM Version](https://img.shields.io/npm/v/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
+[![NPM Downloads](https://img.shields.io/npm/dm/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A pluggable form generator for redux-form.
 
-## Getting Started
+✅ No dependency on styling frameworks (bootstrap, etc)
 
-```
+✅ Pluggable - Add your own custom field types
+
+✅ Uses a plain JSON object to define the form - can be sent from the server
+
+✅ Supports conditional logic using JSON
+
+## Installation
+
+```bash
 yarn add @isobar-us/redux-form-gen
 ```
 
 or
 
-```
+```bash
 npm install --save @isobar-us/redux-form-gen
 ```
 
-## [API Docs](./API.md)
+## Documentation
+
+* [API Docs](./API.md)
 
 ## Examples
 
 ### 🏖 Code Sandboxes 🏖
 
 * [Basic Example](https://codesandbox.io/s/l27jx3or1q)
+* [All Fields Example](https://codesandbox.io/s/88y1po0qnl)
 * [Conditional Example](https://codesandbox.io/s/948386kpwy)
-* [Reactstrap Example](https://codesandbox.io/s/p1rwr7l37)
+* [Reactstrap Example](https://codesandbox.io/s/p1rwr7l37) (uses `customFieldTypes`)
+
+### Simple Usage
+
+```javascript
+import {reduxForm} from 'redux-form';
+import FormGenerator, {injectGenProps} from '@isobar-us/redux-form-gen';
+
+const fields = [
+  {
+    type: 'text',
+    label: 'First Name',
+    required: true,
+    questionId: 'firstName'
+  },
+  {
+    type: 'text',
+    label: 'Last Name',
+    required: true,
+    questionId: 'lastName'
+  }
+];
+
+const MyFields = ({fields}) => <FormGenerator fields={fields} />;
+
+const MyForm = injectGenProps(
+  reduxForm({
+    form: 'exampleForm'
+  })(MyFields)
+);
+```
 
 ### Defining your own field types
 
 ```javascript
 import {Field} from 'redux-form';
-import FormGenerator, {GenericRequiredLabel} from '@isobar-us/redux-form-gen';
+import FormGenerator, {GenericRequiredLabel, injectGenProps} from '@isobar-us/redux-form-gen';
 
 const SelectField => () => {
   // ... your custom select field
@@ -65,8 +107,15 @@ const fields = [
 ]
 
 // passing your field and customFieldTypes into <FormGenerator />
-const MyForm = () =>
+const MyFields = () =>
   <FormGenerator fields={fields} customFieldTypes={customFieldTypes} />;
+
+// wrapping your generated fields in reduxForm with injectGenProps
+const MyForm = injectGenProps(
+  reduxForm({
+    form: 'myForm'
+  })(MyFields)
+);
 ```
 
 ## Custom Field Type Options

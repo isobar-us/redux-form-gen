@@ -42,9 +42,6 @@ describe('<FormGenerator/>', () => {
       </FormDecorator>
     );
     expect(errorSpy).toHaveBeenCalledTimes(1);
-    expect(errorSpy).toHaveBeenCalledWith(
-      'Warning: Failed prop type: The prop `fields` is marked as required in `FormGenerator`, but its value is `undefined`.\n    in FormGenerator (created by ContextConsumer)' // eslint-disable-line
-    );
     errorSpy.mockReset();
     errorSpy.mockRestore();
   });

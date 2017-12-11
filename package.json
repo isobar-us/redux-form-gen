@@ -25,7 +25,7 @@
     "test": "cross-env BABEL_ENV=commonjs jest --config .jestconfig.json --verbose",
     "test:cov": "npm test -- --coverage",
     "test:watch": "npm test -- --watch",
-    "format": "prettier-eslint \"+(src|stories|__tests__)/**/*.+(js)\" --ignore \"**/bundle.js\" --write --single-quote --trailing-comma=none",
+    "format": "prettier-eslint \"+(src|stories|__tests__)/**/*.+(js)\" --ignore \"**/bundle.js\" --write",
     "prepublish": "npm run clean && npm run check && npm run build --kill --print",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -55,8 +55,8 @@
     "prop-types": "^15.6.0"
   },
   "devDependencies": {
-    "@kadira/storybook-deployer": "^1.2.0",
     "@storybook/react": "^3.2.16",
+    "@storybook/storybook-deployer": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
     "babel-eslint": "^8.0.1",
@@ -80,7 +80,7 @@
     "eslint-plugin-promise": "^3.0.0",
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-standard": "^3.0.1",
-    "flow-bin": "^0.59.0",
+    "flow-bin": "^0.60.1",
     "flow-copy-source": "^1.2.1",
     "husky": "^0.14.3",
     "jest": "^21.0.2",
@@ -97,12 +97,17 @@
     "redux-form": "^7.0.4",
     "rimraf": "^2.5.4",
     "sass-loader": "^6.0.6",
-    "style-loader": "^0.16.1",
+    "style-loader": "^0.19.0",
     "webpack": "^3.3.0"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0 || ^16.0.0-0",
     "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0-0",
     "redux-form": "^6.7.0 || ^7.0.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "none",
+    "arrowParens": "always"
   }
 }
