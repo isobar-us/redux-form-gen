@@ -34,3 +34,6 @@ lib
 
 # IDE
 .idea/
+
+# examples
+docs/examples/**/yarn.lock
