@@ -1,7 +1,7 @@
 import {
-  evalCond
-  // evalConditionalRequired,
-  // evalConditionalValid
+  evalCond,
+  // evalCondValid,
+  condDependentFields
 } from '../src/conditionalUtils';
 
 describe('evalCond()', () => {
@@ -669,5 +669,33 @@ describe('evalCond()', () => {
         })
       ).toBe(false);
     });
+  });
+});
+
+describe('condDependentFields()', () => {
+  it('should pull all dependent questionIds', () => {
+    const cond = {
+      and: [
+        {
+          questionId: 'one'
+        },
+        {
+          or: [
+            {
+              questionId: 'two'
+            },
+            {
+              not: {
+                questionId: 'three'
+              }
+            }
+          ]
+        }
+      ]
+    };
+
+    const dependentFields = condDependentFields(cond);
+
+    expect(dependentFields).toEqual(['one', 'two', 'three']);
   });
 });

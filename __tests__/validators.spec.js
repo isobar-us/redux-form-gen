@@ -1,5 +1,4 @@
 import {buildLookupTable} from '../src/utils';
-// import refundAppStructure from './refundAppStructure';
 import exampleFieldTypes from '../stories/customFieldTypes';
 import {isSectionFilled, isSectionValid, REQUIRED_MESSAGE, INVALID_MESSAGE, isNilOrEmpty} from '../src/validators';
 import get from 'lodash/get';

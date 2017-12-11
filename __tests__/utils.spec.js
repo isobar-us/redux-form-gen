@@ -1,5 +1,4 @@
 import {buildLookupTable, getDefaultValues} from '../src/utils';
-// import refundAppStructure from './refundAppStructure';
 import exampleFieldTypes from '../stories/customFieldTypes';
 // import defaultsDeep from 'lodash/defaultsDeep';
 
