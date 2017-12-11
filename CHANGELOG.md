@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.7.0
+
+#### Features
+
+* 🎉 Flow Types! 🎉 #1
+* Open Source Guidelines #2
+
+#### Bug Fixes
+
+* Fixed bug where the `not` conditional operator wasn't working.
+* There may be some other bugs that were fixed by adding Flow.
+
 ## v0.6.0
 
 #### Features
