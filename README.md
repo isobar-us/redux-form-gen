@@ -37,6 +37,7 @@ npm install --save @isobar-us/redux-form-gen
 * [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/master/docs/examples/basic-example)
 * [All Fields Example](https://codesandbox.io/s/88y1po0qnl)
 * [Conditional Example](https://codesandbox.io/s/948386kpwy)
+* [Wizard Example](https://codesandbox.io/s/l27jx3or1q)
 * [Reactstrap Example](https://codesandbox.io/s/p1rwr7l37) (uses `customFieldTypes`)
 
 ### Simple Usage
