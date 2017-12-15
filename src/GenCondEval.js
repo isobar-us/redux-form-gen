@@ -55,10 +55,15 @@ class GenCondEval extends Component<Props> {
 export default consumeReduxFormContext(
   consumeGenContext(
     connect((state, {_reduxForm, names}) => {
-      const formName = _reduxForm.form;
-      const formValues = getFormValues(formName)(state);
+      const {form, sectionPrefix} = _reduxForm;
+      const formValues = getFormValues(form)(state);
+      const sectionPrefixValues = sectionPrefix ? get(formValues, sectionPrefix) : {};
+
+      // merge section data scope with the global scope
+      const mergedData = {...formValues, ...sectionPrefixValues};
+
       return {
-        formValues: names.reduce((values, name) => set(values, name, get(formValues, name)), {})
+        formValues: names.reduce((values, name) => set(values, name, get(mergedData, name)), {})
       };
     })(GenCondEval)
   )
