@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.7.1
+
+#### Features
+
+* Codesandbox links are now versioned within this repo.
+* new Wizard Example
+
+#### Bug Fixes
+
+* Fix a bug where conditional properties for array items were broken.
+
 ## v0.7.0
 
 #### Features
@@ -11,6 +22,8 @@
 
 * Fixed bug where the `not` conditional operator wasn't working.
 * There may be some other bugs that were fixed by adding Flow.
+
+---
 
 ## v0.6.0
 
