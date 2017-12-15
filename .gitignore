@@ -36,4 +36,4 @@ lib
 .idea/
 
 # examples
-docs/examples/**/yarn.lock
+/examples/**/yarn.lock
