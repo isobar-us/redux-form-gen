@@ -32,7 +32,8 @@ const config = {
     // Don't package React with the component.
     react: 'react',
     'react-dom': 'react-dom',
-    'redux-form': 'redux-form'
+    'redux-form': 'redux-form',
+    'react-redux': 'react-redux'
     // If your component depends on external utility libraries like lodash,
     // you might want to add them here.
     // Refer to https://webpack.js.org/configuration/externals/ for more info.
