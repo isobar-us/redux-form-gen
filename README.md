@@ -30,64 +30,6 @@ npm install --save @isobar-us/redux-form-gen
 
 * [API Docs](./API.md)
 
-## Default Field Types
-
-### GenericProps
-
-* `type: string` - the type of the field. you can add more type using `customFieldTypes` prop on the `<FormGenerator />`.
-* `label: string` - the label for the field
-* `childFields: [FieldType]` - an array of child fields. If the parent field is invisible, childFields will also be invisible. useful for the `section` and `group` types.
-* `conditionalVisible: ConditionalObject` - the evaluated ConditionalObject controls whether a field and it's childFields are visible
-
-### GenericFieldProps
-
-Extends `GenericProps`
-
-* `questionId`: - the `name` property for a field. supports dot-notation
-* `required: boolean` - mark the field as required
-* `disabled: boolean` - mark the field as disabled (also skips required validation)
-* `conditionalRequired: ConditionalObject` - the evaluated ConditionalObject controls whether a field is required
-* `conditionalDisabled: ConditionalObject` - the evaluated ConditionalObject controls whether a field is disabled (also skips required validation)
-
-### Type: `text`
-
-Extends `GenericFieldProps`. Renders a native `<input type="text" />` component.
-
-### Type: `textarea`
-
-Extends `GenericFieldProps`. Renders a native `<textarea>` component.
-
-### Type: `radio`
-
-Extends `GenericFieldProps`. Renders a native `<input type="radio" />` component.
-
-### Type: `select`
-
-Extends `GenericFieldProps`. Renders a native `<select>` and `<option>` component.
-
-* `options: [ { label: string, value: string } ]` - an array of `<option>`s to render.
-
-### Type: `array`
-
-Extends `GenericFieldProps`. Uses ReduxForm `FieldArray` component, and renders each item, as an `arrayItem` type.
-
-* `item: (FieldType: arrayItem)` - the `arrayItem` type that the `array` will use to render each item.
-* `addLabel` - the label for the `Add` button for adding a new item to the array.
-
-### Type: `arrayItem`
-
-Extends `GenericProps`
-
-* `label: string` - supports templates for `{index}` and `{indexOverTotal}` ex: `label: "Item {index}"`
-
-### Type: `group`
-
-Extends `GenericProps`. Renders a extra `label` for grouping fields.
-
-### Type: `section`
-
-Extends `GenericProps`. Renders a header for grouping fields.
-
 ## Examples
 
 ### 🏖 Code Sandboxes 🏖
@@ -176,6 +118,64 @@ const MyForm = injectGenProps(
   })(MyFields)
 );
 ```
+
+## Default Field Types
+
+### GenericProps
+
+* `type: string` - the type of the field. you can add more type using `customFieldTypes` prop on the `<FormGenerator />`.
+* `label: string` - the label for the field
+* `childFields: [FieldType]` - an array of child fields. If the parent field is invisible, childFields will also be invisible. useful for the `section` and `group` types.
+* `conditionalVisible: ConditionalObject` - the evaluated ConditionalObject controls whether a field and it's childFields are visible
+
+### GenericFieldProps
+
+Extends `GenericProps`
+
+* `questionId`: - the `name` property for a field. supports dot-notation
+* `required: boolean` - mark the field as required
+* `disabled: boolean` - mark the field as disabled (also skips required validation)
+* `conditionalRequired: ConditionalObject` - the evaluated ConditionalObject controls whether a field is required
+* `conditionalDisabled: ConditionalObject` - the evaluated ConditionalObject controls whether a field is disabled (also skips required validation)
+
+### Type: `text`
+
+Extends `GenericFieldProps`. Renders a native `<input type="text" />` component.
+
+### Type: `textarea`
+
+Extends `GenericFieldProps`. Renders a native `<textarea>` component.
+
+### Type: `radio`
+
+Extends `GenericFieldProps`. Renders a native `<input type="radio" />` component.
+
+### Type: `select`
+
+Extends `GenericFieldProps`. Renders a native `<select>` and `<option>` component.
+
+* `options: [ { label: string, value: string } ]` - an array of `<option>`s to render.
+
+### Type: `array`
+
+Extends `GenericFieldProps`. Uses ReduxForm `FieldArray` component, and renders each item, as an `arrayItem` type.
+
+* `item: (FieldType: arrayItem)` - the `arrayItem` type that the `array` will use to render each item.
+* `addLabel` - the label for the `Add` button for adding a new item to the array.
+
+### Type: `arrayItem`
+
+Extends `GenericProps`
+
+* `label: string` - supports templates for `{index}` and `{indexOverTotal}` ex: `label: "Item {index}"`
+
+### Type: `group`
+
+Extends `GenericProps`. Renders a extra `label` for grouping fields.
+
+### Type: `section`
+
+Extends `GenericProps`. Renders a header for grouping fields.
 
 ## Custom Field Type Options
 
