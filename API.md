@@ -6,6 +6,17 @@
 
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+* [Default Field Types](#default-field-types)
+  * [GenericProps](#genericprops)
+  * [GenericFieldProps](#genericfieldprops)
+  * [Type: `text`](#type-text)
+  * [Type: `textarea`](#type-textarea)
+  * [Type: `radio`](#type-radio)
+  * [Type: `select`](#type-select)
+  * [Type: `array`](#type-array)
+  * [Type: `arrayItem`](#type-arrayitem)
+  * [Type: `group`](#type-group)
+  * [Type: `section`](#type-section)
 * [API](#api)
   * [default export `FormGenerator : React.ComponentType<FormGeneratorProps>`](#default-export-formgenerator--reactcomponenttypeformgeneratorprops)
   * [`isSectionValid: (options: SectionValidOptions) => Object`](#issectionvalid-options-sectionvalidoptions--object)
@@ -69,9 +80,67 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+# Default Field Types
+
+### GenericProps
+
+* `type: string` - the type of the field. you can add more type using `customFieldTypes` prop on the `<FormGenerator />`.
+* `label: string` - the label for the field
+* `childFields: [FieldType]` - an array of child fields. If the parent field is invisible, childFields will also be invisible. useful for the `section` and `group` types.
+* `conditionalVisible`: [`ConditionalObject`](#conditionalobject) - the evaluated ConditionalObject controls whether a field and it's childFields are visible
+
+### GenericFieldProps
+
+Extends [GenericProps](#genericprops)
+
+* `questionId`: - the `name` property for a field. supports dot-notation
+* `required: boolean` - mark the field as required
+* `disabled: boolean` - mark the field as disabled (also skips required validation)
+* `conditionalRequired`: [`ConditionalObject`](#conditionalobject) - the evaluated ConditionalObject controls whether a field is required
+* `conditionalDisabled`: [`ConditionalObject`](#conditionalobject) - the evaluated ConditionalObject controls whether a field is disabled (also skips required validation)
+
+### Type: `text`
+
+Extends [GenericFieldProps](#genericfieldprops). Renders a native `<input type="text" />` component.
+
+### Type: `textarea`
+
+Extends [GenericFieldProps](#genericfieldprops). Renders a native `<textarea>` component.
+
+### Type: `radio`
+
+Extends [GenericFieldProps](#genericfieldprops). Renders a native `<input type="radio" />` component.
+
+### Type: `select`
+
+Extends [GenericFieldProps](#genericfieldprops). Renders a native `<select>` and `<option>` component.
+
+* `options: [ { label: string, value: string } ]` - an array of `<option>`s to render.
+
+### Type: `array`
+
+Extends [GenericFieldProps](#genericfieldprops). Uses ReduxForm `FieldArray` component, and renders each item, as an `arrayItem` type.
+
+* `item: (FieldType: arrayItem)` - the `arrayItem` type that the `array` will use to render each item.
+* `addLabel` - the label for the `Add` button for adding a new item to the array.
+
+### Type: `arrayItem`
+
+Extends [GenericProps](#genericprops)
+
+* `label: string` - supports templates for `{index}` and `{indexOverTotal}` ex: `label: "Item {index}"`
+
+### Type: `group`
+
+Extends [GenericProps](#genericprops). Renders a extra `label` for grouping fields.
+
+### Type: `section`
+
+Extends [GenericProps](#genericprops). Renders a header for grouping fields.
+
 # API
 
-these are the library exports.
+These are the library exports.
 
 ### default export `FormGenerator : React.ComponentType<FormGeneratorProps>`
 
