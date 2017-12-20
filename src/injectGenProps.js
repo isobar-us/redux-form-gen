@@ -50,7 +50,12 @@ const injectGenProps = (FormComponent: ComponentType<*>) => {
 
     validate = (formValues: Object, props: Props) => {
       let errors = {};
-      const {fields, customFieldTypes} = this.props;
+      const {fields, customFieldTypes, validate} = this.props;
+
+      if (validate) {
+        errors = validate(formValues, props);
+      }
+
       // const isFilled = isSectionFilled({
       //   data: formValues,
       //   fields,
