@@ -5,6 +5,7 @@ import {reducer as formReducer, reduxForm} from 'redux-form';
 import {Provider} from 'react-redux';
 import FormGenerator, {injectGenProps} from '@isobar-us/redux-form-gen';
 import '@isobar-us/redux-form-gen/dist/style.css';
+import customFieldTypes from './customFieldTypes';
 
 const rootReducer = combineReducers({
   form: formReducer
@@ -30,7 +31,7 @@ const fields = [
   }
 ];
 
-const _Form = ({fields}) => <FormGenerator fields={fields} />;
+const _Form = ({fields}) => <FormGenerator fields={fields} customFieldTypes={customFieldTypes} />;
 
 const Form = injectGenProps(
   reduxForm({
@@ -42,7 +43,7 @@ const App = () => (
   <Provider store={store}>
     <div style={styles}>
       <h2>Basic Example using @isobar-us/redux-form-gen</h2>
-      <Form fields={fields} />
+      <Form fields={fields} customFieldTypes={customFieldTypes} />
     </div>
   </Provider>
 );
