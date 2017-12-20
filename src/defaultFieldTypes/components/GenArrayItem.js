@@ -9,7 +9,11 @@ class GenArrayItem extends Component {
   };
   renderRemoveButtonLabel = () => 'Delete';
   renderRemoveButton = () => {
-    return <button onClick={this.handleRemoveArrayItem}>{this.renderRemoveButtonLabel()}</button>;
+    return (
+      <button type='button' onClick={this.handleRemoveArrayItem}>
+        {this.renderRemoveButtonLabel()}
+      </button>
+    );
   };
 
   renderItemLabel = () => {

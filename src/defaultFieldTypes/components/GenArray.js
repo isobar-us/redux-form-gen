@@ -29,7 +29,11 @@ class GenArray extends Component {
     return !isNil(addLabel) ? addLabel : 'Add';
   };
   renderAddButton = () => {
-    return <button onClick={this.handleAddArrayItem}>{this.renderAddButtonLabel()}</button>;
+    return (
+      <button type='button' onClick={this.handleAddArrayItem}>
+        {this.renderAddButtonLabel()}
+      </button>
+    );
   };
 
   render() {
