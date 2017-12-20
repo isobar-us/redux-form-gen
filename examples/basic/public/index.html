@@ -12,8 +12,25 @@
 
     <!-- Example styles for the sandbox -->
     <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v2.3.7/dist/mini-default.min.css">
-    <link rel="stylesheet" href="/style.css">
-    
+    <style type="text/css">
+      .generated-form label {
+        font-size: 14px;
+        margin-top: 0.5rem;
+        margin-left: -0.25em;
+      }
+      .generated-form label .required-field {
+        color: #B83211;
+        padding-right: 0.25em;
+        display: inline-block;
+      }
+      .generated-form .field-error-message {
+        color: #B83211;
+        font-size: 12px;
+        margin: 0;
+        padding-left: 0.5em;
+      }
+    </style>
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
