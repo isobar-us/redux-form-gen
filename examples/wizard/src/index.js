@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {createStore, combineReducers} from 'redux';
-import {reducer as formReducer, reduxForm} from 'redux-form';
+import {reducer as formReducer, reduxForm, Form} from 'redux-form';
 import {Provider} from 'react-redux';
 import FormGenerator, {injectGenProps} from '@isobar-us/redux-form-gen';
 import '@isobar-us/redux-form-gen/dist/style.css';
@@ -11,9 +11,7 @@ const rootReducer = combineReducers({
 });
 const store = createStore(rootReducer);
 
-const styles = {
-  fontFamily: 'sans-serif'
-};
+const onSubmit = (values) => alert(JSON.stringify(values, null, 2));
 
 const fields = [
   {
@@ -73,7 +71,7 @@ const fields = [
   }
 ];
 
-class WizardForm extends React.Component {
+class WizardFields extends React.Component {
   state = {
     currentStep: 0
   };
@@ -89,29 +87,36 @@ class WizardForm extends React.Component {
     });
 
   render() {
-    const {fields} = this.props;
+    const {fields, handleSubmit} = this.props;
     const {currentStep} = this.state;
     return (
-      <div>
+      <Form onSubmit={handleSubmit}>
+        {/* pass your fields into <FormGenerator /> */}
         <FormGenerator fields={fields} visibleDepth={`fields[${this.state.currentStep}]`} />
         {currentStep > 0 && <button onClick={this.handlePrevStep}>Prev</button>}
         {currentStep < fields.length && <button onClick={this.handleNextStep}>Next</button>}
-      </div>
+        {currentStep === fields.length && (<button type='submit'>Submit</button>)}
+      </Form>
     );
   }
 }
 
-const Form = injectGenProps(
+// wrap reduxForm in injectGenProps to take care of validation and initialValues
+const WizardForm = injectGenProps(
   reduxForm({
-    form: 'exampleForm'
-  })(WizardForm)
+    form: 'exampleForm',
+    onSubmit
+  })(WizardFields)
 );
 
 const App = () => (
   <Provider store={store}>
-    <div style={styles}>
-      <h2>Wizard Example using @isobar-us/redux-form-gen</h2>
-      <Form fields={fields} />
+    <div>
+      <h2>
+        Wizard Example
+        <small>using @isobar-us/redux-form-gen</small>
+      </h2>
+      <WizardForm fields={fields} /> {/* make sure to pass fields into the component wrapped with injectGenProps() */}
     </div>
   </Provider>
 );

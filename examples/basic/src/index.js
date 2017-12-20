@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {createStore, combineReducers} from 'redux';
-import {reducer as formReducer, reduxForm} from 'redux-form';
+import {reducer as formReducer, reduxForm, Form} from 'redux-form';
 import {Provider} from 'react-redux';
 import FormGenerator, {injectGenProps} from '@isobar-us/redux-form-gen';
 import '@isobar-us/redux-form-gen/dist/style.css';
@@ -11,10 +11,9 @@ const rootReducer = combineReducers({
 });
 const store = createStore(rootReducer);
 
-const styles = {
-  fontFamily: 'sans-serif'
-};
+const onSubmit = (values) => alert(JSON.stringify(values, null, 2));
 
+// define your fields structure to pass into the FormGenerator
 const fields = [
   {
     type: 'text',
@@ -30,19 +29,29 @@ const fields = [
   }
 ];
 
-const _Form = ({fields}) => <FormGenerator fields={fields} />;
+const MyFields = ({fields, handleSubmit}) => (
+  <Form onSubmit={handleSubmit}>
+    <FormGenerator fields={fields} /> {/* pass your fields into <FormGenerator /> */}
+    <button type='submit'>Submit</button>
+  </Form>
+);
 
-const Form = injectGenProps(
+// wrap reduxForm in injectGenProps to take care of validation and initialValues
+const MyForm = injectGenProps(
   reduxForm({
-    form: 'exampleForm'
-  })(_Form)
+    form: 'exampleForm',
+    onSubmit
+  })(MyFields)
 );
 
 const App = () => (
   <Provider store={store}>
-    <div style={styles}>
-      <h2>Basic Example using @isobar-us/redux-form-gen</h2>
-      <Form fields={fields} />
+    <div>
+      <h2>
+        Basic Example
+        <small>using @isobar-us/redux-form-gen</small>
+      </h2>
+      <MyForm fields={fields} /> {/* make sure to pass fields into the component wrapped with injectGenProps() */}
     </div>
   </Provider>
 );

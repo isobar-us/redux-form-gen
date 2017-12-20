@@ -43,7 +43,7 @@ npm install --save @isobar-us/redux-form-gen
 ### Simple Usage
 
 ```javascript
-import {reduxForm} from 'redux-form';
+import {reduxForm, Form} from 'redux-form';
 import FormGenerator, {injectGenProps} from '@isobar-us/redux-form-gen';
 
 const fields = [
@@ -61,23 +61,36 @@ const fields = [
   }
 ];
 
-const MyFields = ({fields}) => <FormGenerator fields={fields} />;
+// pass your fields into <FormGenerator />
+const MyFields = ({handleSubmit}) => (
+  <Form onSubmit={handleSubmit}>
+    <FormGenerator fields={fields} />
+    <button type='submit'>Submit</button>
+  </Form>
+);
 
+// wrap reduxForm in injectGenProps to take care of validation and initialValues
 const MyForm = injectGenProps(
   reduxForm({
     form: 'exampleForm'
   })(MyFields)
+);
+
+// make sure to pass fields into the form wrapped with injectGenProps()
+const MyPage = () => (
+  ...
+  <MyForm fields={fields} />
 );
 ```
 
 ### Defining your own field types
 
 ```javascript
-import {Field} from 'redux-form';
+import {reduxForm, Field, Form} from 'redux-form';
 import FormGenerator, {GenericRequiredLabel, injectGenProps} from '@isobar-us/redux-form-gen';
 
 const SelectField => () => {
-  // ... your custom select field
+  // ... your custom select field implementation
 };
 
 // defining your own field type definition.
@@ -107,15 +120,25 @@ const fields = [
   }
 ]
 
-// passing your field and customFieldTypes into <FormGenerator />
-const MyFields = () =>
-  <FormGenerator fields={fields} customFieldTypes={customFieldTypes} />;
+// pass your fields and customFieldTypes into <FormGenerator />
+const MyFields = ({handleSubmit}) => (
+  <Form onSubmit={handleSubmit}>
+    <FormGenerator fields={fields} customFieldTypes={customFieldTypes} />
+    <button type='submit'>Submit</button>
+  </Form>
+);
 
-// wrapping your generated fields in reduxForm with injectGenProps
+// wrap reduxForm in injectGenProps to take care of validation and initialValues
 const MyForm = injectGenProps(
   reduxForm({
     form: 'myForm'
   })(MyFields)
+);
+
+// make sure to pass fields and customFieldTypes into the form wrapped with injectGenProps()
+const MyPage = () => (
+  ...
+  <MyForm fields={fields} customFieldTypes={customFieldTypes} />
 );
 ```
 
