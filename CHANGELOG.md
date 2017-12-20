@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.2
+
+#### Features
+
+* `injectGenProps()` now merges the provided `validate` errors with the generated errors
+
 ## v0.7.1
 
 #### Features
