@@ -7,7 +7,7 @@ import {reduxForm, reducer as formReducer, isDirty, getFormValues} from 'redux-f
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 
-import FormGenerator, {getDefaultValues, defaultFieldTypes} from '../src';
+import {FormGenerator, getDefaultValues, defaultFieldTypes} from '../src';
 import RadioField from '../src/defaultFieldTypes/components/RadioField';
 import TextField from '../src/defaultFieldTypes/components/TextField';
 import GenArray from '../src/defaultFieldTypes/components/GenArray';
