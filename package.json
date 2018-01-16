@@ -28,6 +28,7 @@
     "format": "prettier-eslint \"+(src|stories|__tests__)/**/*.+(js)\" --ignore \"**/bundle.js\" --write",
     "prepublishOnly": "npm run clean && npm run check && npm run build --kill --print",
     "storybook": "start-storybook -p 6006",
+    "start": "npm run storybook",
     "build-storybook": "build-storybook",
     "precommit": "npm run lint -q",
     "prepush": "npm run check -q"
