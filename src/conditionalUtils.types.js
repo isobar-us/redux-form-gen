@@ -1,5 +1,15 @@
+/**
+ * This is an object which evaluates to a boolean.
+ */
 export type ConditionalObject = {
+  /**
+   * The questionId the evaluate the conditional operations against
+   * @memberof ConditionalObject
+   */
   questionId: string,
+  /** tests for lodash.isEqual
+   * @memberof ConditionalObject
+   */
   equals?: mixed,
   // cond
   and?: Array<ConditionalObject>,

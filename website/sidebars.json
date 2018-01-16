@@ -1,0 +1,27 @@
+{
+  "docs": {
+    "Introduction": [
+      "getting-started"
+    ],
+    "API Reference": [
+      "api",
+      "form-generator",
+      "inject-gen-props",
+      "is-section-filled",
+      "is-section-valid"
+    ],
+    "Types": [
+      "conditional-object",
+      "custom-field-types",
+      "field-filled-options",
+      "field-options",
+      "field-type",
+      "field-valid-options",
+      "fields-type",
+      "form-generator-props",
+      "section-filled-options",
+      "section-valid-options",
+      "validator-options"
+    ]
+  }
+}

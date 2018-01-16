@@ -13,6 +13,10 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import type {Props, State} from './FormGenerator.types';
 
+/**
+ * [FormGenerator description]
+ * @extends Component
+ */
 class FormGenerator extends Component<Props, State> {
   static childContextTypes = genContext;
   getChildContext = () => {

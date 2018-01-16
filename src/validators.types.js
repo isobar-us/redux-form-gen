@@ -1,5 +1,8 @@
 import type {FieldType, FieldsType} from './types';
 
+/**
+ * [ValidatorOptions description]
+ */
 type ValidatorOptions = {
   data: Object,
   customFieldTypes?: Object,
@@ -12,24 +15,40 @@ type ValidatorOptions = {
   }
 };
 
+/**
+ * Options passed into isSectionValid()
+ * @extends ValidatorOptions
+ */
 export type SectionValidOptions = {
   fields: FieldsType,
-  errors?: Object,
-  ...ValidatorOptions
+  errors?: Object
+  /* :: ...ValidatorOptions */
 };
 
+/**
+ * [FieldValidOptions description]
+ * @extends ValidatorOptions
+ */
 export type FieldValidOptions = {
   field: FieldType,
-  errors?: Object,
-  ...ValidatorOptions
+  errors?: Object
+  /* :: ...ValidatorOptions */
 };
 
+/**
+ * Options passed into isSectionFilled()
+ * @extends ValidatorOptions
+ */
 export type SectionFilledOptions = {
-  fields: FieldsType,
-  ...ValidatorOptions
+  fields: FieldsType
+  /* :: ...ValidatorOptions */
 };
 
+/**
+ * [FieldFilledOptions description]
+ * @extends ValidatorOptions
+ */
 export type FieldFilledOptions = {
-  field: FieldType,
-  ...ValidatorOptions
+  field: FieldType
+  /* :: ...ValidatorOptions */
 };

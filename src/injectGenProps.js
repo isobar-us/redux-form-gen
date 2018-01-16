@@ -6,6 +6,9 @@ import {isSectionValid} from './validators';
 import {buildLookupTable, getDefaultValues} from './utils';
 import type {Props, State} from './injectGenProps.types';
 
+/**
+ * [injectGenProps description]
+ */
 const injectGenProps = (FormComponent: ComponentType<*>) => {
   class InjectedGenProps extends Component<Props, State> {
     static propTypes = {

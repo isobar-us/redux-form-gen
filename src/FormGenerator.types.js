@@ -1,6 +1,10 @@
 import type {FieldsType, CustomFieldTypes} from './types';
 import type {LookupTable} from './utils.types';
 
+/**
+ * [FormGenerator Props description]
+ * @name FormGeneratorProps
+ */
 export type Props = {
   fields: FieldsType,
   customQuestionProps?: {

@@ -33,6 +33,11 @@ import type {
   FieldFilledOptions
 } from './validators.types';
 
+/**
+ * [isSectionValid description]
+ * @param  {SectionValidOptions}  options [description]
+ * @return {Boolean}         [description]
+ */
 // options = {fields, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
 export const isSectionValid = (options: SectionValidOptions) => {
   options = {
@@ -275,9 +280,17 @@ export const isFieldFilled = (options: FieldFilledOptions) => {
   return fieldFilled;
 };
 
-// returns true if a section has any fields that have been filled out, false otherwise
-// lookupTable is required if you have fields that are conditionalValid.
-export const isSectionFilled = ({data, fields, lookupTable = {}, parent, ...options}: SectionFilledOptions) => {
+/**
+ * Used to determine whether a section of FML is filled out based on required fields.
+ * @param {SectionFilledOptions} options is required if you have fields that are conditionalValid.
+ * @returns true if a section has any fields that have been filled out, false otherwise
+ */
+export const isSectionFilled = (options: SectionFilledOptions) => {
+  options = {
+    lookupTable: {},
+    ...options
+  };
+  const {data, fields, lookupTable = {}, parent} = options;
   const parentQuestionId = parent && parent.questionId;
   return fields.reduce((valid, field) => {
     return valid && isFieldFilled({...options, field, data, lookupTable, parentQuestionId});

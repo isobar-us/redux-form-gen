@@ -1,6 +1,9 @@
 import * as React from 'react';
 import type {ConditionalObject} from './conditionalUtils';
 
+/**
+ * [FieldType description]
+ */
 export type FieldType = {
   type: string,
   questionId?: string,
@@ -11,8 +14,14 @@ export type FieldType = {
   conditionalValid?: ConditionalObject
 };
 
+/**
+ * [FieldsType description]
+ */
 export type FieldsType = Array<FieldType>;
 
+/**
+ * [FieldOptions description]
+ */
 export type FieldOptions = {
   _genFieldComponent?: React.ElementType,
   _genLabelComponent?: React.ElementType,
@@ -27,6 +36,9 @@ export type FieldOptions = {
   _genHidden?: boolean
 };
 
+/**
+ * [CustomFieldTypes description]
+ */
 export type CustomFieldTypes = {
   [key: string]: {({field: FieldType}): FieldOptions}
 };
