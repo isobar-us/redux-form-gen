@@ -1,8 +1,4 @@
-import {
-  evalCond,
-  evalCondValid,
-  condDependentFields
-} from '../src/conditionalUtils';
+import {evalCond, evalCondValid, condDependentFields} from '../src/conditionalUtils';
 
 import {buildLookupTable} from '../src/utils';
 

@@ -99,7 +99,8 @@ class GenField extends Component<Props> {
 
     const component = !isNil(fieldOptions._genComponent) && React.createElement(fieldOptions._genComponent, this.props);
 
-    const wrapperComponent = !isNil(fieldOptions._genWrapperComponent) &&
+    const wrapperComponent =
+      !isNil(fieldOptions._genWrapperComponent) &&
       React.createElement(fieldOptions._genWrapperComponent, {
         ...this.props,
         labelComponent,

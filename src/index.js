@@ -28,7 +28,6 @@ export type {FieldOptions, CustomFieldTypes} from './types';
 
 export {
   FormGenerator,
-
   // defaultFieldTypes
   defaultFieldTypes,
   getFieldOptions,

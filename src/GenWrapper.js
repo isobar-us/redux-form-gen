@@ -16,30 +16,26 @@ class GenWrapper extends Component<Props> {
       'wrapper--inline': display === 'inline'
     };
 
-    return (
-      fieldComponent ? (
-        labelComponent ? (
-          <div className={cn('wrapper', orientation)}>
-            {labelComponent}
-            {fieldComponent}
-          </div>
-        ) : (
-          fieldComponent
-        )
+    return fieldComponent ? (
+      labelComponent ? (
+        <div className={cn('wrapper', orientation)}>
+          {labelComponent}
+          {fieldComponent}
+        </div>
       ) : (
-        labelComponent && component ? (
-          <div className={cn('wrapper', orientation)}>
-            {labelComponent}
-            {component}
-          </div>
-        ) : (
-          // if either the label or component is missing, don't treat as an input-container. just render what you have.
-          <Frag>
-            {labelComponent && labelComponent}
-            {component && component}
-          </Frag>
-        )
+        fieldComponent
       )
+    ) : labelComponent && component ? (
+      <div className={cn('wrapper', orientation)}>
+        {labelComponent}
+        {component}
+      </div>
+    ) : (
+      // if either the label or component is missing, don't treat as an input-container. just render what you have.
+      <Frag>
+        {labelComponent && labelComponent}
+        {component && component}
+      </Frag>
     );
   }
 }

@@ -43,7 +43,7 @@ class GenCondClearField extends Component<Props> {
           fieldOptions: _fieldOptions
         });
 
-        const defaultItems = (hasDefaultValue && defaultValue) ? defaultValue : [];
+        const defaultItems = hasDefaultValue && defaultValue ? defaultValue : [];
 
         gen.setCachedValue(fields.name, items);
         fields.removeAll();
