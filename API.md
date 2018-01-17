@@ -18,7 +18,7 @@
   * [Type: `group`](#type-group)
   * [Type: `section`](#type-section)
 * [API](#api)
-  * [default export `FormGenerator : React.ComponentType<FormGeneratorProps>`](#default-export-formgenerator--reactcomponenttypeformgeneratorprops)
+  * [`FormGenerator : React.ComponentType<FormGeneratorProps>`](#formgenerator--reactcomponenttypeformgeneratorprops)
   * [`isSectionValid: (options: SectionValidOptions) => Object`](#issectionvalid-options-sectionvalidoptions--object)
   * [`isSectionFilled: (options: SectionFilledOptions) => boolean`](#issectionfilled-options-sectionfilledoptions--boolean)
   * [`getDefaultValues: (options: GetDefaultValuesOptions) => Object`](#getdefaultvalues-options-getdefaultvaluesoptions--object)
@@ -142,7 +142,7 @@ Extends [GenericProps](#genericprops). Renders a header for grouping fields.
 
 These are the library exports.
 
-### default export `FormGenerator : React.ComponentType<FormGeneratorProps>`
+### `FormGenerator : React.ComponentType<FormGeneratorProps>`
 
 ### `isSectionValid: (options: SectionValidOptions) => Object`
 
