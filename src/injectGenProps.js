@@ -41,7 +41,6 @@ const injectGenProps = (FormComponent: ComponentType<*>) => {
         initialValues: getDefaultValues({
           fields,
           lookupTable,
-          data: initialValues,
           initialValues,
           customFieldTypes
         })

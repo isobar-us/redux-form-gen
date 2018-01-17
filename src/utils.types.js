@@ -1,4 +1,4 @@
-import type {CustomFieldTypes, FieldType, FieldsType} from './types';
+import type {CustomFieldTypes, FieldType, FieldOptions, FieldsType} from './types';
 
 export type BuildLookupTableOptions = {
   fields: FieldsType,
@@ -26,4 +26,9 @@ export type GetDefaultValueOptions = {
 export type GetDefaultValuesOptions = {
   fields: FieldsType,
   ...DefaultOptions
+};
+
+export type HasDefaultValueOptions = {
+  field: FieldType,
+  fieldOptions: FieldOptions
 };

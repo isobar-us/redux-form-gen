@@ -6,7 +6,12 @@ import compact from 'lodash/compact';
 import {getFieldOptions} from './defaultFieldTypes';
 import defaultsDeep from 'lodash/defaultsDeep';
 
-import type {BuildLookupTableOptions, GetDefaultValuesOptions, GetDefaultValueOptions} from './utils.types';
+import type {
+  BuildLookupTableOptions,
+  GetDefaultValuesOptions,
+  GetDefaultValueOptions,
+  HasDefaultValueOptions
+} from './utils.types';
 
 export const buildLookupTable = (options: BuildLookupTableOptions, table: Object = {}) => {
   const {fields, customFieldTypes} = options;
@@ -80,10 +85,29 @@ export const buildLookupTable = (options: BuildLookupTableOptions, table: Object
   return table;
 };
 
+export const getDefaultValueHelper = ({field, fieldOptions}: HasDefaultValueOptions) => {
+  if (has(field, 'defaultValue')) {
+    return {
+      hasDefaultValue: true,
+      defaultValue: field.defaultValue
+    };
+  } else if (has(fieldOptions, '_genDefaultValue')) {
+    return {
+      hasDefaultValue: true,
+      defaultValue: fieldOptions._genDefaultValue
+    };
+  }
+  return {
+    hasDefaultValue: false,
+    defaultValue: ''
+  };
+};
+
 export const getDefaultValues = (options: GetDefaultValuesOptions) => {
   options = {
     // defaultValues: {},
     ...options,
+    data: options.initialValues || {},
     defaultValues: defaultsDeep(options.defaultValues, options.initialValues)
   };
 
@@ -98,6 +122,7 @@ const getDefaultValue = (options: GetDefaultValueOptions) => {
   options = {
     // defaultValues: {},
     ...options,
+    data: options.initialValues || {},
     defaultValues: defaultsDeep(options.defaultValues, options.initialValues)
   };
 
@@ -115,10 +140,9 @@ const getDefaultValue = (options: GetDefaultValueOptions) => {
       const fieldPath = has(field, 'questionId') ? mergePaths(pathPrefix, field.questionId) : pathPrefix;
       if (has(field, 'questionId') && !has(defaultValues, fieldPath)) {
         // might need isNilOrEmpty(get(defaultValues, fieldPath)) in the future
-        if (has(field, 'defaultValue')) {
-          set(defaultValues, fieldPath, field.defaultValue);
-        } else if (has(fieldOptions, '_genDefaultValue')) {
-          set(defaultValues, fieldPath, fieldOptions._genDefaultValue);
+        const {hasDefaultValue, defaultValue} = getDefaultValueHelper({field, fieldOptions});
+        if (hasDefaultValue) {
+          set(defaultValues, fieldPath, defaultValue);
         }
       }
     }

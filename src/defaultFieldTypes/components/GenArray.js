@@ -13,7 +13,6 @@ class GenArray extends Component {
     const newItem = getDefaultValues({
       fields: [this.props.item],
       customFieldTypes: this.props.gen.customFieldTypes,
-      data: {},
       initialValues: {}
     });
     return this.props.fields.push(newItem);
