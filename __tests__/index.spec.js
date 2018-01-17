@@ -1,11 +1,12 @@
-import FormGenerator, * as main from '../src';
+import DefaultExport, * as main from '../src';
 
 describe('index exports', () => {
-  it('should export the correct default export', () => {
-    expect(FormGenerator).toBeDefined();
+  it('should not export a default export', () => {
+    expect(DefaultExport).toBeUndefined();
   });
 
   it('should export the correct named exports', () => {
+    expect(main.FormGenerator).toBeDefined();
     expect(main.defaultFieldTypes).toBeDefined();
     expect(main.getFieldOptions).toBeDefined();
     expect(main.RequiredIndicator).toBeDefined();

@@ -1,6 +1,5 @@
 // @flow
 import FormGenerator from './FormGenerator';
-export default FormGenerator;
 
 import defaultFieldTypes, {getFieldOptions, genericFieldProps} from './defaultFieldTypes';
 import GenericRequiredLabel from './defaultFieldTypes/components/GenericRequiredLabel';
@@ -27,6 +26,8 @@ import GenField from './GenField';
 export type {FieldOptions, CustomFieldTypes} from './types';
 
 export {
+  FormGenerator,
+
   // defaultFieldTypes
   defaultFieldTypes,
   getFieldOptions,

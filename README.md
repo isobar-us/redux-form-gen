@@ -44,7 +44,7 @@ npm install --save @isobar-us/redux-form-gen
 
 ```javascript
 import {reduxForm, Form} from 'redux-form';
-import FormGenerator, {injectGenProps} from '@isobar-us/redux-form-gen';
+import {FormGenerator, injectGenProps} from '@isobar-us/redux-form-gen';
 
 const fields = [
   {
@@ -87,7 +87,7 @@ const MyPage = () => (
 
 ```javascript
 import {reduxForm, Field, Form} from 'redux-form';
-import FormGenerator, {GenericRequiredLabel, injectGenProps} from '@isobar-us/redux-form-gen';
+import {FormGenerator, GenericRequiredLabel, injectGenProps} from '@isobar-us/redux-form-gen';
 
 const SelectField => () => {
   // ... your custom select field implementation
