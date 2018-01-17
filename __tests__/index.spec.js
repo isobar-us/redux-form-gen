@@ -16,8 +16,8 @@ describe('index exports', () => {
     expect(main.isSectionEmpty).toBeDefined();
     expect(main.isSectionFilled).toBeDefined();
     expect(main.isFieldFilled).toBeDefined();
-    expect(main.isSectionValid).toBeDefined();
-    expect(main.isFieldValid).toBeDefined();
+    expect(main.getSectionErrors).toBeDefined();
+    expect(main.getFieldErrors).toBeDefined();
     expect(main.isNilOrEmpty).toBeDefined();
 
     expect(main.getDefaultValues).toBeDefined();

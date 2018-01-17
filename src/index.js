@@ -7,7 +7,14 @@ import GenericRequiredLabel from './defaultFieldTypes/components/GenericRequired
 import RequiredIndicator from './defaultFieldTypes/components/RequiredIndicator';
 import injectGenProps from './injectGenProps';
 
-import {isSectionEmpty, isSectionFilled, isFieldFilled, isSectionValid, isFieldValid, isNilOrEmpty} from './validators';
+import {
+  isSectionEmpty,
+  isSectionFilled,
+  isFieldFilled,
+  getSectionErrors,
+  getFieldErrors,
+  isNilOrEmpty
+} from './validators';
 
 import {getDefaultValues, buildLookupTable} from './utils';
 
@@ -31,8 +38,8 @@ export {
   isSectionEmpty,
   isSectionFilled,
   isFieldFilled,
-  isSectionValid,
-  isFieldValid,
+  getSectionErrors,
+  getFieldErrors,
   isNilOrEmpty,
   // utils
   getDefaultValues,

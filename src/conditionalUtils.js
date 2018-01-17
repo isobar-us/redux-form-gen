@@ -9,7 +9,7 @@ import isEqual from 'lodash/isEqual';
 import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
-import {isNilOrEmpty, isFieldValid} from './validators';
+import {isNilOrEmpty, getFieldErrors} from './validators';
 
 import type {FieldType} from './types';
 
@@ -37,7 +37,7 @@ const ops: ConditionalOperators = {
     //   const {cond, data, lookupTable, customFieldTypes} = options;
     //   const field = get(lookupTable, cond.questionId);
     //   // if a dependent field doesn't have required:true, then it will always return true. we force it here.
-    //   return isFieldValid({customFieldTypes, field: {...field, required: true}, data, lookupTable});
+    //   return getFieldErrors({customFieldTypes, field: {...field, required: true}, data, lookupTable});
   },
   includes: ({value, param}) => includes(value, param),
   // comparison
@@ -104,8 +104,18 @@ export const evalCond = (opts: EvalCondOptions) => {
 const condValidElseHandler = (options) => {
   const {cond, data, lookupTable, customFieldTypes} = options;
   const field = get(lookupTable, cond.questionId);
-  // if a dependent field doesn't have required:true, then it will always return true. we force it here.
-  return isFieldValid({customFieldTypes, field: {...field, required: true}, data, lookupTable});
+
+  const fieldErrors = getFieldErrors({
+    customFieldTypes,
+    field: {
+      ...field,
+      required: true // if a dependent field doesn't have required:true, then it will always return true. we force it here.
+    },
+    data,
+    lookupTable
+  });
+
+  return isNilOrEmpty(fieldErrors); // need to check if the errors object is empty. if empty, field is valid.
 };
 export const evalCondValid = (args: EvalCondOptions) =>
   evalCond({
