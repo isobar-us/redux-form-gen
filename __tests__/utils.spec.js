@@ -175,7 +175,6 @@ describe('getDefaultValues()', () => {
     const defaultValues = getDefaultValues({
       fields,
       lookupTable,
-      data: initialValues,
       initialValues
     });
     expect(defaultValues).toEqual({
