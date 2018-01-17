@@ -89,9 +89,11 @@ class GenField extends Component<Props> {
         ...options,
         component: GenCondClearField,
         condComponent: options.component,
-        visible,
-        _fieldOptions: fieldOptions,
-        _field: field
+        condClearProps: {
+          visible,
+          fieldOptions,
+          field
+        }
       });
 
     const labelComponent =
