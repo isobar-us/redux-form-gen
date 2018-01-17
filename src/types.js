@@ -8,7 +8,9 @@ export type FieldType = {
   conditionalVisible?: ConditionalObject,
   conditionalRequired?: ConditionalObject,
   conditionalDisabled?: ConditionalObject,
-  conditionalValid?: ConditionalObject
+  conditionalValid?: ConditionalObject,
+  requiredMessage?: string,
+  invalidMessage?: string
 };
 
 export type FieldsType = Array<FieldType>;
