@@ -68,6 +68,7 @@
     * [`_genFieldComponent?: React.ElementType`](#_genfieldcomponent-reactelementtype)
     * [`_genLabelComponent?: React.ElementType`](#_genlabelcomponent-reactelementtype)
     * [`_genComponent?: React.ElementType`](#_gencomponent-reactelementtype)
+    * [`_genWrapperComponent?: React.ElementType`](#_genwrappercomponent-reactelementtype)
     * [`_genChildren?: FieldsType`](#_genchildren-fieldstype)
     * [`_genDefaultValue?: mixed`](#_gendefaultvalue-mixed)
     * [`_genIsFilled?: Function`](#_genisfilled-function)
@@ -311,6 +312,10 @@ The component to use when rendering the label. Internally uses `GenericRequiredL
 ### `_genComponent?: React.ElementType`
 
 The component to use if you're not rendering a `redux-form` field component (using `_genFieldComponent`)
+
+### `_genWrapperComponent?: React.ElementType`
+
+If provided, it will be passed props from `GenField` as well as the pre-rendered `labelComponent`, `fieldComponent`, and `component`
 
 ### `_genChildren?: FieldsType`
 

@@ -16,6 +16,7 @@ export type FieldsType = Array<FieldType>;
 export type FieldOptions = {
   _genFieldComponent?: React.ElementType,
   _genLabelComponent?: React.ElementType,
+  _genWrapperComponent?: React.ElementType,
   _genComponent?: React.ElementType,
   _genChildren?: FieldsType,
   _genDefaultValue?: mixed,

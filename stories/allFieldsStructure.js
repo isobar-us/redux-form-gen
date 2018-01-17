@@ -4,11 +4,6 @@ export default [
     label: 'Default Field Types',
     childFields: [
       {
-        type: 'static',
-        label: 'Static Label',
-        text: 'Static Text'
-      },
-      {
         type: 'text',
         questionId: 'text',
         label: 'Text Label',
@@ -67,6 +62,11 @@ export default [
     label: 'Custom Field Types',
     childFields: [
       {
+        type: 'static',
+        label: 'Static Label',
+        text: 'Static Text'
+      },
+      {
         type: 'dateUnknown',
         label: 'Date or Unknown Label',
         required: true,
@@ -82,6 +82,11 @@ export default [
             label: 'Unknown'
           }
         }
+      },
+      {
+        type: 'date',
+        label: 'Date Label',
+        questionId: 'date'
       }
     ]
   }

@@ -1,5 +1,6 @@
 import defaultFieldTypes from './defaultFieldTypes';
 import isNil from 'lodash/isNil';
+import defaultFieldOptions from './defaultFieldOptions';
 
 const getFieldOptions = (options) => {
   const {field, customFieldTypes = {}} = options;
@@ -25,7 +26,10 @@ const getFieldOptions = (options) => {
     );
     return null;
   }
-  return buildFieldOptions(options);
+  return {
+    ...defaultFieldOptions,
+    ...buildFieldOptions(options)
+  };
 };
 
 export default getFieldOptions;
