@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.8.0
+
+#### ⚠️ Breaking Changes ⚠️
+
+* No more default export. please destructure `import {FormGenerator} from '@isobar-us/redux-form-generator'` #5
+* Renamed `isSectionValid` to `getSectionErrors` #7
+* Renamed `isFieldValid` to `getFieldErrors` #7
+
+#### Features
+
+* New `_genWrapperComponent` api for field types. #6
+* Field level validation messages. #9
+
+#### Bug Fixes
+
+* Fix bugs around `getDefaultValues` in combination with `GenCondClearField` #8
+
 ## v0.7.2
 
 #### Features
