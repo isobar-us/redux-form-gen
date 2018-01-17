@@ -19,7 +19,7 @@
   * [Type: `section`](#type-section)
 * [API](#api)
   * [default export `FormGenerator : React.ComponentType<FormGeneratorProps>`](#default-export-formgenerator--reactcomponenttypeformgeneratorprops)
-  * [`isSectionValid: (options: SectionValidOptions) => Object`](#issectionvalid-options-sectionvalidoptions--object)
+  * [`getSectionErrors: (options: SectionValidOptions) => Object`](#getsectionerrors-options-sectionvalidoptions--object)
   * [`isSectionFilled: (options: SectionFilledOptions) => boolean`](#issectionfilled-options-sectionfilledoptions--boolean)
   * [`getDefaultValues: (options: GetDefaultValuesOptions) => Object`](#getdefaultvalues-options-getdefaultvaluesoptions--object)
   * [`injectGenProps: (React.ComponentType<ReduxForm>) => React.ComponentType`](#injectgenprops-reactcomponenttypereduxform--reactcomponenttype)
@@ -144,7 +144,7 @@ These are the library exports.
 
 ### default export `FormGenerator : React.ComponentType<FormGeneratorProps>`
 
-### `isSectionValid: (options: SectionValidOptions) => Object`
+### `getSectionErrors: (options: SectionValidOptions) => Object`
 
 ### `isSectionFilled: (options: SectionFilledOptions) => boolean`
 
@@ -153,7 +153,7 @@ These are the library exports.
 ### `injectGenProps: (React.ComponentType<ReduxForm>) => React.ComponentType`
 
 does the heavy lifting to validation, defaultValues, and lookupTable. injects props into a reduxForm decorated component
-(`initialValues`, `validate`) and uses `getDefaultValues` and `isSectionValid`
+(`initialValues`, `validate`) and uses `getDefaultValues` and `getSectionErrors`
 
 ### `buildLookupTable: (options: BuildLookupTableOptions) => LookupTable`
 
@@ -171,7 +171,7 @@ genericFieldProps,
 // validators
 isSectionEmpty,
 isFieldFilled,
-isFieldValid,
+getFieldErrors,
 
 // contextUtils
 consumeGenContext,

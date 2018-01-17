@@ -1,8 +1,10 @@
 import {
   evalCond,
-  // evalCondValid,
+  evalCondValid,
   condDependentFields
 } from '../src/conditionalUtils';
+
+import {buildLookupTable} from '../src/utils';
 
 describe('evalCond()', () => {
   describe('shallow/deep', () => {
@@ -697,5 +699,60 @@ describe('condDependentFields()', () => {
     const dependentFields = condDependentFields(cond);
 
     expect(dependentFields).toEqual(['one', 'two', 'three']);
+  });
+});
+
+describe('evalCondValid()', () => {
+  const customFieldTypes = {
+    alwaysError: ({field}) => ({
+      _genIsValid: () => false,
+      name: field.questionId
+    }),
+    alwaysValid: ({field}) => ({
+      _genIsValid: () => true,
+      name: field.questionId
+    })
+  };
+  it('should use getFieldErrors() when no operator is specified', () => {
+    const fields = [
+      {
+        type: 'alwaysError',
+        questionId: 'alwaysError'
+      },
+      {
+        type: 'alwaysValid',
+        questionId: 'alwaysValid'
+      }
+    ];
+
+    const lookupTable = buildLookupTable({
+      fields,
+      customFieldTypes
+    });
+
+    const alwaysError = evalCondValid({
+      cond: {
+        questionId: 'alwaysError'
+      },
+      data: {
+        alwaysError: 'foo'
+      },
+      customFieldTypes,
+      lookupTable
+    });
+
+    const alwaysValid = evalCondValid({
+      cond: {
+        questionId: 'alwaysValid'
+      },
+      data: {
+        alwaysValid: 'foo'
+      },
+      customFieldTypes,
+      lookupTable
+    });
+
+    expect(alwaysError).toBe(false);
+    expect(alwaysValid).toBe(true);
   });
 });
