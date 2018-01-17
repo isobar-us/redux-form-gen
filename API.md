@@ -217,6 +217,12 @@ GenField
 
 ### `conditionalDisabled?: ConditionalObject`
 
+### `requiredMessage?: string`
+If the field is required, this will override the global `REQUIRED_MESSAGE`
+
+### `invalidMessage?: string`
+If the field is invalid, this will override the global `INVALID_MESSAGE`
+
 ## `ConditionalObject`
 
 An object, when evaluated against data, resolves to a `true` or `false` value.

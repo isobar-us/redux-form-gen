@@ -86,7 +86,24 @@ describe('isSectionFilled()', () => {
 });
 
 describe('getSectionErrors', () => {
+  const customFieldRequiredMessage = 'Custom Field Required Message';
+  const customFieldInvalidMessage = 'Custom Field Invalid Message';
+
   const fields = [
+    {
+      type: 'text',
+      questionId: 'customRequired',
+      required: true,
+      requiredMessage: customFieldRequiredMessage
+    },
+    {
+      type: 'text',
+      questionId: 'customInvalid',
+      conditionalValid: {
+        questionId: 'foo'
+      },
+      invalidMessage: customFieldInvalidMessage
+    },
     {
       type: 'text',
       questionId: 'foo',
@@ -206,7 +223,8 @@ describe('getSectionErrors', () => {
             }
           ]
         }
-      ]
+      ],
+      customRequired: customFieldRequiredMessage
     });
 
     const customRequiredMessage = 'Custom Required Message';
@@ -235,7 +253,8 @@ describe('getSectionErrors', () => {
             }
           ]
         }
-      ]
+      ],
+      customRequired: customFieldRequiredMessage
     });
   });
 
@@ -276,7 +295,9 @@ describe('getSectionErrors', () => {
             }
           ]
         }
-      ]
+      ],
+      customRequired: customFieldRequiredMessage,
+      customInvalid: customFieldInvalidMessage
     });
   });
 

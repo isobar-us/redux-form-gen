@@ -76,9 +76,12 @@ export const getFieldErrors = (options: FieldValidOptions) => {
     pathPrefix,
     data,
     parentQuestionId,
-    messages: {requiredMessage, invalidMessage}
+    messages
   } = options;
   let {errors} = options;
+
+  const requiredMessage = has(field, 'requiredMessage') ? field.requiredMessage : messages.requiredMessage;
+  const invalidMessage = has(field, 'invalidMessage') ? field.invalidMessage : messages.invalidMessage;
 
   const fieldOptions = getFieldOptions({field, customFieldTypes});
 
