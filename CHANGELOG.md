@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.8.1
+
+#### Bug Fixes
+
+* Fix accidental omission of `_field` prop.
+
 ## v0.8.0
 
 #### ⚠️ Breaking Changes ⚠️
