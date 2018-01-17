@@ -22,6 +22,7 @@ import {consumeGenContext} from './contextUtils';
 import {evalCond, evalCondValid} from './conditionalUtils';
 
 import GenField from './GenField';
+import GenWrapper from './GenWrapper';
 
 export type {FieldOptions, CustomFieldTypes} from './types';
 
@@ -51,5 +52,6 @@ export {
   evalCond,
   evalCondValid,
   // internals
-  GenField
+  GenField,
+  GenWrapper
 };

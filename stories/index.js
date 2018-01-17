@@ -92,6 +92,11 @@ storiesOf('FormGenerator', module)
       <FormGenerator fields={allFieldsStructure} customFieldTypes={customFieldTypes} />
     </BaseForm>
   ))
+  .add('all field types inline', () => (
+    <BaseForm fields={allFieldsStructure} customFieldTypes={customFieldTypes}>
+      <FormGenerator fields={allFieldsStructure} customFieldTypes={customFieldTypes} display='inline' />
+    </BaseForm>
+  ))
   .add('empty generator', () => (
     <ExampleForm>
       <FormGenerator />

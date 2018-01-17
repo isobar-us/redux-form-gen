@@ -14,8 +14,10 @@ _genFieldComponent || _genComponent
 
 // const defaultIsFilled = ({data, field}) => !isNilOrEmpty(get(data, field.questionId));
 
+// TODO get rid of _gen prefix, and keep components like FieldComponent and LabelComponent caps to use directly as react components?
 export const genericFieldProps = ({field}) => ({
   _genFieldComponent: Field,
+  // _genWrapperComponent: GenWrapper, // default
   // _genComponent: (props) => { // props are the props passed to GenField
   //   return (<span>Display Component Placeholder</span>);
   // },

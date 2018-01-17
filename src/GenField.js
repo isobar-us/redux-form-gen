@@ -71,11 +71,6 @@ class GenField extends Component<Props> {
     // Don't render this field or it's children if it's hidden
     if (fieldOptions._genHidden === true) return null;
 
-    const display = has(field, 'display') ? field.display : gen.display;
-    const orientation = {
-      'wrapper--stacked': display === 'stacked',
-      'wrapper--inline': display === 'inline'
-    };
     const isPathVisible = has(gen, 'visibleDepth') ? startsWith(path, gen.visibleDepth) : true;
     if (isNil(path)) {
       console.error('Missing path for ', field);
@@ -103,6 +98,14 @@ class GenField extends Component<Props> {
       !isNil(fieldOptions._genLabelComponent) && React.createElement(fieldOptions._genLabelComponent, this.props);
 
     const component = !isNil(fieldOptions._genComponent) && React.createElement(fieldOptions._genComponent, this.props);
+
+    const wrapperComponent = !isNil(fieldOptions._genWrapperComponent) &&
+      React.createElement(fieldOptions._genWrapperComponent, {
+        ...this.props,
+        labelComponent,
+        fieldComponent,
+        component
+      });
 
     // find `cond` prefixed props automatically
     const condDependentFieldNames = [
@@ -133,20 +136,10 @@ class GenField extends Component<Props> {
           {' '}
           {/* hide if invisible */}
           <div className={cn({'wrapper--hidden-path': !isPathVisible})}>
-            {fieldComponent ? (
-              <div className={cn('wrapper', orientation)}>
-                {labelComponent && labelComponent}
-                {fieldComponent && fieldComponent}
-              </div>
-            ) : labelComponent && component ? (
-              <div className={cn('wrapper', orientation)}>
-                {labelComponent}
-                {component}
-              </div>
-            ) : (
-              // if either the label or component is missing, don't treat as an input-container. just render what you have.
+            {wrapperComponent || (
               <Frag>
                 {labelComponent && labelComponent}
+                {fieldComponent && fieldComponent}
                 {component && component}
               </Frag>
             )}
