@@ -1,6 +1,6 @@
 import {buildLookupTable} from '../src/utils';
 import exampleFieldTypes from '../stories/customFieldTypes';
-import {isSectionFilled, isSectionValid, REQUIRED_MESSAGE, INVALID_MESSAGE, isNilOrEmpty} from '../src/validators';
+import {isSectionFilled, getSectionErrors, REQUIRED_MESSAGE, INVALID_MESSAGE, isNilOrEmpty} from '../src/validators';
 import get from 'lodash/get';
 
 describe('isSectionFilled()', () => {
@@ -85,7 +85,7 @@ describe('isSectionFilled()', () => {
   });
 });
 
-describe('isSectionValid', () => {
+describe('getSectionErrors', () => {
   const fields = [
     {
       type: 'text',
@@ -187,7 +187,7 @@ describe('isSectionValid', () => {
     };
 
     const lookupTable = buildLookupTable({fields, customFieldTypes: exampleFieldTypes});
-    const errors = isSectionValid({
+    const errors = getSectionErrors({
       fields,
       data,
       customFieldTypes: exampleFieldTypes,
@@ -212,7 +212,7 @@ describe('isSectionValid', () => {
     const customRequiredMessage = 'Custom Required Message';
     const customInvalidMessage = 'Custom Invalid Message';
 
-    const customErrors = isSectionValid({
+    const customErrors = getSectionErrors({
       fields,
       data,
       customFieldTypes: exampleFieldTypes,
@@ -253,7 +253,7 @@ describe('isSectionValid', () => {
     };
 
     const lookupTable = buildLookupTable({fields, customFieldTypes: exampleFieldTypes});
-    const errors = isSectionValid({
+    const errors = getSectionErrors({
       fields,
       data,
       customFieldTypes: exampleFieldTypes,
@@ -302,7 +302,7 @@ describe('isSectionValid', () => {
       const data = {
         check: false
       };
-      const errorsFalse = isSectionValid({
+      const errorsFalse = getSectionErrors({
         fields: checkFields,
         data: data,
         customFieldTypes,
@@ -319,7 +319,7 @@ describe('isSectionValid', () => {
         check: true
       };
 
-      const errors = isSectionValid({
+      const errors = getSectionErrors({
         fields: checkFields,
         data: data,
         customFieldTypes,
@@ -353,7 +353,7 @@ describe('isSectionValid', () => {
       const data = {
         condText: 'something'
       };
-      const errorsFalse = isSectionValid({
+      const errorsFalse = getSectionErrors({
         fields: visFields,
         data: data,
         lookupTable
@@ -367,7 +367,7 @@ describe('isSectionValid', () => {
     it('should show no errors', () => {
       const data = {};
 
-      const errors = isSectionValid({
+      const errors = getSectionErrors({
         fields: visFields,
         data: data,
         lookupTable
