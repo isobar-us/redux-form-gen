@@ -17,7 +17,7 @@ import {
 
 import {getDefaultValues, buildLookupTable} from './utils';
 
-import {consumeGenContext} from './contextUtils';
+import {consumeGenContext, GenContext} from './contextUtils';
 
 import {evalCond, evalCondValid} from './conditionalUtils';
 
@@ -47,6 +47,7 @@ export {
   buildLookupTable,
   // contextUtils
   consumeGenContext,
+  GenContext,
   // conditionalUtils
   evalCond,
   evalCondValid,
