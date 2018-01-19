@@ -1,4 +1,5 @@
 import DefaultExport, * as main from '../src';
+import keys from 'lodash/keys';
 
 describe('index exports', () => {
   it('should not export a default export', () => {
@@ -6,29 +7,35 @@ describe('index exports', () => {
   });
 
   it('should export the correct named exports', () => {
-    expect(main.FormGenerator).toBeDefined();
-    expect(main.defaultFieldTypes).toBeDefined();
-    expect(main.getFieldOptions).toBeDefined();
-    expect(main.RequiredIndicator).toBeDefined();
-    expect(main.GenericRequiredLabel).toBeDefined();
-    expect(main.genericFieldProps).toBeDefined();
-    expect(main.injectGenProps).toBeDefined();
+    expect(keys(main)).toEqual([
+      '__esModule',
 
-    expect(main.isSectionEmpty).toBeDefined();
-    expect(main.isSectionFilled).toBeDefined();
-    expect(main.isFieldFilled).toBeDefined();
-    expect(main.getSectionErrors).toBeDefined();
-    expect(main.getFieldErrors).toBeDefined();
-    expect(main.isNilOrEmpty).toBeDefined();
+      'FormGenerator',
+      'defaultFieldTypes',
+      'getFieldOptions',
+      'RequiredIndicator',
+      'GenericRequiredLabel',
+      'genericFieldProps',
+      'injectGenProps',
 
-    expect(main.getDefaultValues).toBeDefined();
-    expect(main.buildLookupTable).toBeDefined();
+      'isSectionEmpty',
+      'isSectionFilled',
+      'isFieldFilled',
+      'getSectionErrors',
+      'getFieldErrors',
+      'isNilOrEmpty',
 
-    expect(main.consumeGenContext).toBeDefined();
+      'getDefaultValues',
+      'buildLookupTable',
 
-    expect(main.evalCond).toBeDefined();
-    expect(main.evalCondValid).toBeDefined();
+      'consumeGenContext',
+      'GenContext',
 
-    expect(main.GenField).toBeDefined();
+      'evalCond',
+      'evalCondValid',
+
+      'GenField',
+      'GenWrapper'
+    ]);
   });
 });
