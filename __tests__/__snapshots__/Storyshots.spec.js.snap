@@ -1,0 +1,2047 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots FormGenerator all field types 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    invalid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="generated-form__header"
+            >
+              Default Field Types
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  <span
+                    className="required-field"
+                  >
+                    *
+                  </span>
+                  Text Label
+                </label>
+                <input
+                  disabled={undefined}
+                  name="text"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  <span
+                    className="required-field"
+                  >
+                    *
+                  </span>
+                  Textarea Label
+                </label>
+                <textarea
+                  disabled={undefined}
+                  name="textarea"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  value=""
+                >
+                  
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <label>
+                Group Label
+              </label>
+            </div>
+            <div
+              className="section"
+            >
+               
+              <div
+                className=""
+              >
+                <div
+                  className="wrapper wrapper--stacked"
+                >
+                  <label>
+                    <span
+                      className="required-field"
+                    >
+                      *
+                    </span>
+                    Radio Label
+                  </label>
+                  <div
+                    className="wrapper wrapper--inline"
+                  >
+                    <label
+                      htmlFor="radio-1"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-1"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="1"
+                      />
+                      Option 1
+                    </label>
+                    <label
+                      htmlFor="radio-2"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-2"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="2"
+                      />
+                      Option 2
+                    </label>
+                    <label
+                      htmlFor="radio-3"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-3"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="3"
+                      />
+                      Option 3
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="section"
+            >
+               
+              <div
+                className=""
+              >
+                <div
+                  className="wrapper wrapper--stacked"
+                >
+                  <label>
+                    <span
+                      className="required-field"
+                    >
+                      *
+                    </span>
+                    Select Label
+                  </label>
+                  <select
+                    name="select"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    value=""
+                  >
+                    <option
+                      disabled={true}
+                      value=""
+                    />
+                    <option
+                      value="1"
+                    >
+                      Option 1
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      Option 2
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Option 3
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <div
+                  className="generated-form__header"
+                >
+                  Array Label
+                </div>
+                <button
+                  onClick={[Function]}
+                  type="button"
+                >
+                  Add Label
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <hr />
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="generated-form__header"
+            >
+              Custom Field Types
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  Static Label
+                </label>
+                <span>
+                  Static Text
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  <span
+                    className="required-field"
+                  >
+                    *
+                  </span>
+                  Date or Unknown Label
+                </label>
+                <div
+                  className="form-gen__date"
+                >
+                  <div
+                    className="form-gen__date-calendar"
+                  >
+                    <label
+                      className="hide"
+                    >
+                      Date
+                    </label>
+                    <input
+                      disabled=""
+                      name="du_date"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onDragStart={undefined}
+                      onDrop={undefined}
+                      onFocus={[Function]}
+                      type="date"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    className="form-gen__date-unknown"
+                  >
+                    <input
+                      id="form-gen__du_unknown"
+                      name="du_unknown"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onDragStart={undefined}
+                      onDrop={undefined}
+                      onFocus={[Function]}
+                      type="checkbox"
+                      value=""
+                    />
+                    <label
+                      htmlFor="form-gen__du_unknown"
+                    >
+                      Unknown
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  Date Label
+                </label>
+                <input
+                  name="date"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="date"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {
+  "array": []
+}
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots FormGenerator all field types inline 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    invalid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="generated-form__header"
+            >
+              Default Field Types
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <label>
+                  <span
+                    className="required-field"
+                  >
+                    *
+                  </span>
+                  Text Label
+                </label>
+                <input
+                  disabled={undefined}
+                  name="text"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <label>
+                  <span
+                    className="required-field"
+                  >
+                    *
+                  </span>
+                  Textarea Label
+                </label>
+                <textarea
+                  disabled={undefined}
+                  name="textarea"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  value=""
+                >
+                  
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <label>
+                Group Label
+              </label>
+            </div>
+            <div
+              className="section"
+            >
+               
+              <div
+                className=""
+              >
+                <div
+                  className="wrapper wrapper--inline"
+                >
+                  <label>
+                    <span
+                      className="required-field"
+                    >
+                      *
+                    </span>
+                    Radio Label
+                  </label>
+                  <div
+                    className="wrapper wrapper--inline"
+                  >
+                    <label
+                      htmlFor="radio-1"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-1"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="1"
+                      />
+                      Option 1
+                    </label>
+                    <label
+                      htmlFor="radio-2"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-2"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="2"
+                      />
+                      Option 2
+                    </label>
+                    <label
+                      htmlFor="radio-3"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-3"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="3"
+                      />
+                      Option 3
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="section"
+            >
+               
+              <div
+                className=""
+              >
+                <div
+                  className="wrapper wrapper--inline"
+                >
+                  <label>
+                    <span
+                      className="required-field"
+                    >
+                      *
+                    </span>
+                    Select Label
+                  </label>
+                  <select
+                    name="select"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    value=""
+                  >
+                    <option
+                      disabled={true}
+                      value=""
+                    />
+                    <option
+                      value="1"
+                    >
+                      Option 1
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      Option 2
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Option 3
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <div
+                  className="generated-form__header"
+                >
+                  Array Label
+                </div>
+                <button
+                  onClick={[Function]}
+                  type="button"
+                >
+                  Add Label
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <hr />
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="generated-form__header"
+            >
+              Custom Field Types
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <label>
+                  Static Label
+                </label>
+                <span>
+                  Static Text
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <label>
+                  <span
+                    className="required-field"
+                  >
+                    *
+                  </span>
+                  Date or Unknown Label
+                </label>
+                <div
+                  className="form-gen__date"
+                >
+                  <div
+                    className="form-gen__date-calendar"
+                  >
+                    <label
+                      className="hide"
+                    >
+                      Date
+                    </label>
+                    <input
+                      disabled=""
+                      name="du_date"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onDragStart={undefined}
+                      onDrop={undefined}
+                      onFocus={[Function]}
+                      type="date"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    className="form-gen__date-unknown"
+                  >
+                    <input
+                      id="form-gen__du_unknown"
+                      name="du_unknown"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onDragStart={undefined}
+                      onDrop={undefined}
+                      onFocus={[Function]}
+                      type="checkbox"
+                      value=""
+                    />
+                    <label
+                      htmlFor="form-gen__du_unknown"
+                    >
+                      Unknown
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <label>
+                  Date Label
+                </label>
+                <input
+                  name="date"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="date"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {
+  "array": []
+}
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots FormGenerator basic form 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    valid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                First Name
+              </label>
+              <input
+                disabled={undefined}
+                name="firstName"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                Last Name
+              </label>
+              <input
+                disabled={undefined}
+                name="lastName"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                Date of Birth
+              </label>
+              <input
+                name="birthday"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                type="date"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                Gender
+              </label>
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <label
+                  htmlFor="gender-female"
+                >
+                  <input
+                    checked={false}
+                    disabled={undefined}
+                    id="gender-female"
+                    name="gender"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="radio"
+                    value="female"
+                  />
+                  Female
+                </label>
+                <label
+                  htmlFor="gender-male"
+                >
+                  <input
+                    checked={false}
+                    disabled={undefined}
+                    id="gender-male"
+                    name="gender"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="radio"
+                    value="male"
+                  />
+                  Male
+                </label>
+                <label
+                  htmlFor="gender-other"
+                >
+                  <input
+                    checked={false}
+                    disabled={undefined}
+                    id="gender-other"
+                    name="gender"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="radio"
+                    value="other"
+                  />
+                  Other
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {}
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots FormGenerator empty generator 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    valid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="generated-form"
+  />
+</div>
+`;
+
+exports[`Storyshots FormGenerator entire disabled form 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    invalid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <button
+        onClick={[Function]}
+      >
+        Enable
+         Form
+      </button>
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                <span
+                  className="required-field"
+                >
+                  *
+                </span>
+                Do you like tacos?
+              </label>
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <label
+                  htmlFor="tacos-yes"
+                >
+                  <input
+                    checked={true}
+                    disabled={true}
+                    id="tacos-yes"
+                    name="tacos"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="radio"
+                    value="yes"
+                  />
+                  Yes
+                </label>
+                <label
+                  htmlFor="tacos-no"
+                >
+                  <input
+                    checked={false}
+                    disabled={true}
+                    id="tacos-no"
+                    name="tacos"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="radio"
+                    value="no"
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                <span
+                  className="required-field"
+                >
+                  *
+                </span>
+                What's your favorite kind of taco?
+              </label>
+              <input
+                disabled={true}
+                name="favoriteKind"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {
+  "tacos": "yes"
+}
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots FormGenerator nested progressive disclosure 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    valid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                one
+              </label>
+              <div
+                className="wrapper wrapper--inline"
+              >
+                <label
+                  htmlFor="one-yes"
+                >
+                  <input
+                    checked={false}
+                    disabled={undefined}
+                    id="one-yes"
+                    name="one"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="radio"
+                    value="yes"
+                  />
+                  Yes
+                </label>
+                <label
+                  htmlFor="one-no"
+                >
+                  <input
+                    checked={true}
+                    disabled={undefined}
+                    id="one-no"
+                    name="one"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="radio"
+                    value="no"
+                  />
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section section--hidden"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  two
+                </label>
+                <div
+                  className="wrapper wrapper--inline"
+                >
+                  <label
+                    htmlFor="two-yes"
+                  >
+                    <input
+                      checked={false}
+                      disabled={undefined}
+                      id="two-yes"
+                      name="two"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onDragStart={[Function]}
+                      onDrop={[Function]}
+                      onFocus={[Function]}
+                      type="radio"
+                      value="yes"
+                    />
+                    Yes
+                  </label>
+                  <label
+                    htmlFor="two-no"
+                  >
+                    <input
+                      checked={false}
+                      disabled={undefined}
+                      id="two-no"
+                      name="two"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onDragStart={[Function]}
+                      onDrop={[Function]}
+                      onFocus={[Function]}
+                      type="radio"
+                      value="no"
+                    />
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div
+              className="section section--hidden"
+            >
+               
+              <div
+                className=""
+              >
+                <div
+                  className="wrapper wrapper--stacked"
+                >
+                  <label>
+                    three
+                  </label>
+                  <div
+                    className="wrapper wrapper--inline"
+                  >
+                    <label
+                      htmlFor="three-yes"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="three-yes"
+                        name="three"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="yes"
+                      />
+                      Yes
+                    </label>
+                    <label
+                      htmlFor="three-no"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="three-no"
+                        name="three"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="no"
+                      />
+                      No
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="section section--hidden"
+              >
+                 
+                <div
+                  className=""
+                >
+                  <div
+                    className="wrapper wrapper--stacked"
+                  >
+                    <label>
+                      four
+                    </label>
+                    <div
+                      className="wrapper wrapper--inline"
+                    >
+                      <label
+                        htmlFor="four-yes"
+                      >
+                        <input
+                          checked={false}
+                          disabled={undefined}
+                          id="four-yes"
+                          name="four"
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onDragStart={[Function]}
+                          onDrop={[Function]}
+                          onFocus={[Function]}
+                          type="radio"
+                          value="yes"
+                        />
+                        Yes
+                      </label>
+                      <label
+                        htmlFor="four-no"
+                      >
+                        <input
+                          checked={false}
+                          disabled={undefined}
+                          id="four-no"
+                          name="four"
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onDragStart={[Function]}
+                          onDrop={[Function]}
+                          onFocus={[Function]}
+                          type="radio"
+                          value="no"
+                        />
+                        No
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {
+  "one": "no"
+}
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots FormGenerator progressive disclosure 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    valid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                Bar Label
+              </label>
+              <input
+                disabled={undefined}
+                name="bar"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="section section--hidden"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                <span
+                  className="required-field"
+                >
+                  *
+                </span>
+                Foo label
+              </label>
+              <input
+                disabled={undefined}
+                name="foo"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            className="section section--hidden"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  a copy
+                </label>
+                <select
+                  name="foo"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  value=""
+                >
+                  <option
+                    disabled={true}
+                    value=""
+                  />
+                  <option
+                    value="yes"
+                  >
+                    Yes
+                  </option>
+                  <option
+                    value="no"
+                  >
+                    No
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {}
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots FormGenerator with an array (ToDos example) 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    valid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <div
+                className="generated-form__header"
+              >
+                Todos
+              </div>
+              <button
+                onClick={[Function]}
+                type="button"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {
+  "todos": []
+}
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots FormGenerator with custom types 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    valid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                bar
+              </label>
+              <input
+                disabled={undefined}
+                name="Bar"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <span>
+              A FOO
+            </span>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="wrapper wrapper--stacked"
+            >
+              <label>
+                Baz
+              </label>
+              <input
+                checked={false}
+                name="baz"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                type="checkbox"
+                value={false}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {
+  "baz": false
+}
+      </pre>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots FormGenerator wizard form example 1`] = `
+<div
+  className={undefined}
+>
+  <p>
+    validation: 
+    invalid
+  </p>
+  <p>
+    pristine
+  </p>
+  <div
+    className="flex"
+  >
+    <div
+      className="col"
+    >
+      <button
+        onClick={[Function]}
+      >
+        Next
+      </button>
+      <div
+        className="generated-form"
+      >
+        <div
+          className="section"
+        >
+           
+          <div
+            className=""
+          >
+            <div
+              className="generated-form__header"
+            >
+              Wizard Step 1
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  Static Label
+                </label>
+                <span>
+                  Static Text
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  <span
+                    className="required-field"
+                  >
+                    *
+                  </span>
+                  Text Label
+                </label>
+                <input
+                  disabled={undefined}
+                  name="text"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className=""
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <label>
+                  <span
+                    className="required-field"
+                  >
+                    *
+                  </span>
+                  Textarea Label
+                </label>
+                <textarea
+                  disabled={undefined}
+                  name="textarea"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  value=""
+                >
+                  
+                </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className="wrapper--hidden-path"
+          >
+            <div
+              className="generated-form__header"
+            >
+              Wizard Step 2
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className="wrapper--hidden-path"
+            >
+              <label>
+                Group Label
+              </label>
+            </div>
+            <div
+              className="section"
+            >
+               
+              <div
+                className="wrapper--hidden-path"
+              >
+                <div
+                  className="wrapper wrapper--stacked"
+                >
+                  <label>
+                    <span
+                      className="required-field"
+                    >
+                      *
+                    </span>
+                    Radio Label
+                  </label>
+                  <div
+                    className="wrapper wrapper--inline"
+                  >
+                    <label
+                      htmlFor="radio-1"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-1"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="1"
+                      />
+                      Option 1
+                    </label>
+                    <label
+                      htmlFor="radio-2"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-2"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="2"
+                      />
+                      Option 2
+                    </label>
+                    <label
+                      htmlFor="radio-3"
+                    >
+                      <input
+                        checked={false}
+                        disabled={undefined}
+                        id="radio-3"
+                        name="radio"
+                        onBlur={[Function]}
+                        onChange={[Function]}
+                        onDragStart={[Function]}
+                        onDrop={[Function]}
+                        onFocus={[Function]}
+                        type="radio"
+                        value="3"
+                      />
+                      Option 3
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              className="section"
+            >
+               
+              <div
+                className="wrapper--hidden-path"
+              >
+                <div
+                  className="wrapper wrapper--stacked"
+                >
+                  <label>
+                    <span
+                      className="required-field"
+                    >
+                      *
+                    </span>
+                    Select Label
+                  </label>
+                  <select
+                    name="select"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    value=""
+                  >
+                    <option
+                      disabled={true}
+                      value=""
+                    />
+                    <option
+                      value="1"
+                    >
+                      Option 1
+                    </option>
+                    <option
+                      value="2"
+                    >
+                      Option 2
+                    </option>
+                    <option
+                      value="3"
+                    >
+                      Option 3
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="section"
+        >
+           
+          <div
+            className="wrapper--hidden-path"
+          >
+            <div
+              className="generated-form__header"
+            >
+              Wizard Step 3
+            </div>
+          </div>
+          <div
+            className="section"
+          >
+             
+            <div
+              className="wrapper--hidden-path"
+            >
+              <div
+                className="wrapper wrapper--stacked"
+              >
+                <div
+                  className="generated-form__header"
+                >
+                  Array Label
+                </div>
+                <button
+                  onClick={[Function]}
+                  type="button"
+                >
+                  Add Label
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="col"
+    >
+      <pre>
+        {
+  "array": []
+}
+      </pre>
+    </div>
+  </div>
+</div>
+`;

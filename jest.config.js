@@ -12,5 +12,6 @@ module.exports = {
   modulePaths: ['src'],
   testRegex: '(/__tests__/.*\\.spec.js)$',
   verbose: true,
-  setupFiles: ['./__tests__/setup', 'raf/polyfill']
+  setupFiles: ['./__tests__/setup', 'raf/polyfill'],
+  snapshotSerializers: ['enzyme-to-json/serializer']
 };
