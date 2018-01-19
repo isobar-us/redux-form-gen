@@ -16,9 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-* **[⚠️ Breaking]** No more default export. please destructure `import {FormGenerator} from '@isobar-us/redux-form-generator'` #5
-* **[⚠️ Breaking]** Renamed `isSectionValid` to `getSectionErrors` #7
-* **[⚠️ Breaking]** Renamed `isFieldValid` to `getFieldErrors` #7
+* ⚠️ **[Breaking]** No more default export. please destructure `import {FormGenerator} from '@isobar-us/redux-form-generator'` #5
+* ⚠️ **[Breaking]** Renamed `isSectionValid` to `getSectionErrors` #7
+* ⚠️ **[Breaking]** Renamed `isFieldValid` to `getFieldErrors` #7
 
 ### Added
 
@@ -75,15 +75,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-* **[⚠️ Breaking]** `evalCond()` & `evalCondValid()` no longer take `_parentValue` mixed in with data. You now use `valueKey` option to
+* ⚠️ **[Breaking]** `evalCond()` & `evalCondValid()` no longer take `_parentValue` mixed in with data. You now use `valueKey` option to
   pass the questionId of the value data, and it will `get(data, valueKey)`. (is affected by reduxFormDeep option).
-* **[⚠️ Breaking]** `_value` is the new default `valueKey` for `evalCond()` & `evalCondValid()`
-* **[⚠️ Breaking]** When running any validation helpers like `isSectionValid()`, `evalCondValid()` defaults the `valueKey` to the current
+* ⚠️ **[Breaking]** `_value` is the new default `valueKey` for `evalCond()` & `evalCondValid()`
+* ⚠️ **[Breaking]** When running any validation helpers like `isSectionValid()`, `evalCondValid()` defaults the `valueKey` to the current
   field questionId, not the parent like it used to.
 
 ### Removed
-* **[⚠️ Breaking]** Officially remove field level validation operators in favor of using `conditionalValid` operators
-* **[⚠️ Breaking]** Removed `evalCondRequired()` from default exports, since it's equal to `evalCond()`
+* ⚠️ **[Breaking]** Officially remove field level validation operators in favor of using `conditionalValid` operators
+* ⚠️ **[Breaking]** Removed `evalCondRequired()` from default exports, since it's equal to `evalCond()`
 
 ---
 
@@ -126,7 +126,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## v0.4.0
 
-* **[⚠️ Breaking]**  remove the following field types from defaultFieldTypes, moved to storybook examples.
+* ⚠️ **[Breaking]**  remove the following field types from defaultFieldTypes, moved to storybook examples.
   * `arrayControl`
   * `arrayControlSelect`
   * `checkboxArray`
@@ -187,9 +187,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## v0.3.0
 
-* **[⚠️ Breaking]** split `array` type into `array` and `arrayItem`. includes a new `GenArrayItem` component, and
+* ⚠️ **[Breaking]** split `array` type into `array` and `arrayItem`. includes a new `GenArrayItem` component, and
   modification to `GenArray`.
-* **_[⚠️ Possibly Breaking]_** `value` and `equals` cond ops use `_.isEqual` for deep equal comparison.
+* ⚠️ **_[Possibly Breaking]_** `value` and `equals` cond ops use `_.isEqual` for deep equal comparison.
 * merge validation operators into evalCond() operators. supports `regex` and `length` comparisons among others.
 
 ---
@@ -226,9 +226,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## v0.2.0
 
-* **[⚠️ Breaking]** change `_genNoChildren` to `_genSkipChildren`
-* **[⚠️ Breaking]** change `_genDisplayComponent` to `_genComponent`
-* **[⚠️ Breaking]** use `_genDisplayComponent` for static rendering only
+* ⚠️ **[Breaking]** change `_genNoChildren` to `_genSkipChildren`
+* ⚠️ **[Breaking]** change `_genDisplayComponent` to `_genComponent`
+* ⚠️ **[Breaking]** use `_genDisplayComponent` for static rendering only
 
 ---
 
