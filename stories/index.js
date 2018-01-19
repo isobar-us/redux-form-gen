@@ -99,7 +99,7 @@ storiesOf('FormGenerator', module)
   ))
   .add('empty generator', () => (
     <ExampleForm>
-      <FormGenerator />
+      <FormGenerator fields={[]} />
     </ExampleForm>
   ))
   .add('progressive disclosure', () => {
