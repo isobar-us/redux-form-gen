@@ -3,7 +3,7 @@ import type {FieldType, FieldsType} from './types';
 /**
  * [ValidatorOptions description]
  */
-type ValidatorOptions = {
+type ValidatorOptions = { // eslint-disable-line no-unused-vars
   data: Object,
   customFieldTypes?: Object,
   lookupTable: Object,

@@ -34,17 +34,17 @@ npm install --save @isobar-us/redux-form-gen
 
 ### 🏖 Code Sandboxes 🏖
 
-* [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.7.2/examples/basic)
-* [All Fields Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.7.2/examples/all-fields)
-* [Conditional Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.7.2/examples/conditional)
-* [Wizard Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.7.2/examples/wizard)
-* [Reactstrap Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.7.2/examples/reactstrap) (uses `customFieldTypes`)
+* [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/basic)
+* [All Fields Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/all-fields)
+* [Conditional Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/conditional)
+* [Wizard Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/wizard)
+* [Reactstrap Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/reactstrap) (uses `customFieldTypes`)
 
 ### Simple Usage
 
 ```javascript
 import {reduxForm, Form} from 'redux-form';
-import FormGenerator, {injectGenProps} from '@isobar-us/redux-form-gen';
+import {FormGenerator, injectGenProps} from '@isobar-us/redux-form-gen';
 
 const fields = [
   {
@@ -87,7 +87,7 @@ const MyPage = () => (
 
 ```javascript
 import {reduxForm, Field, Form} from 'redux-form';
-import FormGenerator, {GenericRequiredLabel, injectGenProps} from '@isobar-us/redux-form-gen';
+import {FormGenerator, GenericRequiredLabel, injectGenProps} from '@isobar-us/redux-form-gen';
 
 const SelectField => () => {
   // ... your custom select field implementation

@@ -39,7 +39,7 @@ import type {
  * @return {Boolean}         [description]
  */
 // options = {fields, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
-export const isSectionValid = (options: SectionValidOptions) => {
+export const getSectionErrors = (options: SectionValidOptions) => {
   options = {
     // fields
     // customFieldTypes
@@ -53,7 +53,7 @@ export const isSectionValid = (options: SectionValidOptions) => {
 
   const parentQuestionId = parent && parent.questionId;
 
-  fields.map((field) => isFieldValid({...options, parentQuestionId, field}));
+  fields.map((field) => getFieldErrors({...options, parentQuestionId, field}));
   return errors;
 };
 
@@ -61,7 +61,7 @@ export const INVALID_MESSAGE = 'Invalid Field';
 export const REQUIRED_MESSAGE = 'Required Field';
 
 // options = {field, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
-export const isFieldValid = (options: FieldValidOptions) => {
+export const getFieldErrors = (options: FieldValidOptions) => {
   options = {
     // field
     // customFieldTypes
@@ -75,15 +75,11 @@ export const isFieldValid = (options: FieldValidOptions) => {
     ...options
   };
 
-  const {
-    field,
-    customFieldTypes,
-    pathPrefix,
-    data,
-    parentQuestionId,
-    messages: {requiredMessage, invalidMessage}
-  } = options;
+  const {field, customFieldTypes, pathPrefix, data, parentQuestionId, messages} = options;
   let {errors} = options;
+
+  const requiredMessage = has(field, 'requiredMessage') ? field.requiredMessage : messages.requiredMessage;
+  const invalidMessage = has(field, 'invalidMessage') ? field.invalidMessage : messages.invalidMessage;
 
   const fieldOptions = getFieldOptions({field, customFieldTypes});
 
@@ -99,7 +95,7 @@ export const isFieldValid = (options: FieldValidOptions) => {
           ...(parentQuestionId && {valueKey: parentQuestionId})
         })
       ) {
-        isFieldValid({...options, field: omit(field, 'conditionalVisible')});
+        getFieldErrors({...options, field: omit(field, 'conditionalVisible')});
       }
     } else if (visible) {
       const disabled =
@@ -121,6 +117,7 @@ export const isFieldValid = (options: FieldValidOptions) => {
           }));
 
       if (has(fieldOptions, 'name')) {
+        // TODO doesn't work for <Fields names={...} />
         const path = mergePaths(pathPrefix, fieldOptions.name);
         const value = get(data, path);
 
@@ -161,16 +158,16 @@ export const isFieldValid = (options: FieldValidOptions) => {
         // }
       }
       if (has(field, 'childFields') && Array.isArray(field.childFields)) {
-        isSectionValid({...options, parent: field, fields: field.childFields});
+        getSectionErrors({...options, parent: field, fields: field.childFields});
       }
 
       if (fieldOptions._genTraverseChildren) {
         fieldOptions._genTraverseChildren({
           ...options,
-          iterator: isFieldValid
+          iterator: getFieldErrors
         });
       } else if (has(fieldOptions, '_genChildren') && Array.isArray(fieldOptions._genChildren)) {
-        isSectionValid({...options, parent: field, fields: fieldOptions._genChildren});
+        getSectionErrors({...options, parent: field, fields: fieldOptions._genChildren});
       }
     }
   }

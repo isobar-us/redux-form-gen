@@ -7,7 +7,7 @@ import {reduxForm, reducer as formReducer, isDirty, getFormValues} from 'redux-f
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 
-import FormGenerator, {getDefaultValues, defaultFieldTypes} from '../src';
+import {FormGenerator, getDefaultValues, defaultFieldTypes} from '../src';
 import RadioField from '../src/defaultFieldTypes/components/RadioField';
 import TextField from '../src/defaultFieldTypes/components/TextField';
 import GenArray from '../src/defaultFieldTypes/components/GenArray';
@@ -268,6 +268,24 @@ describe('<FormGenerator/>', () => {
               type: 'arrayItem',
               childFields: [
                 {
+                  type: 'array',
+                  questionId: 'subArray',
+                  defaultValue: [
+                    {
+                      subArray_item_text: ''
+                    }
+                  ],
+                  item: {
+                    type: 'arrayItem',
+                    childFields: [
+                      {
+                        type: 'text',
+                        questionId: 'subArray_item_text'
+                      }
+                    ]
+                  }
+                },
+                {
                   type: 'radio',
                   label: 'one',
                   questionId: 'array_item_vis',
@@ -425,6 +443,11 @@ describe('<FormGenerator/>', () => {
         four: 'no',
         array: [
           {
+            subArray: [
+              {
+                subArray_item_text: ''
+              }
+            ],
             array_item_text: 'something'
           }
         ]
@@ -451,6 +474,11 @@ describe('<FormGenerator/>', () => {
         four: 'no',
         array: [
           {
+            subArray: [
+              {
+                subArray_item_text: ''
+              }
+            ],
             array_item_text: 'something'
           }
         ]

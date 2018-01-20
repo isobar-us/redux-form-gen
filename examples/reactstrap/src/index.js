@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import {createStore, combineReducers} from 'redux';
 import {reducer as formReducer, reduxForm} from 'redux-form';
 import {Provider} from 'react-redux';
-import FormGenerator, {injectGenProps} from '@isobar-us/redux-form-gen';
+import {FormGenerator, injectGenProps} from '@isobar-us/redux-form-gen';
 import '@isobar-us/redux-form-gen/dist/style.css';
 import customFieldTypes from './customFieldTypes';
 

@@ -18,8 +18,8 @@
   * [Type: `group`](#type-group)
   * [Type: `section`](#type-section)
 * [API](#api)
-  * [default export `FormGenerator : React.ComponentType<FormGeneratorProps>`](#default-export-formgenerator--reactcomponenttypeformgeneratorprops)
-  * [`isSectionValid: (options: SectionValidOptions) => Object`](#issectionvalid-options-sectionvalidoptions--object)
+  * [`FormGenerator : React.ComponentType<FormGeneratorProps>`](#formgenerator--reactcomponenttypeformgeneratorprops)
+  * [`getSectionErrors: (options: SectionValidOptions) => Object`](#getsectionerrors-options-sectionvalidoptions--object)
   * [`isSectionFilled: (options: SectionFilledOptions) => boolean`](#issectionfilled-options-sectionfilledoptions--boolean)
   * [`getDefaultValues: (options: GetDefaultValuesOptions) => Object`](#getdefaultvalues-options-getdefaultvaluesoptions--object)
   * [`injectGenProps: (React.ComponentType<ReduxForm>) => React.ComponentType`](#injectgenprops-reactcomponenttypereduxform--reactcomponenttype)
@@ -68,6 +68,7 @@
     * [`_genFieldComponent?: React.ElementType`](#_genfieldcomponent-reactelementtype)
     * [`_genLabelComponent?: React.ElementType`](#_genlabelcomponent-reactelementtype)
     * [`_genComponent?: React.ElementType`](#_gencomponent-reactelementtype)
+    * [`_genWrapperComponent?: React.ElementType`](#_genwrappercomponent-reactelementtype)
     * [`_genChildren?: FieldsType`](#_genchildren-fieldstype)
     * [`_genDefaultValue?: mixed`](#_gendefaultvalue-mixed)
     * [`_genIsFilled?: Function`](#_genisfilled-function)
@@ -142,9 +143,9 @@ Extends [GenericProps](#genericprops). Renders a header for grouping fields.
 
 These are the library exports.
 
-### default export `FormGenerator : React.ComponentType<FormGeneratorProps>`
+### `FormGenerator : React.ComponentType<FormGeneratorProps>`
 
-### `isSectionValid: (options: SectionValidOptions) => Object`
+### `getSectionErrors: (options: SectionValidOptions) => Object`
 
 ### `isSectionFilled: (options: SectionFilledOptions) => boolean`
 
@@ -153,7 +154,7 @@ These are the library exports.
 ### `injectGenProps: (React.ComponentType<ReduxForm>) => React.ComponentType`
 
 does the heavy lifting to validation, defaultValues, and lookupTable. injects props into a reduxForm decorated component
-(`initialValues`, `validate`) and uses `getDefaultValues` and `isSectionValid`
+(`initialValues`, `validate`) and uses `getDefaultValues` and `getSectionErrors`
 
 ### `buildLookupTable: (options: BuildLookupTableOptions) => LookupTable`
 
@@ -171,7 +172,7 @@ genericFieldProps,
 // validators
 isSectionEmpty,
 isFieldFilled,
-isFieldValid,
+getFieldErrors,
 
 // contextUtils
 consumeGenContext,
@@ -215,6 +216,12 @@ GenField
 ### `conditionalRequired?: ConditionalObject`
 
 ### `conditionalDisabled?: ConditionalObject`
+
+### `requiredMessage?: string`
+If the field is required, this will override the global `REQUIRED_MESSAGE`
+
+### `invalidMessage?: string`
+If the field is invalid, this will override the global `INVALID_MESSAGE`
 
 ## `ConditionalObject`
 
@@ -311,6 +318,10 @@ The component to use when rendering the label. Internally uses `GenericRequiredL
 ### `_genComponent?: React.ElementType`
 
 The component to use if you're not rendering a `redux-form` field component (using `_genFieldComponent`)
+
+### `_genWrapperComponent?: React.ElementType`
+
+If provided, it will be passed props from `GenField` as well as the pre-rendered `labelComponent`, `fieldComponent`, and `component`
 
 ### `_genChildren?: FieldsType`
 

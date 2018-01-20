@@ -1,9 +1,9 @@
 {
-  "name": "basic-example",
+  "name": "reactstrap-example",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@isobar-us/redux-form-gen": "0.7.2",
+    "@isobar-us/redux-form-gen": "0.8.1",
     "bootstrap": "3.3.7",
     "react": "16.2.0",
     "react-dom": "16.2.0",

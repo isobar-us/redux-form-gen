@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import type {ComponentType} from 'react';
 import PropTypes from 'prop-types';
-import {isSectionValid} from './validators';
+import {getSectionErrors} from './validators';
 import {buildLookupTable, getDefaultValues} from './utils';
 import type {Props, State} from './injectGenProps.types';
 
@@ -44,7 +44,6 @@ const injectGenProps = (FormComponent: ComponentType<*>) => {
         initialValues: getDefaultValues({
           fields,
           lookupTable,
-          data: initialValues,
           initialValues,
           customFieldTypes
         })
@@ -66,7 +65,7 @@ const injectGenProps = (FormComponent: ComponentType<*>) => {
       //   lookupTable: this.state.lookupTable
       // });
 
-      isSectionValid({
+      getSectionErrors({
         fields,
         customFieldTypes,
         data: formValues,
