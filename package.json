@@ -25,6 +25,7 @@
     "test": "cross-env BABEL_ENV=commonjs jest",
     "test:cov": "npm test -- --coverage",
     "test:watch": "npm test -- --watch",
+    "coverage:report": "cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
     "format": "prettier-eslint \"+(src|stories|__tests__)/**/*.+(js)\" --ignore \"**/bundle.js\" --write",
     "prepublishOnly": "npm run clean && npm run check && npm run build --kill --print",
     "storybook": "start-storybook -p 6006",
@@ -52,6 +53,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "codacy-coverage": "^2.0.3",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0"
   },

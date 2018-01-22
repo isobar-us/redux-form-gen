@@ -1,7 +1,7 @@
 module.exports = {
   coverageDirectory: 'coverage',
   collectCoverage: true,
-  coverageReporters: ['html'],
+  coverageReporters: ['html', 'lcov'],
   collectCoverageFrom: ['src/**/*.{js,jsx}'],
   moduleDirectories: ['node_modules'],
   moduleNameMapper: {
