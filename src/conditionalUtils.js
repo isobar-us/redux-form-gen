@@ -4,7 +4,6 @@ import has from 'lodash/has';
 import hasIn from 'lodash/hasIn';
 import includes from 'lodash/includes';
 import omit from 'lodash/omit';
-import keys from 'lodash/keys';
 import isEqual from 'lodash/isEqual';
 import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
@@ -87,7 +86,7 @@ export const evalCond = (opts: EvalCondOptions) => {
   const value = has(cond, 'questionId')
     ? reduxFormDeep ? get(data, `${cond.questionId}.input.value`) : get(data, cond.questionId)
     : reduxFormDeep ? get(data, `${valueKey}.input.value`) : get(data, valueKey);
-  const conds = keys(omit(cond, 'questionId'));
+  const conds = Object.keys(omit(cond, 'questionId'));
   return conds.length > 0
     ? conds.reduce((result, key) => {
         // will AND all the cond props

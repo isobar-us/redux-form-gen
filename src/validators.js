@@ -7,9 +7,7 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 import has from 'lodash/has';
 import omit from 'lodash/omit';
-import values from 'lodash/values';
 import isPlainObject from 'lodash/isPlainObject';
-import isArray from 'lodash/isArray';
 // import merge from 'lodash/merge';
 
 import {evalCond, evalCondValid} from './conditionalUtils';
@@ -18,7 +16,7 @@ import {mergePaths} from './utils';
 
 export const isNilOrEmpty = (value: mixed) =>
   // $FlowFixMe
-  isNil(value) || isEmpty(trim(value)) || ((isPlainObject(value) || isArray(value)) && isEmpty(value));
+  isNil(value) || isEmpty(trim(value)) || ((isPlainObject(value) || Array.isArray(value)) && isEmpty(value));
 
 // ####################################################
 // # Valid
@@ -311,7 +309,7 @@ export const isSectionEmpty = (data: Object, fields: FieldsType) => {
       }
     } else if (field.fields) {
       if (!Array.isArray(field.fields)) {
-        fieldEmpty = fieldEmpty && isSectionEmpty(data, values(field.fields));
+        fieldEmpty = fieldEmpty && isSectionEmpty(data, Object.values(field.fields));
       }
     }
 

@@ -2,7 +2,6 @@
 import set from 'lodash/set';
 import has from 'lodash/has';
 import isNil from 'lodash/isNil';
-import compact from 'lodash/compact';
 import {getFieldOptions} from './defaultFieldTypes';
 import defaultsDeep from 'lodash/defaultsDeep';
 
@@ -164,7 +163,7 @@ const getDefaultValue = (options: GetDefaultValueOptions) => {
 };
 
 // used to merge existing and null/undefined paths together correctly
-export const mergePaths = (...paths: Array<string>) => compact(paths).join('.');
+export const mergePaths = (...paths: Array<string>) => paths.filter((v) => v).join('.');
 
 // export const traverseStructure = ({iterator, fields, parentField, values, fieldTypes}) => {
 //   fields.map((field) => {
