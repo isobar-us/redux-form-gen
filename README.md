@@ -1,5 +1,6 @@
 # redux-form-gen
 
+[![CircleCI build](https://img.shields.io/circleci/project/github/isobar-us/redux-form-gen/master.svg)]()
 [![NPM Version](https://img.shields.io/npm/v/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
 [![NPM Downloads](https://img.shields.io/npm/dm/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
