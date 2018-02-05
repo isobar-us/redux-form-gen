@@ -15,14 +15,245 @@ import {getFieldOptions} from './defaultFieldTypes';
 import {mergePaths} from './utils';
 
 export const isNilOrEmpty = (value: mixed) =>
+  // TODO doesn't work with NaN? what about Infinity?
   // $FlowFixMe
   isNil(value) || isEmpty(trim(value)) || ((isPlainObject(value) || Array.isArray(value)) && isEmpty(value));
+
+// TODO maybe describe this as `isRenderable` or `canRender`?
+// it can get confusing when it comes to visible/hidden
+/**
+ * [isFieldHidden description]
+ * @param  {[type]}  options [description]
+ * @return {Boolean}         [description]
+ */
+export const isFieldHidden = (options) => {
+  options = {
+    ...options,
+    fieldOptions: resolveFieldOptions(options)
+  };
+  const {fieldOptions} = options;
+  return has(fieldOptions, '_genHidden') ? fieldOptions._genHidden : false;
+};
+
+/**
+ * [isFieldVisible description]
+ * @param  {[type]}  options [description]
+ * @return {Boolean}         [description]
+ */
+export const isFieldVisible = (options) => {
+  options = {
+    ...options,
+    fieldOptions: resolveFieldOptions(options)
+  };
+  const {field, parentQuestionId} = options;
+
+  const hidden = isFieldHidden(options);
+
+  return !hidden && has(field, 'conditionalVisible')
+    ? evalCond({
+        ...options,
+        cond: field.conditionalVisible,
+        ...(parentQuestionId && {valueKey: parentQuestionId})
+      })
+    : true;
+};
+
+/**
+ * [isFieldDisabled description]
+ * @param  {[type]}  options [description]
+ * @return {Boolean}         [description]
+ */
+export const isFieldDisabled = (options) => {
+  const {field, parentQuestionId} = options;
+  let fieldOptions = resolveFieldOptions(options);
+
+  return (has(field, 'disabled') && field.disabled) ||
+    (has(fieldOptions, 'disabled') && fieldOptions.disabled) ||
+    (has(field, 'conditionalDisabled') &&
+      evalCond({
+        ...options,
+        cond: field.conditionalDisabled,
+        ...(parentQuestionId && {valueKey: parentQuestionId})
+      })
+    );
+};
+
+/**
+ * [isFieldRequired description]
+ * the required state takes into account the disabled state of a field
+ * @param  {[type]}  options [description]
+ * @return {Boolean}         [description]
+ */
+export const isFieldRequired = (options) => {
+  const {field, parentQuestionId} = options;
+  let disabled = resolveDisabled(options);
+  // let {disabled} = options;
+  // if (isNil(disabled)) {
+  //   disabled = isFieldDisabled(options);
+  // }
+
+  return (!disabled && (has(field, 'required') && field.required)) ||
+  (has(field, 'conditionalRequired') &&
+    evalCond({
+      ...options,
+      cond: field.conditionalRequired,
+      ...(parentQuestionId && {valueKey: parentQuestionId})
+    }));
+};
+
+/**
+ * [_isFieldFilled description]
+ * @param  {[type]}  options [description]
+ * @return {Boolean}         [description]
+ */
+export const _isFieldFilled = (options) => {
+  const {field, data, pathPrefix} = options;
+  let fieldOptions = resolveFieldOptions(options);
+
+  if (has(fieldOptions, '_genIsFilled')) {
+    return fieldOptions._genIsFilled(options);
+  } else if (has(field, 'questionId')) {
+    const path = mergePaths(pathPrefix, field.questionId); // TODO [test] make sure pathPrefix works
+    const value = get(data, path);
+    return !isNilOrEmpty(value);
+  } else {
+    return true; // default to true if there is no questionId
+  }
+};
+
+/**
+ * [_isFieldEmpty description]
+ * @param  {[type]}  options [description]
+ * @return {Boolean}         [description]
+ */
+export const _isFieldEmpty = (options) => {
+  const {field, data, pathPrefix} = options;
+  let fieldOptions = resolveFieldOptions(options);
+
+  if (has(fieldOptions, '_genIsFilled')) {
+    return !fieldOptions._genIsFilled(options);
+  } else if (has(field, 'questionId')) {
+    const path = mergePaths(pathPrefix, field.questionId); // TODO [test] make sure pathPrefix works
+    const value = get(data, path);
+    return isNilOrEmpty(value);
+  } else {
+    return true; // default to true if there is no questionId
+  }
+};
+
+/**
+ * [_isFieldValid description]
+ * @param  {[type]}  options [description]
+ * @return {Boolean}         [description]
+ */
+export const _isFieldValid = (options) => {
+  const {field} = options;
+  let fieldOptions = resolveFieldOptions(options);
+  let fieldValid = true;
+
+  if (has(fieldOptions, '_genIsValid')) {
+    fieldValid = fieldValid && fieldOptions._genIsValid(options);
+  } else if (has(field, 'conditionalValid')) {
+    fieldValid = fieldValid && evalCondValid({
+      ...options,
+      cond: field.conditionalValid,
+      ...(field.questionId && {valueKey: field.questionId})
+    });
+  }
+
+  return fieldValid;
+};
+
+/**
+ * [mapFieldChildren description]
+ * @param  {[type]} options  [description]
+ * @param  {[type]} iterator [description]
+ * @return {[type]}          [description]
+ */
+export const mapFieldChildren = (options, iterator: Function) => {
+  let fieldOptions = resolveFieldOptions(options);
+  options = omit(options, 'fieldOptions');
+  const {field} = options;
+
+  const parentOptions = {
+    ...(field && {parent: field}),
+    ...(field.questionId && {parentQuestionId: field.questionId})
+  };
+
+  // TODO figure out what to do about childFields in addition to special children, _genSkipChildren
+  // reminder: _genSkipChildren is only to skip render, not skip traversal
+
+  let allChildFields = [];
+  // anything can have childFields
+  if (has(field, 'childFields') && Array.isArray(field.childFields)) {
+    allChildFields = allChildFields.concat(
+      field.childFields.map((field, index) => iterator({
+        ...options,
+        ...parentOptions,
+        field,
+        index
+      }))
+    );
+  }
+
+  // if the fieldOptions specifies additional children, use them too
+  if (fieldOptions._genTraverseChildren) {
+    allChildFields = allChildFields.concat(
+      fieldOptions._genTraverseChildren({
+        ...options,
+        ...parentOptions,
+        iterator
+      })
+    );
+  } else if (has(fieldOptions, '_genChildren') && Array.isArray(fieldOptions._genChildren)) {
+    allChildFields = allChildFields.concat(
+      fieldOptions._genChildren.map((field, index) => iterator({
+        ...options,
+        ...parentOptions,
+        field,
+        index
+      }))
+    );
+  }
+  return allChildFields;
+};
+
+// TODO figure out a way to replicate this pattern better
+/**
+ * [resolve description]
+ * @param  {[type]} property [description]
+ * @param  {[type]} resolver [description]
+ * @param  {[type]} options  [description]
+ * @return {[type]}          [description]
+ */
+export const resolve = (property: string, resolver: Function, options: Object) =>
+  !isNil(options[property]) ? options[property] : resolver(options);
+
+const resolveFieldOptions = (options) => resolve('fieldOptions', getFieldOptions, options);
+const resolveDisabled = (options) => resolve('disabled', isFieldDisabled, options);
+
+// const resolverMap = {
+//   fieldOptions: getFieldOptions,
+//   disabled: isFieldDisabled,
+//   visible: isFieldVisible,
+//   required: isFieldRequired
+// };
+//
+// const resolvers = Object.keys(resolverMap).reduce((resolvers, property) =>
+//   Object.assign(resolvers, {
+//     [property]: (options) => resolve(property, resolverMap[property], options)
+//   })
+// , {});
+//
+// const resolveAll = (props, options) => props.reduce((options, property) =>
+//   Object.assign(options, {
+//     [property]: resolvers[property](options)
+//   })
+// , options);
 
 // ####################################################
 // # Valid
 // ####################################################
-
-import type {FieldsType} from './types';
 
 import type {
   SectionValidOptions,
@@ -38,129 +269,68 @@ export const getSectionErrors = (options: SectionValidOptions) => {
     // customFieldTypes
     // data
     errors: {},
+    deep: true,
     ...options
   };
 
   const {fields, parent} = options;
   let {errors} = options;
 
-  const parentQuestionId = parent && parent.questionId;
+  const parentQuestionId = parent && parent.questionId; // TODO see if this can be removed
 
   fields.map((field) => getFieldErrors({...options, parentQuestionId, field}));
+
   return errors;
 };
 
 export const INVALID_MESSAGE = 'Invalid Field';
 export const REQUIRED_MESSAGE = 'Required Field';
 
-// options = {field, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
 export const getFieldErrors = (options: FieldValidOptions) => {
   options = {
     // field
     // customFieldTypes
     // data
+    deep: false,
     errors: {},
     messages: {
       requiredMessage: REQUIRED_MESSAGE,
       invalidMessage: INVALID_MESSAGE,
       ...options.messages
     },
-    ...options
+    ...options,
+    fieldOptions: resolveFieldOptions(options)
   };
 
-  const {field, customFieldTypes, pathPrefix, data, parentQuestionId, messages} = options;
+  const {field, pathPrefix, messages, deep, fieldOptions} = options;
   let {errors} = options;
 
   const requiredMessage = has(field, 'requiredMessage') ? field.requiredMessage : messages.requiredMessage;
   const invalidMessage = has(field, 'invalidMessage') ? field.invalidMessage : messages.invalidMessage;
 
-  const fieldOptions = getFieldOptions({field, customFieldTypes});
-
   // only parse valid field types
   if (!isNil(fieldOptions)) {
-    const visible = has(fieldOptions, '_genHidden') ? !fieldOptions._genHidden : true;
-
-    if (has(field, 'conditionalVisible')) {
-      if (
-        evalCond({
-          ...options,
-          cond: field.conditionalVisible,
-          ...(parentQuestionId && {valueKey: parentQuestionId})
-        })
-      ) {
-        getFieldErrors({...options, field: omit(field, 'conditionalVisible')});
-      }
-    } else if (visible) {
-      const disabled =
-        (has(field, 'disabled') && field.disabled) ||
-        (has(fieldOptions, 'disabled') && fieldOptions.disabled) ||
-        (has(field, 'conditionalDisabled') &&
-          evalCond({
-            ...options,
-            cond: field.conditionalDisabled,
-            ...(parentQuestionId && {valueKey: parentQuestionId})
-          }));
-      const required =
-        (!disabled && (has(field, 'required') && field.required)) ||
-        (has(field, 'conditionalRequired') &&
-          evalCond({
-            ...options,
-            cond: field.conditionalRequired,
-            ...(parentQuestionId && {valueKey: parentQuestionId})
-          }));
+    if (isFieldVisible(options)) {
+      const disabled = isFieldDisabled(options);
+      const required = isFieldRequired({...options, disabled});
 
       if (has(fieldOptions, 'name')) {
-        // TODO doesn't work for <Fields names={...} />
         const path = mergePaths(pathPrefix, fieldOptions.name);
-        const value = get(data, path);
 
-        if (
-          required === true &&
-          (has(fieldOptions, '_genIsFilled') ? !fieldOptions._genIsFilled(options) : isNilOrEmpty(value))
-        ) {
+        if (required && !_isFieldFilled(options)) {
           set(errors, path, requiredMessage);
-        } else if (has(fieldOptions, '_genIsValid') && !fieldOptions._genIsValid(options)) {
-          set(errors, path, invalidMessage);
-        } else if (has(fieldOptions, '_genSectionErrors')) {
-          fieldOptions._genSectionErrors(options);
-        } else if (
-          has(field, 'conditionalValid') &&
-          !evalCondValid({
-            ...options,
-            cond: field.conditionalValid,
-            ...(field.questionId && {valueKey: field.questionId})
-          })
-        ) {
+        } else if (!_isFieldValid(options)) {
           set(errors, path, invalidMessage);
         }
       } else {
-        // // if there is no questionId, and the is _genIsValid,
-        // // then expect the result of _genIsValid to be an errors object, and merge the result
-        // // this is needed to support multifields
-        // if (has(fieldOptions, '_genIsValid')) {
-        //   const fieldErrors = fieldOptions._genIsValid({
-        //     ...options,
-        //     messages: {
-        //       invalid: invalidMessage,
-        //       required: requiredMessage
-        //     }
-        //   });
-        //   if (!isEmpty(fieldErrors)) {
-        //     merge(errors, fieldErrors);
-        //   }
-        // }
-      }
-      if (has(field, 'childFields') && Array.isArray(field.childFields)) {
-        getSectionErrors({...options, parent: field, fields: field.childFields});
+        // if a field uses `names` then this is how to throw errors
+        if (has(fieldOptions, '_genSectionErrors')) {
+          fieldOptions._genSectionErrors(options);
+        }
       }
 
-      if (fieldOptions._genTraverseChildren) {
-        fieldOptions._genTraverseChildren({
-          ...options,
-          iterator: getFieldErrors
-        });
-      } else if (has(fieldOptions, '_genChildren') && Array.isArray(fieldOptions._genChildren)) {
-        getSectionErrors({...options, parent: field, fields: fieldOptions._genChildren});
+      if (deep) {
+        mapFieldChildren({...options, fieldOptions: null}, getFieldErrors);
       }
     }
   }
@@ -173,146 +343,95 @@ export const getFieldErrors = (options: FieldValidOptions) => {
 
 // options = {field, data, lookupTable, customFieldTypes, parentQuestionId}
 export const isFieldFilled = (options: FieldFilledOptions) => {
-  const {field, parentQuestionId} = options;
+  options = {
+    // field
+    // customFieldTypes
+    // data
+    deep: false,
+    ...options,
+    fieldOptions: resolveFieldOptions(options)
+  };
+  const {deep, fieldOptions} = options;
   let fieldFilled = true;
 
-  if (has(field, 'conditionalVisible')) {
-    if (
-      evalCond({
-        ...options,
-        cond: field.conditionalVisible,
-        ...(parentQuestionId && {valueKey: parentQuestionId})
-      })
-    ) {
-      fieldFilled = fieldFilled && isFieldFilled({...options, field: omit(field, 'conditionalVisible')});
-    }
-  } else {
-    const required =
-      (has(field, 'required') && field.required) ||
-      (has(field, 'conditionalRequired') &&
-        evalCond({
-          ...options,
-          cond: field.conditionalRequired,
-          ...(parentQuestionId && {valueKey: parentQuestionId})
-        }));
+  if (!isNil(fieldOptions)) {
+    if (isFieldVisible(options)) {
+      const disabled = isFieldDisabled(options);
+      const required = isFieldRequired({...options, disabled});
 
-    const fieldOptions = getFieldOptions(options);
+      if (required) {
+        fieldFilled = fieldFilled && _isFieldFilled(options);
+      }
 
-    let conditionalValid = field.conditionalValid || {};
-
-    // TODO: move away from this pattern, try out the _genIsFilled pattern
-    if (required) {
-      if (has(fieldOptions, '_genIsFilled')) {
-        fieldFilled = fieldFilled && fieldOptions._genIsFilled({...options});
-      } else {
-        let conditionalRequiredValid = {
-          filled: true
-        };
-        fieldFilled =
-          fieldFilled &&
-          evalCondValid({
-            ...options,
-            cond: conditionalRequiredValid,
-            ...(field.questionId && {valueKey: field.questionId})
-          });
+      if (deep) {
+        fieldFilled = fieldFilled && mapFieldChildren({...options, fieldOptions: null}, isFieldFilled)
+          .reduce((result, fieldResult) => result && fieldResult, true);
       }
     }
-
-    // console.log('hit standard', field, conditionalValid);
-
-    if (!isEmpty(conditionalValid)) {
-      fieldFilled =
-        fieldFilled &&
-        evalCondValid({
-          ...options,
-          cond: conditionalValid,
-          ...(field.questionId && {valueKey: field.questionId})
-        });
-    }
-
-    // console.log('is field filled', fieldFilled);
-
-    // if (required && has(field, 'conditionalValid')) {
-    //   fieldFilled = fieldFilled && evalConditionalValid(field.conditionalValid, data, valueKey: field.questionId, lookupTable, {shallow: true});
-    // }
-
-    // TODO: not sure if we need this exactly, might push into _genOperators.filled ? similar to _genOperators.valid? or is that just condValid?
-    // if (has(fieldOptions, '_genIsFilled')) {
-    //   fieldFilled = fieldFilled && fieldOptions._genIsFilled({...options, required});
-    // }
-
-    if (has(fieldOptions, '_genTraverseChildren')) {
-      fieldFilled =
-        fieldFilled &&
-        fieldOptions
-          ._genTraverseChildren({
-            ...options,
-            iterator: ({field, ...iteratorOptions}) => isFieldFilled({field, ...iteratorOptions})
-          })
-          .reduce((result, fieldResult) => result && fieldResult, true);
-    } else if (has(fieldOptions, '_genChildren') && Array.isArray(fieldOptions._genChildren)) {
-      fieldFilled = fieldFilled && isSectionFilled({...options, fields: fieldOptions._genChildren, parent: field});
-    }
-
-    // trick to detect arrays?
-    // if (fieldOptions._genFieldComponent === FieldArray && has(fieldOptions, '_genChildren')) {
-    //   console.log('*&*&&*&*&*&*&&* caught array', field);
-    // }
-
-    if (has(field, 'childFields') && Array.isArray(field.childFields)) {
-      fieldFilled = fieldFilled && isSectionFilled({...options, fields: field.childFields, parent: field});
-    }
-
-    // if (has(field, 'childFields') && Array.isArray(field.childFields)) {
-    //   fieldFilled = fieldFilled && isSectionFilled({data, fields: field.childFields, lookupTable, parent: field});
-    // }
   }
+
   return fieldFilled;
 };
 
 // returns true if a section has any fields that have been filled out, false otherwise
 // lookupTable is required if you have fields that are conditionalValid.
-export const isSectionFilled = ({data, fields, lookupTable = {}, parent, ...options}: SectionFilledOptions) => {
-  const parentQuestionId = parent && parent.questionId;
-  return fields.reduce((valid, field) => {
-    return valid && isFieldFilled({...options, field, data, lookupTable, parentQuestionId});
-  }, true);
+export const isSectionFilled = (options: SectionFilledOptions) => {
+  options = {
+    // fields
+    // customFieldTypes
+    // data
+    deep: true,
+    ...options
+  };
+  const {fields, parent} = options;
+
+  const parentQuestionId = parent && parent.questionId; // TODO see if this can be removed
+
+  return fields.reduce((valid, field) => valid && isFieldFilled({...options, parentQuestionId, field}), true);
 };
 
 // ####################################################
 // # Empty
 // ####################################################
 
-// TODO needs rewrite
+export const isFieldEmpty = (options) => {
+  options = {
+    // field
+    // customFieldTypes
+    // data
+    deep: false,
+    ...options,
+    fieldOptions: resolveFieldOptions(options)
+  };
+  const {deep, fieldOptions} = options;
+  let fieldEmpty = true;
 
-// returns true if a section has any fields that have been filled out, false otherwise
-export const isSectionEmpty = (data: Object, fields: FieldsType) => {
-  return fields.reduce((empty, field) => {
-    let fieldEmpty = true;
+  if (!isNil(fieldOptions)) {
+    if (isFieldVisible(options)) {
+      fieldEmpty = _isFieldEmpty(options);
 
-    fieldEmpty =
-      has(field, 'questionId') && has(data, field.questionId) ? isNilOrEmpty(get(data, field.questionId)) : true;
-    if (field.childFields) {
-      fieldEmpty = fieldEmpty && isSectionEmpty(data, field.childFields);
-    } else if (field.columns) {
-      fieldEmpty = fieldEmpty && field.columns.reduce((colEmpty, col) => colEmpty && isSectionEmpty(data, col), true);
-    } else if (field.type === 'sectionArray' || field.type === 'array') {
-      // TODO detect arrays with _genTraverseChildren instead
-      let sectionArray = get(data, field.questionId);
-      if (Array.isArray(sectionArray)) {
-        fieldEmpty =
-          fieldEmpty &&
-          sectionArray.reduce(
-            (sectionValid, sectionValues) => sectionValid && isSectionEmpty({...data, ...sectionValues}, field.fields),
-            true
-          );
-      }
-    } else if (field.fields) {
-      if (!Array.isArray(field.fields)) {
-        fieldEmpty = fieldEmpty && isSectionEmpty(data, Object.values(field.fields));
+      if (deep) {
+        fieldEmpty = fieldEmpty && mapFieldChildren({...options, fieldOptions: null}, isFieldEmpty)
+          .reduce((result, fieldResult) => result && fieldResult, true);
       }
     }
+  }
 
-    return empty && fieldEmpty;
-  }, true);
+  return fieldEmpty;
+};
+
+// returns true if a section has any fields that have been filled out, false otherwise
+export const isSectionEmpty = (options) => {
+  options = {
+    // fields
+    // customFieldTypes
+    // data
+    deep: true,
+    ...options
+  };
+  const {fields, parent} = options;
+
+  const parentQuestionId = parent && parent.questionId; // TODO see if this can be removed
+
+  return fields.reduce((empty, field) => empty && isFieldEmpty({...options, parentQuestionId, field}), true);
 };

@@ -18,6 +18,11 @@ export const buildLookupTable = (options: BuildLookupTableOptions, table: Object
     fields.map((field) => {
       const fieldOptions = getFieldOptions({field, customFieldTypes});
 
+      /* TODO use questionRef for unique ids?
+         - this would allow for multiple fields to reference the same questionId
+         - would need to transform questionRef => questionId when running evalCond using lookupTable?
+      */
+
       if (!isNil(fieldOptions)) {
         // only parse valid field types
         if (field.questionId) {

@@ -16,5 +16,6 @@ module.exports = {
   modulePaths: ['src'],
   testRegex: '(/__tests__/.*\\.spec.js)$',
   verbose: true,
+  setupTestFrameworkScriptFile: './node_modules/jest-enzyme/lib/index.js',
   setupFiles: ['./__tests__/setup', 'raf/polyfill']
 };

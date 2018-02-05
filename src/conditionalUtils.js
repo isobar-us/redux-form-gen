@@ -92,6 +92,7 @@ export const evalCond = (opts: EvalCondOptions) => {
         // will AND all the cond props
         const operator = get(ops, key);
         if (isNil(operator)) {
+          // TODO decide if we really want to throw an error or just a warning to the console.
           throw new Error(`[FormGenerator] Unknown conditional operator "${key}"`);
         }
         const param = get(cond, key);
