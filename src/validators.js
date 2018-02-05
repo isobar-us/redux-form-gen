@@ -14,6 +14,19 @@ import {evalCond, evalCondValid} from './conditionalUtils';
 import {getFieldOptions} from './defaultFieldTypes';
 import {mergePaths} from './utils';
 
+import type {
+  FieldValidatorOptions,
+
+  SectionValidOptions,
+  FieldValidOptions,
+
+  SectionFilledOptions,
+  FieldFilledOptions,
+
+  SectionEmptyOptions,
+  FieldEmptyOptions
+} from './validators.types';
+
 export const isNilOrEmpty = (value: mixed) =>
   // TODO doesn't work with NaN? what about Infinity?
   // $FlowFixMe
@@ -26,7 +39,7 @@ export const isNilOrEmpty = (value: mixed) =>
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const isFieldHidden = (options) => {
+export const isFieldHidden = (options: FieldValidatorOptions) => {
   options = {
     ...options,
     fieldOptions: resolveFieldOptions(options)
@@ -40,7 +53,7 @@ export const isFieldHidden = (options) => {
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const isFieldVisible = (options) => {
+export const isFieldVisible = (options: FieldValidatorOptions) => {
   options = {
     ...options,
     fieldOptions: resolveFieldOptions(options)
@@ -63,7 +76,7 @@ export const isFieldVisible = (options) => {
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const isFieldDisabled = (options) => {
+export const isFieldDisabled = (options: FieldValidatorOptions) => {
   const {field, parentQuestionId} = options;
   let fieldOptions = resolveFieldOptions(options);
 
@@ -84,7 +97,7 @@ export const isFieldDisabled = (options) => {
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const isFieldRequired = (options) => {
+export const isFieldRequired = (options: FieldValidatorOptions) => {
   const {field, parentQuestionId} = options;
   let disabled = resolveDisabled(options);
   // let {disabled} = options;
@@ -106,7 +119,7 @@ export const isFieldRequired = (options) => {
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const _isFieldFilled = (options) => {
+export const _isFieldFilled = (options: FieldValidatorOptions) => {
   const {field, data, pathPrefix} = options;
   let fieldOptions = resolveFieldOptions(options);
 
@@ -126,7 +139,7 @@ export const _isFieldFilled = (options) => {
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const _isFieldEmpty = (options) => {
+export const _isFieldEmpty = (options: FieldValidatorOptions) => {
   const {field, data, pathPrefix} = options;
   let fieldOptions = resolveFieldOptions(options);
 
@@ -146,7 +159,7 @@ export const _isFieldEmpty = (options) => {
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const _isFieldValid = (options) => {
+export const _isFieldValid = (options: FieldValidatorOptions) => {
   const {field} = options;
   let fieldOptions = resolveFieldOptions(options);
   let fieldValid = true;
@@ -170,7 +183,7 @@ export const _isFieldValid = (options) => {
  * @param  {[type]} iterator [description]
  * @return {[type]}          [description]
  */
-export const mapFieldChildren = (options, iterator: Function) => {
+export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Function) => {
   let fieldOptions = resolveFieldOptions(options);
   options = omit(options, 'fieldOptions');
   const {field} = options;
@@ -254,13 +267,6 @@ const resolveDisabled = (options) => resolve('disabled', isFieldDisabled, option
 // ####################################################
 // # Valid
 // ####################################################
-
-import type {
-  SectionValidOptions,
-  FieldValidOptions,
-  SectionFilledOptions,
-  FieldFilledOptions
-} from './validators.types';
 
 // options = {fields, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
 export const getSectionErrors = (options: SectionValidOptions) => {
@@ -394,7 +400,7 @@ export const isSectionFilled = (options: SectionFilledOptions) => {
 // # Empty
 // ####################################################
 
-export const isFieldEmpty = (options) => {
+export const isFieldEmpty = (options: FieldEmptyOptions) => {
   options = {
     // field
     // customFieldTypes
@@ -421,7 +427,7 @@ export const isFieldEmpty = (options) => {
 };
 
 // returns true if a section has any fields that have been filled out, false otherwise
-export const isSectionEmpty = (options) => {
+export const isSectionEmpty = (options: SectionEmptyOptions) => {
   options = {
     // fields
     // customFieldTypes
