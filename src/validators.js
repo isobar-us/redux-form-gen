@@ -32,6 +32,16 @@ export const isNilOrEmpty = (value: mixed) =>
   // $FlowFixMe
   isNil(value) || isEmpty(trim(value)) || ((isPlainObject(value) || Array.isArray(value)) && isEmpty(value));
 
+/**
+ * [getFieldPath description]
+ * @param  {[type]} options [description]
+ * @return {[type]}         [description]
+ */
+export const getFieldPath = (options) => {
+  const {pathPrefix, field} = options;
+  return has(field, 'questionId') ? mergePaths(pathPrefix, field.questionId) : null; // TODO [test] make sure pathPrefix works
+};
+
 // TODO maybe describe this as `isRenderable` or `canRender`?
 // it can get confusing when it comes to visible/hidden
 /**
@@ -120,13 +130,13 @@ export const isFieldRequired = (options: FieldValidatorOptions) => {
  * @return {Boolean}         [description]
  */
 export const _isFieldFilled = (options: FieldValidatorOptions) => {
-  const {field, data, pathPrefix} = options;
+  const {field, data} = options;
   let fieldOptions = resolveFieldOptions(options);
 
   if (has(fieldOptions, '_genIsFilled')) {
     return fieldOptions._genIsFilled(options);
   } else if (has(field, 'questionId')) {
-    const path = mergePaths(pathPrefix, field.questionId); // TODO [test] make sure pathPrefix works
+    const path = getFieldPath(options);
     const value = get(data, path);
     return !isNilOrEmpty(value);
   } else {
@@ -140,13 +150,13 @@ export const _isFieldFilled = (options: FieldValidatorOptions) => {
  * @return {Boolean}         [description]
  */
 export const _isFieldEmpty = (options: FieldValidatorOptions) => {
-  const {field, data, pathPrefix} = options;
+  const {field, data} = options;
   let fieldOptions = resolveFieldOptions(options);
 
   if (has(fieldOptions, '_genIsFilled')) {
     return !fieldOptions._genIsFilled(options);
   } else if (has(field, 'questionId')) {
-    const path = mergePaths(pathPrefix, field.questionId); // TODO [test] make sure pathPrefix works
+    const path = getFieldPath(options);
     const value = get(data, path);
     return isNilOrEmpty(value);
   } else {
@@ -242,8 +252,8 @@ export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Funct
 export const resolve = (property: string, resolver: Function, options: Object) =>
   !isNil(options[property]) ? options[property] : resolver(options);
 
-const resolveFieldOptions = (options) => resolve('fieldOptions', getFieldOptions, options);
-const resolveDisabled = (options) => resolve('disabled', isFieldDisabled, options);
+export const resolveFieldOptions = (options) => resolve('fieldOptions', getFieldOptions, options);
+export const resolveDisabled = (options) => resolve('disabled', isFieldDisabled, options);
 
 // const resolverMap = {
 //   fieldOptions: getFieldOptions,
@@ -308,7 +318,7 @@ export const getFieldErrors = (options: FieldValidOptions) => {
     fieldOptions: resolveFieldOptions(options)
   };
 
-  const {field, pathPrefix, messages, deep, fieldOptions} = options;
+  const {field, messages, deep, fieldOptions} = options;
   let {errors} = options;
 
   const requiredMessage = has(field, 'requiredMessage') ? field.requiredMessage : messages.requiredMessage;
@@ -321,7 +331,7 @@ export const getFieldErrors = (options: FieldValidOptions) => {
       const required = isFieldRequired({...options, disabled});
 
       if (has(fieldOptions, 'name')) {
-        const path = mergePaths(pathPrefix, fieldOptions.name);
+        const path = getFieldPath(options);
 
         if (required && !_isFieldFilled(options)) {
           set(errors, path, requiredMessage);

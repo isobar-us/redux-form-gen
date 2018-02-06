@@ -3,41 +3,26 @@ import {evalCond, evalCondValid, condDependentFields} from '../src/conditionalUt
 import {buildLookupTable} from '../src/utils';
 
 describe('evalCond()', () => {
-  describe('shallow/deep', () => {
-    it('should access deep when reduxFormDeep option is true', () => {
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', equals: 'bar'},
-          data: {foo: {input: {value: 'bar'}}},
-          reduxFormDeep: true
-        })
-      ).toBe(true);
-    });
-    it('should access shallow when reduxFormDeep option is false', () => {
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', equals: 'bar'},
-          data: {foo: 'bar'},
-          reduxFormDeep: false
-        })
-      ).toBe(true);
-    });
-    it('should access shallow when no options passed', () => {
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', equals: 'bar'},
-          data: {foo: 'bar'}
-        })
-      ).toBe(true);
-    });
+  const fooFields = [
+    {
+      type: 'text',
+      questionId: 'foo'
+    }
+  ];
+
+  const fooLookupTable = buildLookupTable({
+    fields: fooFields
+    // customFieldTypes
   });
 
   describe('default cond (filled)', () => {
+    const lookupTable = fooLookupTable;
     it('should return true if remote questionId filled out', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo'},
-          data: {foo: 'bar'}
+          data: {foo: 'bar'},
+          lookupTable
         })
       ).toBe(true);
     });
@@ -46,32 +31,37 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo'},
-          data: {foo: ''}
+          data: {foo: ''},
+          lookupTable
         })
       ).toBe(false);
 
       expect(
         evalCond({
           cond: {questionId: 'foo'},
-          data: {foo: null}
+          data: {foo: null},
+          lookupTable
         })
       ).toBe(false);
 
       expect(
         evalCond({
           cond: {questionId: 'foo'},
-          data: {}
+          data: {},
+          lookupTable
         })
       ).toBe(false);
     });
   });
 
   describe('filled', () => {
+    const lookupTable = fooLookupTable;
     it('should return true if remote questionId filled out', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', filled: true},
-          data: {foo: 'bar'}
+          data: {foo: 'bar'},
+          lookupTable
         })
       ).toBe(true);
     });
@@ -80,21 +70,24 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', filled: true},
-          data: {foo: ''}
+          data: {foo: ''},
+          lookupTable
         })
       ).toBe(false);
 
       expect(
         evalCond({
           cond: {questionId: 'foo', filled: true},
-          data: {foo: null}
+          data: {foo: null},
+          lookupTable
         })
       ).toBe(false);
 
       expect(
         evalCond({
           cond: {questionId: 'foo', filled: true},
-          data: {}
+          data: {},
+          lookupTable
         })
       ).toBe(false);
     });
@@ -103,21 +96,24 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', filled: false},
-          data: {foo: ''}
+          data: {foo: ''},
+          lookupTable
         })
       ).toBe(true);
 
       expect(
         evalCond({
           cond: {questionId: 'foo', filled: false},
-          data: {foo: null}
+          data: {foo: null},
+          lookupTable
         })
       ).toBe(true);
 
       expect(
         evalCond({
           cond: {questionId: 'foo', filled: false},
-          data: {}
+          data: {},
+          lookupTable
         })
       ).toBe(true);
     });
@@ -131,6 +127,7 @@ describe('evalCond()', () => {
   });
 
   describe('valueKey', () => {
+    const lookupTable = fooLookupTable;
     it('should return true if parent filled out', () => {
       expect(
         evalCond({
@@ -146,7 +143,8 @@ describe('evalCond()', () => {
         evalCond({
           cond: {questionId: 'foo'},
           data: {foo: ''},
-          valueKey: 'foo'
+          valueKey: 'foo',
+          lookupTable
         })
       ).toBe(false);
     });
@@ -619,6 +617,77 @@ describe('evalCond()', () => {
         })
       ).toBe(false);
     });
+  });
+
+  describe('email', () => {
+    it('should return true if nil', () => {
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            email: true
+          },
+          data: {}
+        })
+      ).toBe(true);
+
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            regex: true
+          },
+          data: {foo: null}
+        })
+      ).toBe(true);
+    });
+
+    it('should return true if is an email', () => {
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            email: true
+          },
+          data: {foo: 'foo@bar.com'}
+        })
+      ).toBe(true);
+    });
+
+    it('should return false if not an email.', () => {
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            email: true
+          },
+          data: {foo: '123'}
+        })
+      ).toBe(false);
+    });
+
+    // TODO should act like filled (false evals the inverse of the operator)
+    // it('should return inverse', () => {
+    //   expect(
+    //     evalCond({
+    //       cond: {
+    //         questionId: 'foo',
+    //         email: false
+    //       },
+    //       data: {foo: 'foo@bar.com'}
+    //     })
+    //   ).toBe(false);
+    //
+    //   expect(
+    //     evalCond({
+    //       cond: {
+    //         questionId: 'foo',
+    //         email: false
+    //       },
+    //       data: {foo: '123'}
+    //     })
+    //   ).toBe(true);
+    // });
   });
 
   describe('regex', () => {

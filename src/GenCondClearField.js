@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import omit from 'lodash/omit';
 import {consumeGenContext} from './contextUtils';
-import {getDefaultValueHelper} from './utils';
+import {getFieldDefaultValue, hasFieldDefaultValue} from './utils';
 import has from 'lodash/has';
 import isEqual from 'lodash/isEqual';
 
@@ -22,8 +22,8 @@ class GenCondClearField extends Component<Props> {
         if (!skipCache) {
           gen.setCachedValue(name, value);
 
-          const {hasDefaultValue, defaultValue} = getDefaultValueHelper({field, fieldOptions});
-          onChange(hasDefaultValue ? defaultValue : '');
+          const options = {field, fieldOptions};
+          onChange(hasFieldDefaultValue(options) ? getFieldDefaultValue(options) : '');
         }
       }
 
@@ -38,8 +38,8 @@ class GenCondClearField extends Component<Props> {
         // backup current value and clear
         const {condClearProps: {fieldOptions, field}, fields, gen} = nextProps;
         const items = nextProps.fields.getAll();
-        const {hasDefaultValue, defaultValue} = getDefaultValueHelper({field, fieldOptions});
-        const defaultItems = hasDefaultValue && defaultValue ? defaultValue : [];
+        const options = {field, fieldOptions};
+        const defaultItems = hasFieldDefaultValue(options) ? getFieldDefaultValue(options) : [];
 
         gen.setCachedValue(fields.name, items);
         fields.removeAll();
@@ -49,8 +49,8 @@ class GenCondClearField extends Component<Props> {
       if (!visible && nextVisible) {
         const {condClearProps: {fieldOptions, field}, fields, gen} = nextProps;
         const items = gen.getCachedValue(fields.name);
-        const {hasDefaultValue, defaultValue} = getDefaultValueHelper({field, fieldOptions});
-        const defaultItems = hasDefaultValue && defaultValue ? defaultValue : [];
+        const options = {field, fieldOptions};
+        const defaultItems = hasFieldDefaultValue(options) ? getFieldDefaultValue(options) : [];
 
         if (items) {
           // restore old value
