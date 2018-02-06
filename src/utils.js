@@ -89,13 +89,13 @@ export const buildLookupTable = (options: BuildLookupTableOptions, table: Object
   return table;
 };
 
-export const hasFieldDefaultValue = (options) => {
+export const hasFieldDefaultValue = (options: GetDefaultValueOptions) => {
   const {field} = options;
   const fieldOptions = resolveFieldOptions(options);
   return has(field, 'defaultValue') || has(fieldOptions, '_genDefaultValue');
 };
 
-export const getFieldDefaultValue = (options) => {
+export const getFieldDefaultValue = (options: GetDefaultValueOptions) => {
   const {field} = options;
   const fieldOptions = resolveFieldOptions(options);
   return has(field, 'defaultValue') ? field.defaultValue

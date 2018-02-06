@@ -41,9 +41,13 @@ class GenCondClearField extends Component<Props> {
         const options = {field, fieldOptions};
         const defaultItems = hasFieldDefaultValue(options) ? getFieldDefaultValue(options) : [];
 
-        gen.setCachedValue(fields.name, items);
-        fields.removeAll();
-        defaultItems.map((item) => fields.push(item));
+        if (Array.isArray(defaultItems)) {
+          gen.setCachedValue(fields.name, items);
+          fields.removeAll();
+          defaultItems.map((item) => fields.push(item));
+        } else {
+          console.warn('[Form Generator] Default value for a FieldArray is not an array!'); // TODO invariant?
+        }
       }
 
       if (!visible && nextVisible) {
@@ -52,13 +56,17 @@ class GenCondClearField extends Component<Props> {
         const options = {field, fieldOptions};
         const defaultItems = hasFieldDefaultValue(options) ? getFieldDefaultValue(options) : [];
 
-        if (items) {
-          // restore old value
-          fields.removeAll();
-          items.map((item) => fields.push(item));
-        } else if (fields.length === 0 && defaultItems) {
-          // otherwise set the default value
-          defaultItems.map((item) => fields.push(item));
+        if (Array.isArray(defaultItems)) {
+          if (items) {
+            // restore old value
+            fields.removeAll();
+            items.map((item) => fields.push(item));
+          } else if (fields.length === 0 && defaultItems) {
+            // otherwise set the default value
+            defaultItems.map((item) => fields.push(item));
+          }
+        } else {
+          console.warn('[Form Generator] Default value for a FieldArray is not an array!'); // TODO invariant?
         }
       }
     }

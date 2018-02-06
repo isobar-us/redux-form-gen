@@ -37,7 +37,7 @@ export const isNilOrEmpty = (value: mixed) =>
  * @param  {[type]} options [description]
  * @return {[type]}         [description]
  */
-export const getFieldPath = (options) => {
+export const getFieldPath = (options: FieldValidatorOptions) => {
   const {pathPrefix, field} = options;
   return has(field, 'questionId') ? mergePaths(pathPrefix, field.questionId) : null; // TODO [test] make sure pathPrefix works
 };
@@ -252,8 +252,10 @@ export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Funct
 export const resolve = (property: string, resolver: Function, options: Object) =>
   !isNil(options[property]) ? options[property] : resolver(options);
 
-export const resolveFieldOptions = (options) => resolve('fieldOptions', getFieldOptions, options);
-export const resolveDisabled = (options) => resolve('disabled', isFieldDisabled, options);
+export const resolveFieldOptions = (options: FieldValidatorOptions) =>
+  resolve('fieldOptions', getFieldOptions, options);
+export const resolveDisabled = (options: FieldValidatorOptions) =>
+  resolve('disabled', isFieldDisabled, options);
 
 // const resolverMap = {
 //   fieldOptions: getFieldOptions,
