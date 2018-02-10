@@ -48,10 +48,7 @@ describe('index exports', () => {
     ];
 
     // expect all the names to be exactly equal
-    expect(keys(main)).toEqual([
-      '__esModule',
-      ...namedExports
-    ]);
+    expect(keys(main)).toEqual(['__esModule', ...namedExports]);
 
     // expect all named exports to be defined
     namedExports.forEach((namedExport) => {

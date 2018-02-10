@@ -5,8 +5,7 @@ configure({adapter: new Adapter()});
 import {injectGenProps} from '../src';
 
 const propsAtNthRender = (spy, callNumber) => spy.mock.calls[callNumber][0];
-const propsAtLastRender = (spy) =>
-  propsAtNthRender(spy, spy.mock.calls.length - 1);
+const propsAtLastRender = (spy) => propsAtNthRender(spy, spy.mock.calls.length - 1);
 
 import {reduxForm, reducer as formReducer} from 'redux-form';
 import {createStore, combineReducers} from 'redux';
@@ -43,9 +42,7 @@ describe('injectGenProps()', () => {
     const validate = jest.fn();
 
     const FormGen = injectGenProps(FormDecorator);
-    const wrapper = mount(
-      <FormGen fields={[]} initialValues={{}} validate={validate} />
-    );
+    const wrapper = mount(<FormGen fields={[]} initialValues={{}} validate={validate} />);
 
     expect(propsAtLastRender(formRender).initialValues).toBeDefined();
     expect(propsAtLastRender(formRender).initialValues).toEqual({});

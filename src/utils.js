@@ -6,11 +6,7 @@ import {getFieldOptions} from './defaultFieldTypes';
 import defaultsDeep from 'lodash/defaultsDeep';
 import {isFieldHidden, getFieldPath, resolveFieldOptions, mapFieldChildren} from './validators';
 
-import type {
-  BuildLookupTableOptions,
-  GetDefaultValuesOptions,
-  GetDefaultValueOptions
-} from './utils.types';
+import type {BuildLookupTableOptions, GetDefaultValuesOptions, GetDefaultValueOptions} from './utils.types';
 
 export const buildLookupTable = (options: BuildLookupTableOptions, table: Object = {}) => {
   const {fields, customFieldTypes} = options;
@@ -98,9 +94,9 @@ export const hasFieldDefaultValue = (options: GetDefaultValueOptions) => {
 export const getFieldDefaultValue = (options: GetDefaultValueOptions) => {
   const {field} = options;
   const fieldOptions = resolveFieldOptions(options);
-  return has(field, 'defaultValue') ? field.defaultValue
-    : has(fieldOptions, '_genDefaultValue') ? fieldOptions._genDefaultValue
-    : '';
+  return has(field, 'defaultValue')
+    ? field.defaultValue
+    : has(fieldOptions, '_genDefaultValue') ? fieldOptions._genDefaultValue : '';
 };
 
 export const getDefaultValues = (options: GetDefaultValuesOptions) => {

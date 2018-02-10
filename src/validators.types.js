@@ -16,7 +16,7 @@ export type FieldValidatorOptions = {
   field: FieldType,
   fieldOptions?: FieldOptions,
   ...ValidatorOptions
-}
+};
 
 export type SectionValidOptions = {
   fields: FieldsType,

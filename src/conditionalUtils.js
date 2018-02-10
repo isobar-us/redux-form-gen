@@ -114,9 +114,7 @@ export const evalCond = (options: EvalCondOptions) => {
   const {cond, data, elseHandler, valueKey} = options;
 
   // TODO add support for getFieldPath() when doing get(data, path) ?
-  const value = has(cond, 'questionId')
-    ? get(data, cond.questionId)
-    : get(data, valueKey);
+  const value = has(cond, 'questionId') ? get(data, cond.questionId) : get(data, valueKey);
   const conds = Object.keys(omit(cond, 'questionId'));
   return conds.length > 0
     ? conds.reduce((result, key) => {

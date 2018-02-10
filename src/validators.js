@@ -16,13 +16,10 @@ import {mergePaths} from './utils';
 
 import type {
   FieldValidatorOptions,
-
   SectionValidOptions,
   FieldValidOptions,
-
   SectionFilledOptions,
   FieldFilledOptions,
-
   SectionEmptyOptions,
   FieldEmptyOptions
 } from './validators.types';
@@ -90,15 +87,16 @@ export const isFieldDisabled = (options: FieldValidatorOptions) => {
   const {field, parentQuestionId} = options;
   let fieldOptions = resolveFieldOptions(options);
 
-  return (has(field, 'disabled') && field.disabled) ||
+  return (
+    (has(field, 'disabled') && field.disabled) ||
     (has(fieldOptions, 'disabled') && fieldOptions.disabled) ||
     (has(field, 'conditionalDisabled') &&
       evalCond({
         ...options,
         cond: field.conditionalDisabled,
         ...(parentQuestionId && {valueKey: parentQuestionId})
-      })
-    );
+      }))
+  );
 };
 
 /**
@@ -115,13 +113,15 @@ export const isFieldRequired = (options: FieldValidatorOptions) => {
   //   disabled = isFieldDisabled(options);
   // }
 
-  return (!disabled && (has(field, 'required') && field.required)) ||
-  (has(field, 'conditionalRequired') &&
-    evalCond({
-      ...options,
-      cond: field.conditionalRequired,
-      ...(parentQuestionId && {valueKey: parentQuestionId})
-    }));
+  return (
+    (!disabled && (has(field, 'required') && field.required)) ||
+    (has(field, 'conditionalRequired') &&
+      evalCond({
+        ...options,
+        cond: field.conditionalRequired,
+        ...(parentQuestionId && {valueKey: parentQuestionId})
+      }))
+  );
 };
 
 /**
@@ -177,11 +177,13 @@ export const isFieldValid = (options: FieldValidatorOptions) => {
   if (has(fieldOptions, '_genIsValid')) {
     fieldValid = fieldValid && fieldOptions._genIsValid(options);
   } else if (has(field, 'conditionalValid')) {
-    fieldValid = fieldValid && evalCondValid({
-      ...options,
-      cond: field.conditionalValid,
-      ...(field.questionId && {valueKey: field.questionId})
-    });
+    fieldValid =
+      fieldValid &&
+      evalCondValid({
+        ...options,
+        cond: field.conditionalValid,
+        ...(field.questionId && {valueKey: field.questionId})
+      });
   }
 
   // TODO should this take into account _genSectionErrors?
@@ -213,12 +215,14 @@ export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Funct
   // anything can have childFields
   if (has(field, 'childFields') && Array.isArray(field.childFields)) {
     allChildFields = allChildFields.concat(
-      field.childFields.map((field, index) => iterator({
-        ...options,
-        ...parentOptions,
-        field,
-        index
-      }))
+      field.childFields.map((field, index) =>
+        iterator({
+          ...options,
+          ...parentOptions,
+          field,
+          index
+        })
+      )
     );
   }
 
@@ -233,12 +237,14 @@ export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Funct
     );
   } else if (has(fieldOptions, '_genChildren') && Array.isArray(fieldOptions._genChildren)) {
     allChildFields = allChildFields.concat(
-      fieldOptions._genChildren.map((field, index) => iterator({
-        ...options,
-        ...parentOptions,
-        field,
-        index
-      }))
+      fieldOptions._genChildren.map((field, index) =>
+        iterator({
+          ...options,
+          ...parentOptions,
+          field,
+          index
+        })
+      )
     );
   }
   return allChildFields;
@@ -257,8 +263,7 @@ export const resolve = (property: string, resolver: Function, options: Object) =
 
 export const resolveFieldOptions = (options: FieldValidatorOptions) =>
   resolve('fieldOptions', getFieldOptions, options);
-export const resolveDisabled = (options: FieldValidatorOptions) =>
-  resolve('disabled', isFieldDisabled, options);
+export const resolveDisabled = (options: FieldValidatorOptions) => resolve('disabled', isFieldDisabled, options);
 
 // const resolverMap = {
 //   fieldOptions: getFieldOptions,
@@ -383,8 +388,12 @@ export const isSectionFilledIterator = (options: FieldFilledOptions) => {
       }
 
       if (deep) {
-        fieldFilled = fieldFilled && mapFieldChildren({...options, fieldOptions: null}, isSectionFilledIterator)
-          .reduce((result, fieldResult) => result && fieldResult, true);
+        fieldFilled =
+          fieldFilled &&
+          mapFieldChildren({...options, fieldOptions: null}, isSectionFilledIterator).reduce(
+            (result, fieldResult) => result && fieldResult,
+            true
+          );
       }
     }
   }
@@ -428,8 +437,12 @@ export const isSectionEmptyIterator = (options: FieldEmptyOptions) => {
       fieldEmpty = isFieldEmpty(options);
 
       if (deep) {
-        fieldEmpty = fieldEmpty && mapFieldChildren({...options, fieldOptions: null}, isSectionEmptyIterator)
-          .reduce((result, fieldResult) => result && fieldResult, true);
+        fieldEmpty =
+          fieldEmpty &&
+          mapFieldChildren({...options, fieldOptions: null}, isSectionEmptyIterator).reduce(
+            (result, fieldResult) => result && fieldResult,
+            true
+          );
       }
     }
   }

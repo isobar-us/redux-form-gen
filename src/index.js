@@ -14,7 +14,6 @@ import {
   getSectionErrors,
   getSectionErrorsIterator,
   isNilOrEmpty,
-
   getFieldPath,
   isFieldHidden,
   isFieldVisible,
