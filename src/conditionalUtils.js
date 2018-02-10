@@ -8,7 +8,7 @@ import isEqual from 'lodash/isEqual';
 import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
-import {isNilOrEmpty, _isFieldFilled, _isFieldValid} from './validators';
+import {isNilOrEmpty, isFieldFilled, isFieldValid} from './validators';
 
 import type {FieldType} from './types';
 import type {ConditionalOperators, EvalCondOptions, ConditionalObject} from './conditionalUtils.types';
@@ -37,7 +37,7 @@ const ops: ConditionalOperators = {
     if (has(options, 'lookupTable')) {
       const {cond, lookupTable} = options;
       const field = get(lookupTable, cond.questionId);
-      fieldFilled = _isFieldFilled({...options, field});
+      fieldFilled = isFieldFilled({...options, field});
     } else {
       console.warn('[Form Generator] attempted to check `filled` without a lookupTable. Condition:', options.cond); // TODO finalise this warning
       fieldFilled = !isNilOrEmpty(value);
@@ -57,7 +57,7 @@ const ops: ConditionalOperators = {
   //     }
   //   }
   //
-  //   const fieldValid = _isFieldValid({
+  //   const fieldValid = isFieldValid({
   //     ...options,
   //     field
   //   });
@@ -143,7 +143,7 @@ const condValidElseHandler = (options) => {
     }
   }
 
-  return _isFieldValid({
+  return isFieldValid({
     ...options,
     field
   });

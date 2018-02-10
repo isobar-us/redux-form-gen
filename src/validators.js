@@ -125,11 +125,11 @@ export const isFieldRequired = (options: FieldValidatorOptions) => {
 };
 
 /**
- * [_isFieldFilled description]
+ * [isFieldFilled description]
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const _isFieldFilled = (options: FieldValidatorOptions) => {
+export const isFieldFilled = (options: FieldValidatorOptions) => {
   const {field, data} = options;
   let fieldOptions = resolveFieldOptions(options);
 
@@ -145,11 +145,11 @@ export const _isFieldFilled = (options: FieldValidatorOptions) => {
 };
 
 /**
- * [_isFieldEmpty description]
+ * [isFieldEmpty description]
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const _isFieldEmpty = (options: FieldValidatorOptions) => {
+export const isFieldEmpty = (options: FieldValidatorOptions) => {
   const {field, data} = options;
   let fieldOptions = resolveFieldOptions(options);
 
@@ -165,11 +165,11 @@ export const _isFieldEmpty = (options: FieldValidatorOptions) => {
 };
 
 /**
- * [_isFieldValid description]
+ * [isFieldValid description]
  * @param  {[type]}  options [description]
  * @return {Boolean}         [description]
  */
-export const _isFieldValid = (options: FieldValidatorOptions) => {
+export const isFieldValid = (options: FieldValidatorOptions) => {
   const {field} = options;
   let fieldOptions = resolveFieldOptions(options);
   let fieldValid = true;
@@ -183,6 +183,9 @@ export const _isFieldValid = (options: FieldValidatorOptions) => {
       ...(field.questionId && {valueKey: field.questionId})
     });
   }
+
+  // TODO should this take into account _genSectionErrors?
+  // I think should, and check for empty object
 
   return fieldValid;
 };
@@ -335,9 +338,9 @@ export const getFieldErrors = (options: FieldValidOptions) => {
       if (has(fieldOptions, 'name')) {
         const path = getFieldPath(options);
 
-        if (required && !_isFieldFilled(options)) {
+        if (required && !isFieldFilled(options)) {
           set(errors, path, requiredMessage);
-        } else if (!_isFieldValid(options)) {
+        } else if (!isFieldValid(options)) {
           set(errors, path, invalidMessage);
         }
       } else {
@@ -360,7 +363,7 @@ export const getFieldErrors = (options: FieldValidOptions) => {
 // ####################################################
 
 // options = {field, data, lookupTable, customFieldTypes, parentQuestionId}
-export const isFieldFilled = (options: FieldFilledOptions) => {
+export const isSectionFilledIterator = (options: FieldFilledOptions) => {
   options = {
     // field
     // customFieldTypes
@@ -378,11 +381,11 @@ export const isFieldFilled = (options: FieldFilledOptions) => {
       const required = isFieldRequired({...options, disabled});
 
       if (required) {
-        fieldFilled = fieldFilled && _isFieldFilled(options);
+        fieldFilled = fieldFilled && isFieldFilled(options);
       }
 
       if (deep) {
-        fieldFilled = fieldFilled && mapFieldChildren({...options, fieldOptions: null}, isFieldFilled)
+        fieldFilled = fieldFilled && mapFieldChildren({...options, fieldOptions: null}, isSectionFilledIterator)
           .reduce((result, fieldResult) => result && fieldResult, true);
       }
     }
@@ -401,18 +404,16 @@ export const isSectionFilled = (options: SectionFilledOptions) => {
     deep: true,
     ...options
   };
-  const {fields, parent} = options;
+  const {fields} = options;
 
-  const parentQuestionId = parent && parent.questionId; // TODO see if this can be removed
-
-  return fields.reduce((valid, field) => valid && isFieldFilled({...options, parentQuestionId, field}), true);
+  return fields.reduce((valid, field) => valid && isSectionFilledIterator({...options, field}), true);
 };
 
 // ####################################################
 // # Empty
 // ####################################################
 
-export const isFieldEmpty = (options: FieldEmptyOptions) => {
+export const isSectionEmptyIterator = (options: FieldEmptyOptions) => {
   options = {
     // field
     // customFieldTypes
@@ -426,10 +427,10 @@ export const isFieldEmpty = (options: FieldEmptyOptions) => {
 
   if (!isNil(fieldOptions)) {
     if (isFieldVisible(options)) {
-      fieldEmpty = _isFieldEmpty(options);
+      fieldEmpty = isFieldEmpty(options);
 
       if (deep) {
-        fieldEmpty = fieldEmpty && mapFieldChildren({...options, fieldOptions: null}, isFieldEmpty)
+        fieldEmpty = fieldEmpty && mapFieldChildren({...options, fieldOptions: null}, isSectionEmptyIterator)
           .reduce((result, fieldResult) => result && fieldResult, true);
       }
     }
@@ -447,9 +448,7 @@ export const isSectionEmpty = (options: SectionEmptyOptions) => {
     deep: true,
     ...options
   };
-  const {fields, parent} = options;
+  const {fields} = options;
 
-  const parentQuestionId = parent && parent.questionId; // TODO see if this can be removed
-
-  return fields.reduce((empty, field) => empty && isFieldEmpty({...options, parentQuestionId, field}), true);
+  return fields.reduce((empty, field) => empty && isSectionEmptyIterator({...options, field}), true);
 };
