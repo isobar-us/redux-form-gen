@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GenField should log an error if attempting to render a field that is missing a name 1`] = `
+Array [
+  "Form Generator: you must specify a questionId for this field",
+  Object {
+    "type": "text",
+  },
+]
+`;
+
+exports[`GenField should log an error if attempting to render an unknown type 1`] = `
+Array [
+  "Form Generator: unknown field type \\"foo\\". 
+Field:",
+  Object {
+    "type": "foo",
+  },
+  "
+Known Types:",
+  Array [
+    "text",
+    "textarea",
+    "select",
+    "radio",
+    "group",
+    "section",
+    "array",
+    "arrayItem",
+  ],
+]
+`;
+
+exports[`GenField should log an error if attempting to render an unknown type 2`] = `
+Array [
+  "Form Generator: unknown field type \\"foo\\". 
+Field:",
+  Object {
+    "type": "foo",
+  },
+  "
+. skipping render.",
+]
+`;
+
+exports[`GenField should log an error if path is missing 1`] = `
+Array [
+  Array [
+    "Missing path for ",
+    Object {
+      "questionId": "foo",
+      "type": "text",
+    },
+  ],
+  Array [
+    "Missing path for ",
+    Object {
+      "questionId": "foo",
+      "type": "text",
+    },
+  ],
+]
+`;
+
+exports[`GenField should throw an error if not rendered inside a FormGenerator 1`] = `"GenField must be rendered as a child of a <FormGenerator>"`;

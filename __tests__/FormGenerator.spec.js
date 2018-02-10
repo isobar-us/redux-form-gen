@@ -1,7 +1,5 @@
 import React from 'react';
-import {mount, configure} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-configure({adapter: new Adapter()});
+import {mount} from 'enzyme';
 
 import {reduxForm, reducer as formReducer, isDirty, getFormValues} from 'redux-form';
 import {createStore, combineReducers} from 'redux';
@@ -32,18 +30,35 @@ beforeEach(() => {
   store = createStore(reducer, {});
 });
 
+let consoleErrorSpy;
+const startErrorSupression = () => {
+  consoleErrorSpy = jest.spyOn(console, 'error');
+  consoleErrorSpy.mockImplementation(() => {}); // suppress error log
+};
+
+const stopErrorSuppression = () => {
+  consoleErrorSpy.mockReset();
+  consoleErrorSpy.mockRestore();
+};
+
 describe('<FormGenerator/>', () => {
+  it('should throw an error if rendered outside reduxForm', () => {
+    startErrorSupression();
+    expect(() => {
+      mount(<FormGenerator fields={[]} />);
+    }).toThrowErrorMatchingSnapshot();
+    stopErrorSuppression();
+  });
+
   it('should render null when no fields passed, and error on PropTypes', () => {
-    const errorSpy = jest.spyOn(console, 'error');
-    errorSpy.mockImplementation(() => {}); // suppress error log
+    startErrorSupression();
     mount(
       <FormDecorator>
         <FormGenerator />
       </FormDecorator>
     );
-    expect(errorSpy).toHaveBeenCalledTimes(1);
-    errorSpy.mockReset();
-    errorSpy.mockRestore();
+    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+    stopErrorSuppression();
   });
 
   it('should not render any fields', () => {
@@ -408,6 +423,60 @@ describe('<FormGenerator/>', () => {
             array_item_text: 'another'
           }
         ]
+      });
+    });
+
+    it('should allow reset of cachedValues via FormGenerator.clearCachedValues()', () => {
+      const wrapper = mount(
+        <FormDecorator
+          initialValues={getDefaultValues({
+            fields: conditionalStructure,
+            initialValues: {
+              one: 'yes',
+              two: 'yes',
+              three: 'yes',
+              four: 'no',
+              array: [
+                {
+                  array_item_text: 'something'
+                }
+              ]
+            }
+          })}
+        >
+          <FormGenerator fields={conditionalStructure} />
+        </FormDecorator>
+      );
+
+      const one = wrapper.findWhere((n) => n.is(RadioField) && n.props().input.name === 'one');
+
+      let state = store.getState();
+      one.props().input.onChange('no');
+
+      state = store.getState();
+      expect(isDirtySelector(state)).toBe(true);
+      expect(getFormValuesSelector(state)).toEqual({
+        one: 'no',
+        two: '',
+        three: '',
+        four: '',
+        array: []
+      });
+
+      wrapper
+        .find('FormGenerator')
+        .instance()
+        .clearCachedValues();
+
+      one.props().input.onChange('yes');
+      state = store.getState();
+      expect(isDirtySelector(state)).toBe(true);
+      expect(getFormValuesSelector(state)).toEqual({
+        one: 'yes',
+        two: '',
+        three: '',
+        four: '',
+        array: []
       });
     });
 
