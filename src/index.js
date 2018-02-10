@@ -8,11 +8,22 @@ import injectGenProps from './injectGenProps';
 
 import {
   isSectionEmpty,
+  isSectionEmptyIterator,
   isSectionFilled,
-  isFieldFilled,
+  isSectionFilledIterator,
   getSectionErrors,
-  getFieldErrors,
-  isNilOrEmpty
+  getSectionErrorsIterator,
+  isNilOrEmpty,
+
+  getFieldPath,
+  isFieldHidden,
+  isFieldVisible,
+  isFieldRequired,
+  isFieldDisabled,
+  isFieldEmpty,
+  isFieldFilled,
+  isFieldValid,
+  mapFieldChildren
 } from './validators';
 
 import {getDefaultValues, buildLookupTable} from './utils';
@@ -37,11 +48,22 @@ export {
   injectGenProps,
   // validators
   isSectionEmpty,
+  isSectionEmptyIterator,
   isSectionFilled,
-  isFieldFilled,
+  isSectionFilledIterator,
   getSectionErrors,
-  getFieldErrors,
+  getSectionErrorsIterator,
   isNilOrEmpty,
+  // validator utils
+  getFieldPath,
+  isFieldHidden,
+  isFieldVisible,
+  isFieldRequired,
+  isFieldDisabled,
+  isFieldEmpty,
+  isFieldFilled,
+  isFieldValid,
+  mapFieldChildren,
   // utils
   getDefaultValues,
   buildLookupTable,

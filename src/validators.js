@@ -294,12 +294,10 @@ export const getSectionErrors = (options: SectionValidOptions) => {
     ...options
   };
 
-  const {fields, parent} = options;
+  const {fields} = options;
   let {errors} = options;
 
-  const parentQuestionId = parent && parent.questionId; // TODO see if this can be removed
-
-  fields.map((field) => getFieldErrors({...options, parentQuestionId, field}));
+  fields.map((field) => getSectionErrorsIterator({...options, field}));
 
   return errors;
 };
@@ -307,7 +305,7 @@ export const getSectionErrors = (options: SectionValidOptions) => {
 export const INVALID_MESSAGE = 'Invalid Field';
 export const REQUIRED_MESSAGE = 'Required Field';
 
-export const getFieldErrors = (options: FieldValidOptions) => {
+export const getSectionErrorsIterator = (options: FieldValidOptions) => {
   options = {
     // field
     // customFieldTypes
@@ -351,7 +349,7 @@ export const getFieldErrors = (options: FieldValidOptions) => {
       }
 
       if (deep) {
-        mapFieldChildren({...options, fieldOptions: null}, getFieldErrors);
+        mapFieldChildren({...options, fieldOptions: null}, getSectionErrorsIterator);
       }
     }
   }
