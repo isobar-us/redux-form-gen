@@ -58,11 +58,14 @@ class FormGenerator extends Component<Props, State> {
     let path = 'fields';
 
     return fields ? (
-      <GenContext.Provider value={{
-        ...omit(this.props, '_reduxForm'),
-        getCachedValue: this.getCachedValue,
-        setCachedValue: this.setCachedValue
-      }}>
+      <GenContext.Provider
+        value={{
+          ...omit(this.props, '_reduxForm'),
+          getCachedValue: this.getCachedValue,
+          setCachedValue: this.setCachedValue,
+          wasGenerated: true
+        }}
+      >
         <div className='generated-form'>
           {fields.map((field, index) => <GenField key={index} {...{field, path: `${path}[${index}]`}} />)}
         </div>
