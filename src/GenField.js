@@ -133,7 +133,10 @@ class GenField extends Component<Props> {
           <GenCondEval {...{field, path, parentVisible: visible, ...(parentQuestionId && {parentQuestionId})}} />
         ))) || (
         <div
-          /* TODO refactor these divs used to hide for visibility/path. */
+          /* TODO refactor these divs used to hide for visibility/path.
+            maybe get rid of the top-most div, and pass visibility to childFields via props?
+            Then we would just need to focus on hiding individual fields...
+          */
           className={cn('section', {'section--hidden': !visible})}
         >
           {' '}

@@ -7,35 +7,53 @@ describe('index exports', () => {
   });
 
   it('should export the correct named exports', () => {
-    expect(keys(main)).toEqual([
-      '__esModule',
-
+    const namedExports = [
       'FormGenerator',
+      // defaultFieldTypes
       'defaultFieldTypes',
       'getFieldOptions',
       'RequiredIndicator',
       'GenericRequiredLabel',
       'genericFieldProps',
       'injectGenProps',
-
+      // validators
       'isSectionEmpty',
+      'isSectionEmptyIterator',
       'isSectionFilled',
-      'isFieldFilled',
+      'isSectionFilledIterator',
       'getSectionErrors',
-      'getFieldErrors',
+      'getSectionErrorsIterator',
       'isNilOrEmpty',
-
+      // validator utils
+      'getFieldPath',
+      'isFieldHidden',
+      'isFieldVisible',
+      'isFieldRequired',
+      'isFieldDisabled',
+      'isFieldEmpty',
+      'isFieldFilled',
+      'isFieldValid',
+      'mapFieldChildren',
+      // utils
       'getDefaultValues',
       'buildLookupTable',
-
+      // contextUtils
       'consumeGenContext',
       'GenContext',
-
+      // conditionalUtils
       'evalCond',
       'evalCondValid',
-
+      // internals
       'GenField',
       'GenWrapper'
-    ]);
+    ];
+
+    // expect all the names to be exactly equal
+    expect(keys(main)).toEqual(['__esModule', ...namedExports]);
+
+    // expect all named exports to be defined
+    namedExports.forEach((namedExport) => {
+      expect(main[namedExport]).toBeDefined();
+    });
   });
 });

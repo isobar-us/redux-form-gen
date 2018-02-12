@@ -1,5 +1,8 @@
 # redux-form-gen
 
+[![CircleCI build](https://img.shields.io/circleci/project/github/isobar-us/redux-form-gen/master.svg)](https://circleci.com/gh/isobar-us/redux-form-gen)
+[![Codacy grade](https://img.shields.io/codacy/grade/0acc2d14b2a44e40bc9cb1cb3d95a2ae/master.svg)](https://www.codacy.com/app/isobar-us/redux-form-gen?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=isobar-us/redux-form-gen&amp;utm_campaign=Badge_Grade)
+[![Codacy coverage](https://img.shields.io/codacy/coverage/0acc2d14b2a44e40bc9cb1cb3d95a2ae/master.svg)](https://www.codacy.com/app/isobar-us/redux-form-gen?utm_source=github.com&utm_medium=referral&utm_content=isobar-us/redux-form-gen&utm_campaign=Badge_Coverage)
 [![NPM Version](https://img.shields.io/npm/v/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
 [![NPM Downloads](https://img.shields.io/npm/dm/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
