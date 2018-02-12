@@ -6,6 +6,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.9.0] - 2018-02-11
+
+### Changed
+
+* ⚠️ **[Breaking]** `isFieldFilled()` has been renamed to `isSectionFilledIterator()`
+* ⚠️ **[Breaking]** `isFieldEmpty()` has been renamed to `isSectionEmptyIterator()`
+* ⚠️ **[Breaking]** `getFieldErrors()` has been renamed to `getSectionErrorsIterator()`
+
+### Added
+
+* New context API
+  * new export `GenContext` follows the new `createReactContext()` pattern
+* New util functions #13
+  * `isFieldVisible(options)` - runs `field.conditionalVisible`
+  * `isFieldHidden(options)` - checks for `_genHidden`
+  * `isFieldDisabled(options)` - checks `field.disabled` or runs `field.conditionalDisabled`
+  * `isFieldRequired(options)` - checks `field.required` or runs `field.conditionalRequired`. also takes into account the disabled state. a field that is disabled can't be required.
+  * `isFieldFilled(options)` - checks for `_genIsFilled` or runs `!isNilOrEmpty(value)`
+  * `isFieldEmpty(options)` - checks for `!_genIsFilled` or runs `isNilOrEmpty(value)`
+  * `isFieldValid(options)` - checks for `_genIsValid` or runs `field.conditionalValid`
+  * `mapFieldChildren(options, iterator)` - maps over all children (`field.childFields`, `_genChildren`, and `_genTraverseChildren`)
+
 ## [v0.8.1] - 2018-01-17
 
 ### Fixed
@@ -270,8 +292,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.1...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.0...HEAD
 
+[v0.9.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.1...v0.9.0
 [v0.8.1]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.0...v0.8.1
 [v0.8.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.7.2...v0.8.0
 
