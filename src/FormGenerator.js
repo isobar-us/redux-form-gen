@@ -1,8 +1,7 @@
 // @flow
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import {consumeReduxFormContext, genContext} from './contextUtils';
-import Frag from './Frag';
+import {consumeReduxFormContext, GenContext} from './contextUtils';
 
 import GenField from './GenField';
 
@@ -14,17 +13,6 @@ import cloneDeep from 'lodash/cloneDeep';
 import type {Props, State} from './FormGenerator.types';
 
 class FormGenerator extends Component<Props, State> {
-  static childContextTypes = genContext;
-  getChildContext = () => {
-    return {
-      gen: {
-        ...omit(this.props, '_reduxForm'),
-        getCachedValue: this.getCachedValue,
-        setCachedValue: this.setCachedValue
-      }
-    };
-  };
-
   static propTypes = {
     fields: PropTypes.array.isRequired, // an array of field objects
     customQuestionProps: PropTypes.object, // object key = questionId, value = an object of props for the specified questionId's
@@ -70,12 +58,19 @@ class FormGenerator extends Component<Props, State> {
     let path = 'fields';
 
     return fields ? (
-      <Frag>
+      <GenContext.Provider
+        value={{
+          ...omit(this.props, '_reduxForm'),
+          getCachedValue: this.getCachedValue,
+          setCachedValue: this.setCachedValue,
+          wasGenerated: true
+        }}
+      >
         <div className='generated-form'>
           {fields.map((field, index) => <GenField key={index} {...{field, path: `${path}[${index}]`}} />)}
         </div>
         {children}
-      </Frag>
+      </GenContext.Provider>
     ) : null;
   }
 }

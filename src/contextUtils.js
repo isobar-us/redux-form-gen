@@ -1,8 +1,18 @@
 // @flow
-// inspired by
-// https://medium.com/react-ecosystem/how-to-handle-react-context-a7592dfdcbc
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import createReactContext from 'create-react-context';
+export const GenContext = createReactContext({wasGenerated: false});
+
+export const consumeGenContext = (Component: Function) => (props: mixed) => (
+  <GenContext.Consumer>
+    {(gen) => <Component {...props} gen={gen} /> }
+  </GenContext.Consumer>
+);
+
+// inspired by
+// https://medium.com/react-ecosystem/how-to-handle-react-context-a7592dfdcbc
 
 // const provideContext = (childContextTypes, getChildContext) => (WrappedComponent) => {
 //   class ContextProvider extends Component {
@@ -25,17 +35,8 @@ const consumeContext = (contextTypes) => (Component: Function) => {
   return ContextConsumer;
 };
 
-export const genContext = {
-  gen: PropTypes.object
-};
-
 export const reduxFormContext = {
   _reduxForm: PropTypes.object
 };
-// const getGenContext = (props) => ({
-//   gen: props
-// });
 
-// export const provideGenContext = provideContext(genContext, getGenContext);
-export const consumeGenContext = consumeContext(genContext);
 export const consumeReduxFormContext = consumeContext(reduxFormContext);

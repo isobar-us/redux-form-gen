@@ -30,7 +30,7 @@ class GenField extends Component<Props> {
     })
   };
   componentWillMount() {
-    if (isNil(this.props.gen)) {
+    if (isNil(this.props.gen) || !this.props.gen.wasGenerated) {
       throw new Error('GenField must be rendered as a child of a <FormGenerator>');
     }
   }

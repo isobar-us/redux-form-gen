@@ -39,6 +39,7 @@ describe('index exports', () => {
       'buildLookupTable',
       // contextUtils
       'consumeGenContext',
+      'GenContext',
       // conditionalUtils
       'evalCond',
       'evalCondValid',
