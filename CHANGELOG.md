@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.9.3] - 2018-02-13
+
+### Fixed
+
+* Fixed issue where `filled` wperator was not executing if `lookupTable` was provided, but the remote field was not in the table.
+
+## [Unreleased]
+
 ## [v0.9.2] - 2018-02-13
 
 ### Fixed
@@ -306,8 +314,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.2...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.3...HEAD
 
+[v0.9.3]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.2...v0.9.3
 [v0.9.2]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.1...v0.9.2
 [v0.9.1]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.0...v0.9.1
 [v0.9.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.1...v0.9.0

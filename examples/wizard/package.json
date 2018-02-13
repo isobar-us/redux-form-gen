@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@isobar-us/redux-form-gen": "0.9.2",
+    "@isobar-us/redux-form-gen": "0.9.3",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-redux": "5.0.6",
