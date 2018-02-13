@@ -63,3 +63,20 @@ Array [
 `;
 
 exports[`GenField should throw an error if not rendered inside a FormGenerator 1`] = `"GenField must be rendered as a child of a <FormGenerator>"`;
+
+exports[`GenField should warn backup check for filled 1`] = `
+Array [
+  Array [
+    "[Form Generator] attempted to check \`filled\` without a lookupTable. Condition:",
+    Object {
+      "questionId": "bar",
+    },
+  ],
+  Array [
+    "[Form Generator] attempted to check \`filled\` without a lookupTable. Condition:",
+    Object {
+      "questionId": "bar",
+    },
+  ],
+]
+`;

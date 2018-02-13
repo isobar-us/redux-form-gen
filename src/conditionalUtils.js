@@ -21,6 +21,8 @@ import type {ConditionalOperators, EvalCondOptions, ConditionalObject} from './c
 export const isCondField = (field: FieldType) =>
   has(field, 'conditionalVisible') || has(field, 'conditionalRequired') || has(field, 'conditionalDisabled');
 
+const getCondValueKey = ({cond, valueKey}) => (has(cond, 'questionId') ? cond.questionId : valueKey);
+
 /*
   Conditional Operators
  */
@@ -35,9 +37,15 @@ const ops: ConditionalOperators = {
   filled: ({value, param, ...options}) => {
     let fieldFilled = true;
     if (has(options, 'lookupTable')) {
-      const {cond, lookupTable} = options;
-      const field = get(lookupTable, cond.questionId);
-      fieldFilled = isFieldFilled({...options, field});
+      const {lookupTable} = options;
+      const field = get(lookupTable, getCondValueKey(options));
+      if (!isNil(field)) {
+        // if field is defined in the lookupTable, run isFieldFilled()
+        fieldFilled = isFieldFilled({...options, field});
+      } else {
+        // if field is not defined in the lookupTable, just fall back to isNilOrEmpty
+        fieldFilled = !isNilOrEmpty(value);
+      }
     } else {
       console.warn('[Form Generator] attempted to check `filled` without a lookupTable. Condition:', options.cond); // TODO finalise this warning
       fieldFilled = !isNilOrEmpty(value);
@@ -111,10 +119,10 @@ export const evalCond = (options: EvalCondOptions) => {
     valueKey: defaultValueKey,
     ...options
   };
-  const {cond, data, elseHandler, valueKey} = options;
+  const {cond, data, elseHandler} = options;
 
   // TODO add support for getFieldPath() when doing get(data, path) ?
-  const value = has(cond, 'questionId') ? get(data, cond.questionId) : get(data, valueKey);
+  const value = get(data, getCondValueKey(options));
   const conds = Object.keys(omit(cond, 'questionId'));
   return conds.length > 0
     ? conds.reduce((result, key) => {

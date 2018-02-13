@@ -1,6 +1,6 @@
 import React from 'react';
 import {mount} from 'enzyme';
-import {GenField, FormGenerator} from '../src';
+import {GenField, FormGenerator, GenContext} from '../src';
 
 import {reduxForm, reducer as formReducer} from 'redux-form';
 import {createStore, combineReducers} from 'redux';
@@ -15,10 +15,12 @@ const Form = reduxForm({
 // const isDirtySelector = isDirty('testForm');
 // const getFormValuesSelector = getFormValues('testForm');
 
-const FormGenDecorator = ({children, ...props}) => (
+const FormGenDecorator = ({children, formProps, genProps}) => (
   <Provider store={store}>
-    <Form {...props}>
-      <FormGenerator fields={[]}>{children}</FormGenerator>
+    <Form {...formProps}>
+      <FormGenerator fields={[]} {...genProps}>
+        {children}
+      </FormGenerator>
     </Form>
   </Provider>
 );
@@ -29,14 +31,19 @@ beforeEach(() => {
 });
 
 let consoleErrorSpy;
+let consoleWarnSpy;
 const startErrorSupression = () => {
   consoleErrorSpy = jest.spyOn(console, 'error');
   consoleErrorSpy.mockImplementation(() => {}); // suppress error log
+  consoleWarnSpy = jest.spyOn(console, 'warn');
+  consoleWarnSpy.mockImplementation(() => {}); // suppress warn log
 };
 
 const stopErrorSuppression = () => {
   consoleErrorSpy.mockReset();
   consoleErrorSpy.mockRestore();
+  consoleWarnSpy.mockReset();
+  consoleWarnSpy.mockRestore();
 };
 
 describe('GenField', () => {
@@ -55,9 +62,10 @@ describe('GenField', () => {
         <GenField field={{type: 'foo'}} path='fields[0]' />
       </FormGenDecorator>
     );
+    expect(consoleWarnSpy.mock.calls.length).toBe(0);
+    expect(consoleErrorSpy.mock.calls.length).toBe(2);
     expect(consoleErrorSpy.mock.calls[0]).toMatchSnapshot(); // getFieldOptions error
     expect(consoleErrorSpy.mock.calls[1]).toMatchSnapshot(); // GenField error
-    expect(consoleErrorSpy.mock.calls.length).toBe(2);
     stopErrorSuppression();
   });
 
@@ -68,8 +76,9 @@ describe('GenField', () => {
         <GenField field={{type: 'text'}} path='fields[0]' />
       </FormGenDecorator>
     );
-    expect(consoleErrorSpy.mock.calls[0]).toMatchSnapshot(); // getFieldOptions error
+    expect(consoleWarnSpy.mock.calls.length).toBe(0);
     expect(consoleErrorSpy.mock.calls.length).toBe(1);
+    expect(consoleErrorSpy.mock.calls[0]).toMatchSnapshot(); // getFieldOptions error
     stopErrorSuppression();
   });
 
@@ -80,8 +89,96 @@ describe('GenField', () => {
         <GenField field={{type: 'text', questionId: 'foo'}} />
       </FormGenDecorator>
     );
-    expect(consoleErrorSpy.mock.calls).toMatchSnapshot(); // path error
+    expect(consoleWarnSpy.mock.calls.length).toBe(0);
     expect(consoleErrorSpy.mock.calls.length).toBe(2);
+    expect(consoleErrorSpy.mock.calls).toMatchSnapshot(); // path error
     stopErrorSuppression();
+  });
+
+  it('should warn backup check for filled', () => {
+    const fooField = {
+      type: 'text',
+      questionId: 'foo',
+      conditionalVisible: {
+        questionId: 'bar'
+      }
+    };
+
+    startErrorSupression();
+    mount(
+      <Provider store={store}>
+        <Form>
+          <GenContext.Provider value={{wasGenerated: true}}>
+            <GenField field={fooField} path='fields[0]' />
+          </GenContext.Provider>
+        </Form>
+      </Provider>
+    );
+    expect(consoleWarnSpy.mock.calls.length).toBe(2);
+    expect(consoleErrorSpy.mock.calls.length).toBe(0);
+    expect(consoleWarnSpy.mock.calls).toMatchSnapshot();
+    stopErrorSuppression();
+  });
+
+  it('should use the field type def for _genIsFilled', () => {
+    const customFieldTypes = {
+      bar: () => ({
+        _genIsFilled: () => true
+      })
+    };
+    const fooField = {
+      type: 'text',
+      questionId: 'foo',
+      conditionalVisible: {
+        questionId: 'bar'
+      }
+    };
+
+    const barField = {
+      type: 'bar',
+      questionId: 'bar'
+    };
+    const wrapper = mount(
+      <FormGenDecorator
+        genProps={{
+          lookupTable: {
+            bar: barField
+          },
+          customFieldTypes
+        }}
+      >
+        <GenField field={fooField} path='fields[0]' />
+      </FormGenDecorator>
+    );
+
+    expect(wrapper.find('.section--hidden').length).toBe(0);
+  });
+
+  it('should use backup check for filled', () => {
+    const customFieldTypes = {
+      bar: () => ({
+        _genIsFilled: () => true
+      })
+    };
+
+    const fooField = {
+      type: 'text',
+      questionId: 'foo',
+      conditionalVisible: {
+        questionId: 'bar'
+      }
+    };
+
+    const wrapper = mount(
+      <FormGenDecorator
+        genProps={{
+          customFieldTypes
+        }}
+      >
+        <GenField field={fooField} path='fields[0]' />
+      </FormGenDecorator>
+    );
+
+    expect(wrapper.find('.section--hidden').length).toBe(1);
   });
 });
