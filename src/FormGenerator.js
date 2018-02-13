@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {consumeReduxFormContext, GenContext} from './contextUtils';
+import {buildLookupTable} from './utils';
 
 import GenField from './GenField';
 
@@ -51,7 +52,20 @@ class FormGenerator extends Component<Props, State> {
     if (!this.props._reduxForm) {
       throw new Error('FormGenerator must be inside a component decorated with reduxForm()');
     }
+
+    this.storeLookupTable(this.props);
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.fields !== nextProps.fields) {
+      this.storeLookupTable(nextProps);
+    }
+  }
+
+  storeLookupTable = (props) =>
+    this.setState({
+      lookupTable: props.lookupTable || buildLookupTable(props)
+    });
 
   render() {
     let {fields, children} = this.props;
@@ -63,7 +77,8 @@ class FormGenerator extends Component<Props, State> {
           ...omit(this.props, '_reduxForm'),
           getCachedValue: this.getCachedValue,
           setCachedValue: this.setCachedValue,
-          wasGenerated: true
+          wasGenerated: true,
+          ...(this.state.lookupTable && {lookupTable: this.state.lookupTable})
         }}
       >
         <div className='generated-form'>

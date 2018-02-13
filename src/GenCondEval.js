@@ -14,7 +14,15 @@ import {Props} from './GenCondEval.types';
 // TODO move this logic into GenField connect() ?
 class GenCondEval extends Component<Props> {
   render() {
-    const {field, parentQuestionId, parentVisible, path, gen: {customFieldTypes}, formValues: data} = this.props;
+    const {field, parentQuestionId, parentVisible, path, gen: {customFieldTypes, lookupTable}, data} = this.props;
+
+    const options = {
+      data,
+      customFieldTypes,
+      ...(lookupTable && {lookupTable}),
+      ...(parentQuestionId && {valueKey: parentQuestionId})
+    };
+
     return (
       <GenField
         {...{
@@ -24,26 +32,20 @@ class GenCondEval extends Component<Props> {
             parentVisible &&
             (field.conditionalVisible
               ? evalCond({
-                  cond: field.conditionalVisible,
-                  data,
-                  customFieldTypes,
-                  ...(parentQuestionId && {valueKey: parentQuestionId})
+                  ...options,
+                  cond: field.conditionalVisible
                 })
               : true),
           required: field.conditionalRequired
             ? evalCond({
-                cond: field.conditionalRequired,
-                data,
-                customFieldTypes,
-                ...(parentQuestionId && {valueKey: parentQuestionId})
+                ...options,
+                cond: field.conditionalRequired
               })
             : false,
           disabled: field.conditionalDisabled
             ? evalCond({
-                cond: field.conditionalDisabled,
-                data,
-                customFieldTypes,
-                ...(parentQuestionId && {valueKey: parentQuestionId})
+                ...options,
+                cond: field.conditionalDisabled
               })
             : false
         }}
@@ -63,7 +65,7 @@ export default consumeReduxFormContext(
       const mergedData = {...formValues, ...sectionPrefixValues};
 
       return {
-        formValues: names.reduce((values, name) => set(values, name, get(mergedData, name)), {})
+        data: names.reduce((values, name) => set(values, name, get(mergedData, name)), {})
       };
     })(GenCondEval)
   )
