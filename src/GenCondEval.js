@@ -14,11 +14,19 @@ import {Props} from './GenCondEval.types';
 // TODO move this logic into GenField connect() ?
 class GenCondEval extends Component<Props> {
   render() {
-    const {field, parentQuestionId, parentVisible, path, gen: {customFieldTypes, lookupTable}, data} = this.props;
+    const {
+      field,
+      parentQuestionId,
+      parentVisible,
+      path,
+      gen: {customFieldTypes, customOperators, lookupTable},
+      data
+    } = this.props;
 
     const options = {
       data,
       customFieldTypes,
+      customOperators,
       ...(lookupTable && {lookupTable}),
       ...(parentQuestionId && {valueKey: parentQuestionId})
     };

@@ -2,6 +2,22 @@ import {evalCond, evalCondValid, condDependentFields} from '../src/conditionalUt
 
 import {buildLookupTable} from '../src/utils';
 
+let consoleErrorSpy;
+let consoleWarnSpy;
+const startErrorSupression = () => {
+  consoleErrorSpy = jest.spyOn(console, 'error');
+  consoleErrorSpy.mockImplementation(() => {}); // suppress error log
+  consoleWarnSpy = jest.spyOn(console, 'warn');
+  consoleWarnSpy.mockImplementation(() => {}); // suppress warn log
+};
+
+const stopErrorSuppression = () => {
+  consoleErrorSpy.mockReset();
+  consoleErrorSpy.mockRestore();
+  consoleWarnSpy.mockReset();
+  consoleWarnSpy.mockRestore();
+};
+
 describe('evalCond()', () => {
   const fooFields = [
     {
@@ -688,6 +704,110 @@ describe('evalCond()', () => {
     //     })
     //   ).toBe(true);
     // });
+  });
+
+  describe('compare', () => {
+    it('should compare one questionId to another questionId', () => {
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            compare: {
+              equals: 'bar'
+            }
+          },
+          data: {
+            foo: 50,
+            bar: 50
+          }
+        })
+      ).toBe(true);
+
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            compare: {
+              lessThan: 'bar'
+            }
+          },
+          data: {
+            foo: 50,
+            bar: 50
+          }
+        })
+      ).toBe(false);
+    });
+
+    it('should eval conds in the data', () => {
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            compare: {
+              cond: 'barCond'
+            }
+          },
+          data: {
+            foo: 50,
+            barCond: {
+              questionId: 'foo',
+              equals: 50
+            }
+          }
+        })
+      ).toBe(true);
+    });
+  });
+
+  describe('cond', () => {
+    it('should return true if foo === "bar"', () => {
+      expect(
+        evalCond({
+          cond: {cond: {questionId: 'foo', equals: 'bar'}},
+          data: {foo: 'bar'}
+        })
+      ).toBe(true);
+    });
+
+    it('should return false if foo !== "bar"', () => {
+      expect(
+        evalCond({
+          cond: {cond: {questionId: 'foo', equals: 'bar'}},
+          data: {foo: 'baz'}
+        })
+      ).toBe(false);
+    });
+  });
+
+  describe('customOperators', () => {
+    it('should console.error if missing operator', () => {
+      startErrorSupression();
+      expect(
+        evalCond({
+          cond: {questionId: 'foo', barOp: true},
+          data: {foo: 'bar'}
+        })
+      ).toBe(true);
+      expect(consoleErrorSpy).toBeCalled();
+      expect(consoleErrorSpy.mock.calls).toMatchSnapshot();
+      stopErrorSuppression();
+    });
+
+    it('should use customOperators', () => {
+      startErrorSupression();
+      expect(
+        evalCond({
+          cond: {questionId: 'foo', barOp: true},
+          data: {foo: 'baz'},
+          customOperators: {
+            barOp: ({value, param}) => (param ? value === 'bar' : true)
+          }
+        })
+      ).toBe(false);
+      expect(consoleErrorSpy).not.toBeCalled();
+      stopErrorSuppression();
+    });
   });
 
   describe('regex', () => {
