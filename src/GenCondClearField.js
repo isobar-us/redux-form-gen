@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import omit from 'lodash/omit';
 import {consumeGenContext} from './contextUtils';
-import {getFieldDefaultValue, hasFieldDefaultValue} from './utils';
+import {getFieldDefaultValue, hasFieldDefaultValue, getGenContextOptions} from './utils';
 import has from 'lodash/has';
 import isEqual from 'lodash/isEqual';
 
@@ -26,7 +26,7 @@ class GenCondClearField extends Component<Props> {
         if (!skipCache) {
           gen.setCachedValue(name, value);
 
-          const options = {field, fieldOptions};
+          const options = {...getGenContextOptions(gen), field, fieldOptions};
           onChange(hasFieldDefaultValue(options) ? getFieldDefaultValue(options) : '');
         }
       }
@@ -42,7 +42,7 @@ class GenCondClearField extends Component<Props> {
         // backup current value and clear
         const {condClearProps: {fieldOptions, field}, fields, gen} = nextProps;
         const items = nextProps.fields.getAll();
-        const options = {field, fieldOptions};
+        const options = {...getGenContextOptions(gen), field, fieldOptions};
         const defaultItems = hasFieldDefaultValue(options) ? getFieldDefaultValue(options) : [];
 
         if (Array.isArray(defaultItems)) {
@@ -57,7 +57,7 @@ class GenCondClearField extends Component<Props> {
       if (!visible && nextVisible) {
         const {condClearProps: {fieldOptions, field}, fields, gen} = nextProps;
         const items = gen.getCachedValue(fields.name);
-        const options = {field, fieldOptions};
+        const options = {...getGenContextOptions(gen), field, fieldOptions};
         const defaultItems = hasFieldDefaultValue(options) ? getFieldDefaultValue(options) : [];
 
         if (Array.isArray(defaultItems)) {

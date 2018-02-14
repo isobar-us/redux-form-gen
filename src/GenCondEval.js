@@ -8,26 +8,18 @@ import set from 'lodash/set';
 import GenField from './GenField';
 import omit from 'lodash/omit';
 import {evalCond} from './conditionalUtils';
+import {getGenContextOptions} from './utils';
 
 import {Props} from './GenCondEval.types';
 
 // TODO move this logic into GenField connect() ?
 class GenCondEval extends Component<Props> {
   render() {
-    const {
-      field,
-      parentQuestionId,
-      parentVisible,
-      path,
-      gen: {customFieldTypes, customOperators, lookupTable},
-      data
-    } = this.props;
+    const {field, parentQuestionId, parentVisible, path, data} = this.props;
 
     const options = {
       data,
-      customFieldTypes,
-      customOperators,
-      ...(lookupTable && {lookupTable}),
+      ...getGenContextOptions(this.props.gen),
       ...(parentQuestionId && {valueKey: parentQuestionId})
     };
 

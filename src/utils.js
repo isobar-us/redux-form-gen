@@ -2,17 +2,22 @@
 import set from 'lodash/set';
 import has from 'lodash/has';
 import isNil from 'lodash/isNil';
+import pick from 'lodash/pick';
 import {getFieldOptions} from './defaultFieldTypes';
 import defaultsDeep from 'lodash/defaultsDeep';
 import {isFieldHidden, getFieldPath, resolveFieldOptions, mapFieldChildren} from './validators';
 
 import type {BuildLookupTableOptions, GetDefaultValuesOptions, GetDefaultValueOptions} from './utils.types';
+import type {GenContextProps} from './contextUtils.types';
+
+export const getGenContextOptions = (gen: GenContextProps) =>
+  pick(gen, ['customFieldTypes', 'customOperators', 'lookupTable']);
 
 export const buildLookupTable = (options: BuildLookupTableOptions, table: Object = {}) => {
-  const {fields, customFieldTypes} = options;
+  const {fields} = options;
   if (fields) {
     fields.map((field) => {
-      const fieldOptions = getFieldOptions({field, customFieldTypes});
+      const fieldOptions = getFieldOptions({...options, field});
 
       /* TODO use questionRef for unique ids?
          - this would allow for multiple fields to reference the same questionId
