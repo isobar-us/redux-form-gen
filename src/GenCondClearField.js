@@ -9,9 +9,13 @@ import isEqual from 'lodash/isEqual';
 import type {Props} from './GenCondClearField.types';
 
 class GenCondClearField extends Component<Props> {
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Props) {
     const {condClearProps: {visible}} = this.props;
-    const {condClearProps: {visible: nextVisible}} = nextProps;
+    const {condClearProps: {visible: nextVisible, fieldOptions}} = nextProps;
+
+    if (fieldOptions._genSkipCache) {
+      return;
+    }
 
     if (has(nextProps, 'input')) {
       if (visible && !nextVisible) {

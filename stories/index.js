@@ -136,9 +136,9 @@ storiesOf('FormGenerator', module)
   .add('with custom types', () => {
     const exampleStructure = [
       {
-        label: 'bar',
+        label: 'Bar',
         type: 'text',
-        questionId: 'Bar'
+        questionId: 'bar'
       },
       {
         type: 'foo'
@@ -147,9 +147,19 @@ storiesOf('FormGenerator', module)
         type: 'checkbox',
         questionId: 'baz',
         label: 'Baz'
+      },
+      {
+        type: 'persistText',
+        questionId: 'persist',
+        label: 'persist text',
+        conditionalVisible: {
+          questionId: 'bar',
+          equals: 'bar'
+        }
       }
     ];
     const exampleFieldTypes = {
+      ...customFieldTypes,
       checkbox: checkboxType,
       foo: () => ({
         _genComponent: () => <span>A FOO</span>

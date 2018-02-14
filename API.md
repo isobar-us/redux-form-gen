@@ -391,6 +391,10 @@ Use the provided `iterator` to traverse over complex children.
 
 skip rendering of `childFields`
 
+### `_genSkipCache?: boolean`
+
+skip clearing/restoring the field value when change in visibility happens
+
 ### `_genHidden?: boolean`
 
 skip rendering of this field and all it's children.
