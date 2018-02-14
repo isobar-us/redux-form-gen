@@ -217,6 +217,7 @@ Extends `GenericProps`. Renders a header for grouping fields.
 | `_genSectionErrors`                     | func      | `fn({errors, data, field, lookupTable, customFieldTypes}) => void` set in `errors`                    |
 | `_genTraverseChildren`                  | func      | `fn({iterator, data, lookupTable}) => something.map((field) => iterator({field, data, lookupTable}))` |
 | `_genSkipChildren`                      | bool      | skip rendering of `childFields`                                                                       |
+| `_genSkipCache`                         | bool      | skip clear/restore functionality from `FormGenerator` cache                                           |
 | `_genHidden`                            | bool      | skip rendering of this field and all it's children.                                                   |
 | ...                                     | ...       | ...                                                                                                   |
 | any other props for `<Field>` component | any       | `name`, `names`, `component` etc...                                                                   |
