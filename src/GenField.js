@@ -7,6 +7,7 @@ import has from 'lodash/has';
 import startsWith from 'lodash/startsWith';
 import omitBy from 'lodash/omitBy';
 import isNil from 'lodash/isNil';
+import pick from 'lodash/pick';
 
 import {consumeGenContext} from './contextUtils';
 import GenCondEval from './GenCondEval';
@@ -58,7 +59,10 @@ class GenField extends Component<Props> {
   render() {
     const {gen, field, parentQuestionId, visible = true, /* disabled = false, */ path} = this.props || {};
 
-    const fieldOptions = getFieldOptions({...this.props, customFieldTypes: this.props.gen.customFieldTypes});
+    const fieldOptions = getFieldOptions({
+      ...this.props,
+      ...pick(gen, ['customFieldTypes', 'customOperators', 'lookupTable'])
+    });
     if (isNil(fieldOptions)) {
       console.error(`Form Generator: unknown field type "${field.type}". \nField:`, field, '\n. skipping render.');
       return null;

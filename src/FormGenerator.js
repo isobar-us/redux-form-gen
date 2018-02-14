@@ -19,6 +19,7 @@ class FormGenerator extends Component<Props, State> {
     customQuestionProps: PropTypes.object, // object key = questionId, value = an object of props for the specified questionId's
     visibleDepth: PropTypes.string, // dot-notation string, used to rendering fields after this path (startsWith)
     customFieldTypes: PropTypes.objectOf(PropTypes.func),
+    customOperators: PropTypes.objectOf(PropTypes.func),
     display: PropTypes.oneOf(['stacked', 'inline']),
     disabled: PropTypes.bool // if true, disables all fields in the form
   };
