@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.9.4] - 2018-02-14
+
+### Added
+
+* `_genSkipCache` field option to opt-out of the clear/restore functionality when a field changes visibility #17
+* `compare` operator to compare the value of one questionId to another questionId #18
+* `cond` operator to run conditional objects (useful in combination with `compare`) #18
+* `customOperators` prop for `<FormGenerator />` and all utils. Allows you to specify you own operators for conditional objects. #18
+
 ## [v0.9.3] - 2018-02-13
 
 ### Fixed
@@ -314,12 +323,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.3...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.4...HEAD
 
+[v0.9.4]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.3...v0.9.4
 [v0.9.3]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.2...v0.9.3
 [v0.9.2]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.1...v0.9.2
 [v0.9.1]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.0...v0.9.1
 [v0.9.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.1...v0.9.0
+
 [v0.8.1]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.0...v0.8.1
 [v0.8.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.7.2...v0.8.0
 
