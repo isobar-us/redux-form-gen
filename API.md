@@ -41,6 +41,7 @@
     * [`customQuestionProps?: { [key: string]: Object }`](#customquestionprops--key-string-object-)
     * [`visibleDepth?: string`](#visibledepth-string)
     * [`customFieldTypes?: CustomFieldTypes`](#customfieldtypes-customfieldtypes)
+    * [`customOperators?: CustomOperators`](#customoperators-customoperators)
     * [`display?: 'stacked' | 'inline'`](#display-stacked--inline)
     * [`disabled?: boolean`](#disabled-boolean)
     * [`lookupTable: LookupTable`](#lookuptable-lookuptable)
@@ -88,6 +89,7 @@
     * [`_genSectionErrors?: Function`](#_gensectionerrors-function)
     * [`_genTraverseChildren?: Function`](#_gentraversechildren-function)
     * [`_genSkipChildren?: boolean`](#_genskipchildren-boolean)
+    * [`_genSkipCache?: boolean`](#_genskipcache-boolean)
     * [`_genHidden?: boolean`](#_genhidden-boolean)
     * [(...) props for `_genFieldComponent`](#-props-for-_genfieldcomponent)
 
@@ -228,6 +230,8 @@ GenField
 ### `visibleDepth?: string`
 
 ### `customFieldTypes?: CustomFieldTypes`
+
+### `customOperators?: CustomOperators`
 
 ### `display?: 'stacked' | 'inline'`
 
