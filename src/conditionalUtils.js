@@ -71,6 +71,32 @@ const ops: ConditionalOperators = {
   //   });
   //   return param === true ? fieldValid : !fieldValid;
   // },
+  compare: (options) => {
+    const {value, param, data} = options;
+
+    const conds = Object.keys(omit(param, ['questionId']));
+    return conds.length > 0
+      ? conds.reduce((result, key) => {
+          // will AND all the cond props
+          const operator = get(ops, key);
+          if (isNil(operator)) {
+            // TODO should throw?
+            console.warn(`[FormGenerator] Unknown conditional operator "${key}". Condition:`, options.cond);
+          }
+          const remoteQuestionId = get(param, key);
+          const compareParam = get(
+            data,
+            getCondValueKey({
+              ...options,
+              cond: {
+                ...(remoteQuestionId && {questionId: remoteQuestionId})
+              }
+            })
+          );
+          return result && operator({...options, value, param: compareParam});
+        }, true)
+      : true;
+  },
   // lodash
   includes: ({value, param}) => includes(value, param),
   // comparison
@@ -129,6 +155,7 @@ export const evalCond = (options: EvalCondOptions) => {
         // will AND all the cond props
         const operator = get(ops, key);
         if (isNil(operator)) {
+          // TODO should throw?
           console.warn(`[FormGenerator] Unknown conditional operator "${key}". Condition:`, options.cond);
         }
         const param = get(cond, key);

@@ -690,6 +690,60 @@ describe('evalCond()', () => {
     // });
   });
 
+  describe('compare', () => {
+    it('should compare one questionId to another questionId', () => {
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            compare: {
+              equals: 'bar'
+            }
+          },
+          data: {
+            foo: 50,
+            bar: 50
+          }
+        })
+      ).toBe(true);
+
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            compare: {
+              lessThan: 'bar'
+            }
+          },
+          data: {
+            foo: 50,
+            bar: 50
+          }
+        })
+      ).toBe(false);
+    });
+
+    it('should eval conds in the data', () => {
+      expect(
+        evalCond({
+          cond: {
+            questionId: 'foo',
+            compare: {
+              cond: 'barCond'
+            }
+          },
+          data: {
+            foo: 50,
+            barCond: {
+              questionId: 'foo',
+              equals: 50
+            }
+          }
+        })
+      ).toBe(true);
+    });
+  });
+
   describe('regex', () => {
     it('should return true if nil', () => {
       expect(
