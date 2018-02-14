@@ -71,6 +71,7 @@ const ops: ConditionalOperators = {
   //   });
   //   return param === true ? fieldValid : !fieldValid;
   // },
+  cond: ({value, param, ...options}) => evalCond({...options, cond: param}),
   compare: (options) => {
     const {value, param, data} = options;
 
