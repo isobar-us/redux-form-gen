@@ -37,11 +37,11 @@ npm install --save @isobar-us/redux-form-gen
 
 ### 🏖 Code Sandboxes 🏖
 
-* [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.4/examples/basic)
-* [All Fields Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.4/examples/all-fields)
-* [Conditional Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.4/examples/conditional)
-* [Wizard Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.4/examples/wizard)
-* [Reactstrap Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.4/examples/reactstrap) (uses `customFieldTypes`)
+* [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.5/examples/basic)
+* [All Fields Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.5/examples/all-fields)
+* [Conditional Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.5/examples/conditional)
+* [Wizard Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.5/examples/wizard)
+* [Reactstrap Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.5/examples/reactstrap) (uses `customFieldTypes`)
 
 ### Simple Usage
 

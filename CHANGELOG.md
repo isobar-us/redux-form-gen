@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.9.5] - 2018-02-14
+
+### Fixed
+
+* pass `customOperators` and `lookupTable` down to `getFieldOptions()`
+
 ## [v0.9.4] - 2018-02-14
 
 ### Added
@@ -323,8 +329,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.4...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.5...HEAD
 
+[v0.9.5]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.4...v0.9.5
 [v0.9.4]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.3...v0.9.4
 [v0.9.3]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.2...v0.9.3
 [v0.9.2]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.1...v0.9.2
