@@ -1,8 +1,10 @@
-import type {FieldType, FieldsType, FieldOptions} from './types';
+import type {FieldType, FieldsType, FieldOptions, CustomFieldTypes} from './types';
+import type {CustomOperators} from './conditionalUtils.types';
 
 type ValidatorOptions = {
   data: Object,
-  customFieldTypes?: Object,
+  customFieldTypes?: CustomFieldTypes,
+  customOperators?: CustomOperators,
   lookupTable: Object,
   pathPrefix?: string,
   parentQuestionId?: string,

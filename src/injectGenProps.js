@@ -11,6 +11,7 @@ const injectGenProps = (FormComponent: ComponentType<*>) => {
     static propTypes = {
       fields: PropTypes.array.isRequired,
       customFieldTypes: PropTypes.object,
+      customOperators: PropTypes.object,
       initialValues: PropTypes.object
     };
 
@@ -27,6 +28,7 @@ const injectGenProps = (FormComponent: ComponentType<*>) => {
       if (
         this.props.fields !== nextProps.fields ||
         this.props.customFieldTypes !== nextProps.customFieldTypes ||
+        this.props.customOperators !== nextProps.customOperators ||
         this.props.initialValues !== nextProps.initialValues
       ) {
         this.calculateState(nextProps);
@@ -34,7 +36,7 @@ const injectGenProps = (FormComponent: ComponentType<*>) => {
     }
 
     calculateState = (props: Props) => {
-      const {initialValues = {}, fields, customFieldTypes = {}} = props;
+      const {initialValues = {}, fields, customFieldTypes, customOperators} = props;
       const lookupTable = buildLookupTable({fields, customFieldTypes});
       this.setState({
         lookupTable,
@@ -42,36 +44,29 @@ const injectGenProps = (FormComponent: ComponentType<*>) => {
           fields,
           lookupTable,
           initialValues,
-          customFieldTypes
+          customFieldTypes,
+          customOperators
         })
       });
     };
 
     validate = (formValues: Object, props: Props) => {
       let errors = {};
-      const {fields, customFieldTypes, validate} = this.props;
+      const {fields, customFieldTypes, customOperators, validate} = this.props;
 
       if (validate) {
         errors = validate(formValues, props);
       }
 
-      // const isFilled = isSectionFilled({
-      //   data: formValues,
-      //   fields,
-      //   customFieldTypes,
-      //   lookupTable: this.state.lookupTable
-      // });
-
       getSectionErrors({
         fields,
         customFieldTypes,
+        customOperators,
         data: formValues,
         lookupTable: this.state.lookupTable,
         errors
       });
-      // if (!isFilled) {
-      //   errors._error = 'Missing Required Fields';
-      // }
+
       return errors;
     };
 

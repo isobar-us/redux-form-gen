@@ -23,6 +23,16 @@ export const isCondField = (field: FieldType) =>
 
 const getCondValueKey = ({cond, valueKey}) => (has(cond, 'questionId') ? cond.questionId : valueKey);
 
+const getOperator = (options, key) => {
+  const {customOperators} = options;
+  const operators = {...ops, ...(customOperators || {})};
+  const op = get(operators, key);
+  if (isNil(op)) {
+    console.error(`[FormGenerator] Unknown conditional operator "${key}". Condition:`, options.cond);
+  }
+  return op;
+};
+
 /*
   Conditional Operators
  */
@@ -33,6 +43,32 @@ const ops: ConditionalOperators = {
     param.reduce((and, subCond) => and && evalCond({...options, cond: subCond}), true),
   or: ({value, param, ...options}) => param.reduce((or, subCond) => or || evalCond({...options, cond: subCond}), false),
   not: ({value, param, ...options}) => !evalCond({...options, cond: param}),
+  cond: ({value, param, ...options}) => evalCond({...options, cond: param}),
+  compare: (options) => {
+    const {value, param, data} = options;
+
+    const conds = Object.keys(omit(param, ['questionId']));
+    return conds.length > 0
+      ? conds.reduce((result, key) => {
+          // will AND all the cond props
+          const operator = getOperator(options, key);
+          if (isNil(operator)) {
+            return true;
+          }
+          const remoteQuestionId = get(param, key);
+          const compareParam = get(
+            data,
+            getCondValueKey({
+              ...options,
+              cond: {
+                ...(remoteQuestionId && {questionId: remoteQuestionId})
+              }
+            })
+          );
+          return result && operator({...options, value, param: compareParam});
+        }, true)
+      : true;
+  },
   // generator hooks
   filled: ({value, param, ...options}) => {
     let fieldFilled = true;
@@ -71,33 +107,6 @@ const ops: ConditionalOperators = {
   //   });
   //   return param === true ? fieldValid : !fieldValid;
   // },
-  cond: ({value, param, ...options}) => evalCond({...options, cond: param}),
-  compare: (options) => {
-    const {value, param, data} = options;
-
-    const conds = Object.keys(omit(param, ['questionId']));
-    return conds.length > 0
-      ? conds.reduce((result, key) => {
-          // will AND all the cond props
-          const operator = get(ops, key);
-          if (isNil(operator)) {
-            // TODO should throw?
-            console.warn(`[FormGenerator] Unknown conditional operator "${key}". Condition:`, options.cond);
-          }
-          const remoteQuestionId = get(param, key);
-          const compareParam = get(
-            data,
-            getCondValueKey({
-              ...options,
-              cond: {
-                ...(remoteQuestionId && {questionId: remoteQuestionId})
-              }
-            })
-          );
-          return result && operator({...options, value, param: compareParam});
-        }, true)
-      : true;
-  },
   // lodash
   includes: ({value, param}) => includes(value, param),
   // comparison
@@ -154,10 +163,9 @@ export const evalCond = (options: EvalCondOptions) => {
   return conds.length > 0
     ? conds.reduce((result, key) => {
         // will AND all the cond props
-        const operator = get(ops, key);
+        const operator = getOperator(options, key);
         if (isNil(operator)) {
-          // TODO should throw?
-          console.warn(`[FormGenerator] Unknown conditional operator "${key}". Condition:`, options.cond);
+          return true;
         }
         const param = get(cond, key);
         return result && operator({...options, value, param});

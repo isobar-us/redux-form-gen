@@ -1,4 +1,5 @@
 import type {FieldsType, CustomFieldTypes} from './types';
+import type {CustomOperators} from './conditionalUtils.types';
 import type {LookupTable} from './utils.types';
 
 export type Props = {
@@ -8,6 +9,7 @@ export type Props = {
   },
   visibleDepth?: string,
   customFieldTypes?: CustomFieldTypes,
+  customOperators?: CustomOperators,
   display?: 'stacked' | 'inline',
   disabled?: boolean,
   lookupTable: LookupTable
