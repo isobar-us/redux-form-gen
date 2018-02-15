@@ -176,7 +176,8 @@ export const isFieldValid = (options: FieldValidatorOptions) => {
 
   if (has(fieldOptions, '_genIsValid')) {
     fieldValid = fieldValid && fieldOptions._genIsValid(options);
-  } else if (has(field, 'conditionalValid')) {
+  }
+  if (has(field, 'conditionalValid')) {
     fieldValid =
       fieldValid &&
       evalCondValid({
