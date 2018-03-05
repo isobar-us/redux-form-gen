@@ -347,11 +347,10 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
         } else if (!isFieldValid(options)) {
           set(errors, path, invalidMessage);
         }
-      } else {
-        // if a field uses `names` then this is how to throw errors
-        if (has(fieldOptions, '_genSectionErrors')) {
-          fieldOptions._genSectionErrors(options);
-        }
+      }
+
+      if (has(fieldOptions, '_genSectionErrors')) {
+        fieldOptions._genSectionErrors(options);
       }
 
       if (deep) {
