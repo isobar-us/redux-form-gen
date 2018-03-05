@@ -6,9 +6,7 @@ import createReactContext from 'create-react-context';
 export const GenContext = createReactContext({wasGenerated: false});
 
 export const consumeGenContext = (Component: Function) => (props: mixed) => (
-  <GenContext.Consumer>
-    {(gen) => <Component {...props} gen={gen} /> }
-  </GenContext.Consumer>
+  <GenContext.Consumer>{(gen) => <Component {...props} gen={gen} />}</GenContext.Consumer>
 );
 
 // inspired by
