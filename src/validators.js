@@ -133,7 +133,7 @@ export const isFieldFilled = (options: FieldValidatorOptions) => {
   const {field, data} = options;
   let fieldOptions = resolveFieldOptions(options);
 
-  if (has(fieldOptions, '_genIsFilled')) {
+  if (has(fieldOptions, '_genIsFilled') && !isNil(fieldOptions._genIsFilled)) {
     return fieldOptions._genIsFilled(options);
   } else if (has(field, 'questionId')) {
     const path = getFieldPath(options);
@@ -153,7 +153,7 @@ export const isFieldEmpty = (options: FieldValidatorOptions) => {
   const {field, data} = options;
   let fieldOptions = resolveFieldOptions(options);
 
-  if (has(fieldOptions, '_genIsFilled')) {
+  if (has(fieldOptions, '_genIsFilled') && !isNil(fieldOptions._genIsFilled)) {
     return !fieldOptions._genIsFilled(options);
   } else if (has(field, 'questionId')) {
     const path = getFieldPath(options);
@@ -174,7 +174,7 @@ export const isFieldValid = (options: FieldValidatorOptions) => {
   let fieldOptions = resolveFieldOptions(options);
   let fieldValid = true;
 
-  if (has(fieldOptions, '_genIsValid')) {
+  if (has(fieldOptions, '_genIsValid') && !isNil(fieldOptions._genIsValid)) {
     fieldValid = fieldValid && fieldOptions._genIsValid(options);
   }
   if (has(field, 'conditionalValid')) {
