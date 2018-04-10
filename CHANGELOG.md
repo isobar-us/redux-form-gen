@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.9.9] - 2018-04-10
+
+## Fixed
+
+* Prevented internal bleed of `fieldOptions` between util functions
+* Fixed detection of `_genHidden` in `isFieldVisible()`
+
 ## [v0.9.8] - 2018-03-06
 
 ### Fixed
@@ -348,8 +355,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.8...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.9...HEAD
 
+[v0.9.9]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.8...v0.9.9
 [v0.9.8]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.7...v0.9.8
 [v0.9.7]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.6...v0.9.7
 [v0.9.6]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.5...v0.9.6
