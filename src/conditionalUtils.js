@@ -77,7 +77,7 @@ const ops: ConditionalOperators = {
       const field = get(lookupTable, getCondValueKey(options));
       if (!isNil(field)) {
         // if field is defined in the lookupTable, run isFieldFilled()
-        fieldFilled = isFieldFilled({...options, field});
+        fieldFilled = isFieldFilled({...options, field, fieldOptions: null});
       } else {
         // if field is not defined in the lookupTable, just fall back to isNilOrEmpty
         fieldFilled = !isNilOrEmpty(value);
@@ -103,7 +103,8 @@ const ops: ConditionalOperators = {
   //
   //   const fieldValid = isFieldValid({
   //     ...options,
-  //     field
+  //     field,
+  //     fieldOptions: null,
   //   });
   //   return param === true ? fieldValid : !fieldValid;
   // },
@@ -176,10 +177,12 @@ export const evalCond = (options: EvalCondOptions) => {
 const condValidElseHandler = (options) => {
   const {cond, lookupTable} = options;
   let field = options.field;
+  let fieldOptions = null;
 
   if (has(cond, 'questionId')) {
     if (has(options, 'lookupTable')) {
       field = get(lookupTable, cond.questionId);
+      fieldOptions = null;
     } else {
       console.warn('[Form Generator] attempted to check `valid` without a lookupTable. Condition:', options.cond); // TODO finalise this warning
     }
@@ -187,7 +190,8 @@ const condValidElseHandler = (options) => {
 
   return isFieldValid({
     ...options,
-    field
+    field,
+    fieldOptions
   });
 
   // TODO hook into experimental `valid` operator when ready

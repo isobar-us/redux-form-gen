@@ -68,6 +68,9 @@ export const isFieldVisible = (options: FieldValidatorOptions) => {
   const {field, parentQuestionId} = options;
 
   const hidden = isFieldHidden(options);
+  if (hidden) {
+    return false;
+  }
 
   return !hidden && has(field, 'conditionalVisible')
     ? evalCond({
