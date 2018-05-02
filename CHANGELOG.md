@@ -6,9 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.9.10] - 2018-05-02
+
+### Added
+
+* Internal values cache will now clear if form is reset.
+
+### Fixed
+
+* Performance has been increased by adding some update checks
+* Moved internal values cache out of state (perf)
+* Moved context into state (perf)
+
 ## [v0.9.9] - 2018-04-10
 
-## Fixed
+### Fixed
 
 * Prevented internal bleed of `fieldOptions` between util functions
 * Fixed detection of `_genHidden` in `isFieldVisible()`
@@ -355,8 +367,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.9...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.10...HEAD
 
+[v0.9.10]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.9...v0.9.10
 [v0.9.9]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.8...v0.9.9
 [v0.9.8]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.7...v0.9.8
 [v0.9.7]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.6...v0.9.7
