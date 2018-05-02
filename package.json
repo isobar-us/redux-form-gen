@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "create-react-context": "^0.1.4",
+    "create-react-context": "^0.2.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0"
   },

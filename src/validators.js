@@ -307,7 +307,6 @@ export const getSectionErrors = (options: SectionValidOptions) => {
   let {errors} = options;
 
   fields.map((field) => getSectionErrorsIterator({...options, field}));
-
   return errors;
 };
 
@@ -357,7 +356,7 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
       }
 
       if (deep) {
-        mapFieldChildren({...options, fieldOptions: null}, getSectionErrorsIterator);
+        mapFieldChildren(options, getSectionErrorsIterator);
       }
     }
   }

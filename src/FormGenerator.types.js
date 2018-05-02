@@ -16,5 +16,6 @@ export type Props = {
 };
 
 export type State = {
-  cachedValues: Object
+  wasGenerated: true,
+  lookupTable: Object | null
 };

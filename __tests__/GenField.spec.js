@@ -114,7 +114,7 @@ describe('GenField', () => {
         </Form>
       </Provider>
     );
-    expect(consoleWarnSpy.mock.calls.length).toBe(2);
+    expect(consoleWarnSpy.mock.calls.length).toBe(1);
     expect(consoleErrorSpy.mock.calls.length).toBe(0);
     expect(consoleWarnSpy.mock.calls).toMatchSnapshot();
     stopErrorSuppression();

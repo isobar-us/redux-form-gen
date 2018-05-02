@@ -156,3 +156,52 @@ const getDefaultValue = (options: GetDefaultValueOptions) => {
 
 // used to merge existing and null/undefined paths together correctly
 export const mergePaths = (...paths: Array<string>) => paths.filter((v) => v).join('.');
+
+// https://github.com/mapbox/mapbox-gl-js/blob/7e87d7c05c541f98e06df2bc08b96e931ace9549/src/util/util.js#L296-L314
+export const isDeepEqual = function(a: ?mixed, b: ?mixed): boolean {
+  if (Array.isArray(a)) {
+    if (!Array.isArray(b) || a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+      if (!isDeepEqual(a[i], b[i])) return false;
+    }
+    return true;
+  }
+  if (typeof a === 'object' && a !== null && b !== null) {
+    if (!(typeof b === 'object')) return false;
+    const keys = Object.keys(a);
+    if (keys.length !== Object.keys(b).length) return false;
+    for (const key in a) {
+      if (!isDeepEqual(a[key], b[key])) return false;
+    }
+    return true;
+  }
+  return a === b;
+};
+
+export function isShallowEqual(a: Object, b: Object) {
+  for (let key in a) if (!(key in b) || a[key] !== b[key]) return false;
+
+  for (let key in b) if (!(key in a) || a[key] !== b[key]) return false;
+
+  return true;
+}
+
+// used for testing perf
+export const shallowDiff = (a: Object, b: Object, breakOnFirst: boolean = false) => {
+  for (let key in a) {
+    if (!(key in b) || a[key] !== b[key]) {
+      console.warn(key, a[key], b[key]);
+      if (breakOnFirst) {
+        return;
+      }
+    }
+  }
+  for (let key in b) {
+    if (!(key in a) || a[key] !== b[key]) {
+      console.warn(key, a[key], b[key]);
+      if (breakOnFirst) {
+        return;
+      }
+    }
+  }
+};

@@ -72,11 +72,5 @@ Array [
       "questionId": "bar",
     },
   ],
-  Array [
-    "[Form Generator] attempted to check \`filled\` without a lookupTable. Condition:",
-    Object {
-      "questionId": "bar",
-    },
-  ],
 ]
 `;
