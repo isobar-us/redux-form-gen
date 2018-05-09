@@ -8,7 +8,8 @@ import set from 'lodash/set';
 import GenField from './GenField';
 import omit from 'lodash/omit';
 import {evalCond} from './conditionalUtils';
-import {getGenContextOptions, isDeepEqual} from './utils';
+import {getGenContextOptions} from './utils';
+import isDeepEqual from 'react-fast-compare';
 
 import {Props} from './GenCondEval.types';
 
