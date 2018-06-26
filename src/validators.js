@@ -347,18 +347,20 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
 
         if (required && !isFieldFilled(options)) {
           set(errors, path, requiredMessage);
-          onSetError && onSetError({
-            type: 'required',
-            path,
-            message: requiredMessage
-          });
+          onSetError &&
+            onSetError({
+              type: 'required',
+              path,
+              message: requiredMessage
+            });
         } else if (!isFieldValid(options)) {
           set(errors, path, invalidMessage);
-          onSetError && onSetError({
-            type: 'invalid',
-            path,
-            message: invalidMessage
-          });
+          onSetError &&
+            onSetError({
+              type: 'invalid',
+              path,
+              message: invalidMessage
+            });
         }
       }
 
