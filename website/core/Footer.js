@@ -23,19 +23,13 @@ class Footer extends React.Component {
           </a>
           <div>
             <h5>Docs</h5>
-            <a href={`${this.props.config.baseUrl}docs/${this.props.language}/getting-started.html`}>
-              Getting Started
-            </a>
-            <a href={`${this.props.config.baseUrl}docs/${this.props.language}/examples.html`}>
-              Examples
-            </a>
-            <a href={`${this.props.config.baseUrl}docs/${this.props.language}/api.html`}>
-              API Reference
-            </a>
+            <a href={`${this.props.config.baseUrl}docs/getting-started.html`}>Getting Started</a>
+            <a href={`${this.props.config.baseUrl}docs/examples.html`}>Examples</a>
+            <a href={`${this.props.config.baseUrl}docs/api.html`}>API Reference</a>
           </div>
           <div>
             <h5>Community</h5>
-            <a href={`${this.props.config.baseUrl + this.props.language}/users.html`}>User Showcase</a>
+            <a href={`${this.props.config.baseUrl}users.html`}>User Showcase</a>
             <a href='https://stackoverflow.com/questions/tagged/redux-form-gen' target='_blank'>
               Stack Overflow
             </a>
