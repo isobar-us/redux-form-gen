@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.9.11] - 2018-06-27
+
+### Added
+
+* New `onSetError` event listener for the `getSectionErrors()` function. #21
+* replaced a custom shallow diff function with `react-fast-compare` for better performance.
+
 ## [v0.9.10] - 2018-05-02
 
 ### Added
@@ -65,8 +72,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Fixed issue where `filled` wperator was not executing if `lookupTable` was provided, but the remote field was not in the table.
 
-## [Unreleased]
-
 ## [v0.9.2] - 2018-02-13
 
 ### Fixed
@@ -82,6 +87,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [v0.9.0] - 2018-02-11
 
 🚨 Use v0.9.1 🚨
+
+---
 
 ### Changed
 
@@ -128,7 +135,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ---
 
-## [v0.7.2] - 2017-21-20
+## [v0.7.2] - 2017-12-20
 
 ### Added
 
@@ -367,8 +374,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.10...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.11...HEAD
 
+[v0.9.11]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.10...v0.9.11
 [v0.9.10]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.9...v0.9.10
 [v0.9.9]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.8...v0.9.9
 [v0.9.8]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.7...v0.9.8
