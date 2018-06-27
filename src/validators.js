@@ -292,12 +292,13 @@ export const resolveDisabled = (options: FieldValidatorOptions) => resolve('disa
 // # Valid
 // ####################################################
 
-// options = {fields, data, lookupTable, customFieldTypes, parentQuestionId, errors = {}}
+// options = {fields, data, lookupTable, customFieldTypes, parentQuestionId, onSetError, errors = {}}
 export const getSectionErrors = (options: SectionValidOptions) => {
   options = {
     // fields
     // customFieldTypes
     // data
+    // onSetError
     errors: {},
     deep: true,
     ...options
@@ -329,7 +330,7 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
     fieldOptions: resolveFieldOptions(options)
   };
 
-  const {field, messages, deep, fieldOptions} = options;
+  const {field, messages, deep, fieldOptions, onSetError} = options;
   let {errors} = options;
 
   const requiredMessage = has(field, 'requiredMessage') ? field.requiredMessage : messages.requiredMessage;
@@ -346,8 +347,20 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
 
         if (required && !isFieldFilled(options)) {
           set(errors, path, requiredMessage);
+          onSetError &&
+            onSetError({
+              type: 'required',
+              path,
+              message: requiredMessage
+            });
         } else if (!isFieldValid(options)) {
           set(errors, path, invalidMessage);
+          onSetError &&
+            onSetError({
+              type: 'invalid',
+              path,
+              message: invalidMessage
+            });
         }
       }
 
