@@ -14,6 +14,7 @@ import GenCondClearField from './GenCondClearField';
 import Frag from './Frag';
 
 import {isCondField, condDependentFields} from './conditionalUtils';
+import {getGenContextOptions} from './utils';
 
 import {getFieldOptions} from './defaultFieldTypes';
 
@@ -30,7 +31,7 @@ class GenField extends Component<Props> {
     })
   };
   componentWillMount() {
-    if (isNil(this.props.gen)) {
+    if (isNil(this.props.gen) || !this.props.gen.wasGenerated) {
       throw new Error('GenField must be rendered as a child of a <FormGenerator>');
     }
   }
@@ -58,7 +59,10 @@ class GenField extends Component<Props> {
   render() {
     const {gen, field, parentQuestionId, visible = true, /* disabled = false, */ path} = this.props || {};
 
-    const fieldOptions = getFieldOptions({...this.props, customFieldTypes: this.props.gen.customFieldTypes});
+    const fieldOptions = getFieldOptions({
+      ...this.props,
+      ...getGenContextOptions(this.props.gen)
+    });
     if (isNil(fieldOptions)) {
       console.error(`Form Generator: unknown field type "${field.type}". \nField:`, field, '\n. skipping render.');
       return null;
@@ -133,7 +137,10 @@ class GenField extends Component<Props> {
           <GenCondEval {...{field, path, parentVisible: visible, ...(parentQuestionId && {parentQuestionId})}} />
         ))) || (
         <div
-          /* TODO refactor these divs used to hide for visibility/path. */
+          /* TODO refactor these divs used to hide for visibility/path.
+            maybe get rid of the top-most div, and pass visibility to childFields via props?
+            Then we would just need to focus on hiding individual fields...
+          */
           className={cn('section', {'section--hidden': !visible})}
         >
           {' '}

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormGenerator/> should throw an error if rendered outside reduxForm 1`] = `"FormGenerator must be inside a component decorated with reduxForm()"`;

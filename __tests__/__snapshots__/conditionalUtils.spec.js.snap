@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`evalCond() customOperators should console.error if missing operator 1`] = `
+Array [
+  Array [
+    "[FormGenerator] Unknown conditional operator \\"barOp\\". Condition:",
+    Object {
+      "barOp": true,
+      "questionId": "foo",
+    },
+  ],
+]
+`;

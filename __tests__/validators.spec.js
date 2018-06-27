@@ -1,6 +1,13 @@
 import {buildLookupTable} from '../src/utils';
 import exampleFieldTypes from '../stories/customFieldTypes';
-import {isSectionFilled, getSectionErrors, REQUIRED_MESSAGE, INVALID_MESSAGE, isNilOrEmpty} from '../src/validators';
+import {
+  isSectionFilled,
+  isSectionEmpty,
+  getSectionErrors,
+  REQUIRED_MESSAGE,
+  INVALID_MESSAGE,
+  isNilOrEmpty
+} from '../src/validators';
 import get from 'lodash/get';
 
 describe('isSectionFilled()', () => {
@@ -82,6 +89,88 @@ describe('isSectionFilled()', () => {
 
     const filled = isSectionFilled({data, fields, customFieldTypes: exampleFieldTypes, lookupTable});
     expect(filled).toBe(false);
+  });
+});
+
+describe('isSectionEmpty()', () => {
+  const fields = [
+    {
+      questionId: 'text_id',
+      type: 'text',
+      required: true
+    },
+    {
+      questionId: 'array_id',
+      type: 'array',
+      item: {
+        type: 'arrayItem',
+        childFields: [
+          {
+            type: 'text',
+            questionId: 'array_item_text',
+            required: true
+          },
+          {
+            type: 'radio',
+            questionId: 'array_item_radio',
+            options: [{label: 'Yes', value: 'yes'}, {label: 'Nes', value: 'no'}]
+          },
+          {
+            type: 'array',
+            questionId: 'array_nested',
+            item: {
+              type: 'arrayItem',
+              childFields: [
+                {
+                  type: 'text',
+                  questionId: 'array_nested_item_text',
+                  required: true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ];
+
+  it('should calculate empty true', () => {
+    const data = {
+      // text_id: 'something',
+      array_id: [
+        // {
+        //   array_item_text: 'something',
+        //   array_nested: [
+        //     {
+        //       // array_nested_item_text: 'one more'
+        //     }
+        //   ]
+        // }
+      ]
+    };
+    const lookupTable = buildLookupTable({fields, customFieldTypes: exampleFieldTypes});
+
+    const empty = isSectionEmpty({data, fields, customFieldTypes: exampleFieldTypes, lookupTable});
+    expect(empty).toBe(true);
+  });
+
+  it('should calculate empty false', () => {
+    const data = {
+      text_id: 'something',
+      array_id: [
+        {
+          array_nested: [
+            {
+              array_nested_item_text: 'one more'
+            }
+          ]
+        }
+      ]
+    };
+    const lookupTable = buildLookupTable({fields, customFieldTypes: exampleFieldTypes});
+
+    const empty = isSectionEmpty({data, fields, customFieldTypes: exampleFieldTypes, lookupTable});
+    expect(empty).toBe(false);
   });
 });
 
@@ -421,6 +510,9 @@ describe('getSectionErrors', () => {
     it('should return true for string with spaces', () => {
       expect(isNilOrEmpty('   ')).toBe(true);
     });
+    // it('should return true for NaN', () => {
+    //   expect(isNilOrEmpty(NaN)).toBe(true); // eslint-disable-line no-new-wrappers
+    // }); // TODO what should we do about this?
 
     // false
     it('should return false for "lol"', () => {
@@ -440,6 +532,9 @@ describe('getSectionErrors', () => {
     });
     it('should return false for new Number()', () => {
       expect(isNilOrEmpty(new Number(123))).toBe(false); // eslint-disable-line no-new-wrappers
+    });
+    it('should return false for Infinity', () => {
+      expect(isNilOrEmpty(Infinity)).toBe(false);
     });
     it('should return false for boolean', () => {
       expect(isNilOrEmpty(false)).toBe(false);

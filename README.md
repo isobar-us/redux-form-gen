@@ -1,5 +1,8 @@
 # redux-form-gen
 
+[![CircleCI build](https://img.shields.io/circleci/project/github/isobar-us/redux-form-gen/master.svg)](https://circleci.com/gh/isobar-us/redux-form-gen)
+[![Codacy grade](https://img.shields.io/codacy/grade/0acc2d14b2a44e40bc9cb1cb3d95a2ae/master.svg)](https://www.codacy.com/app/isobar-us/redux-form-gen?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=isobar-us/redux-form-gen&amp;utm_campaign=Badge_Grade)
+[![Codacy coverage](https://img.shields.io/codacy/coverage/0acc2d14b2a44e40bc9cb1cb3d95a2ae/master.svg)](https://www.codacy.com/app/isobar-us/redux-form-gen?utm_source=github.com&utm_medium=referral&utm_content=isobar-us/redux-form-gen&utm_campaign=Badge_Coverage)
 [![NPM Version](https://img.shields.io/npm/v/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
 [![NPM Downloads](https://img.shields.io/npm/dm/@isobar-us/redux-form-gen.svg?style=flat)](https://www.npmjs.com/package/@isobar-us/redux-form-gen)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -34,11 +37,11 @@ npm install --save @isobar-us/redux-form-gen
 
 ### 🏖 Code Sandboxes 🏖
 
-* [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/basic)
-* [All Fields Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/all-fields)
-* [Conditional Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/conditional)
-* [Wizard Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/wizard)
-* [Reactstrap Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.8.1/examples/reactstrap) (uses `customFieldTypes`)
+* [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.10/examples/basic)
+* [All Fields Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.10/examples/all-fields)
+* [Conditional Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.10/examples/conditional)
+* [Wizard Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.10/examples/wizard)
+* [Reactstrap Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.9.10/examples/reactstrap) (uses `customFieldTypes`)
 
 ### Simple Usage
 
@@ -214,6 +217,7 @@ Extends `GenericProps`. Renders a header for grouping fields.
 | `_genSectionErrors`                     | func      | `fn({errors, data, field, lookupTable, customFieldTypes}) => void` set in `errors`                    |
 | `_genTraverseChildren`                  | func      | `fn({iterator, data, lookupTable}) => something.map((field) => iterator({field, data, lookupTable}))` |
 | `_genSkipChildren`                      | bool      | skip rendering of `childFields`                                                                       |
+| `_genSkipCache`                         | bool      | skip clear/restore functionality from `FormGenerator` cache                                           |
 | `_genHidden`                            | bool      | skip rendering of this field and all it's children.                                                   |
 | ...                                     | ...       | ...                                                                                                   |
 | any other props for `<Field>` component | any       | `name`, `names`, `component` etc...                                                                   |

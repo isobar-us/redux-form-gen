@@ -5,14 +5,14 @@ import {FormSection} from 'redux-form';
 import Frag from '../../Frag';
 import {consumeGenContext} from '../../contextUtils';
 import GenField from '../../GenField';
-import {getDefaultValues} from '../../utils';
+import {getDefaultValues, getGenContextOptions} from '../../utils';
 import isNil from 'lodash/isNil';
 
 class GenArray extends Component {
   handleAddArrayItem = () => {
     const newItem = getDefaultValues({
       fields: [this.props.item],
-      customFieldTypes: this.props.gen.customFieldTypes,
+      ...getGenContextOptions(this.props.gen),
       initialValues: {}
     });
     return this.props.fields.push(newItem);

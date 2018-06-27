@@ -37,10 +37,14 @@ export type EvalCondOptions = {
   elseHandler?: Function,
   valueKey?: string,
   cond: ConditionalObject,
-  reduxFormDeep?: boolean
+  customOperators: CustomOperators // eslint-disable-line no-use-before-define
 };
 
-type ConditionalOperatorOptions = {
+export type CustomOperators = {
+  [key: string]: {(options: EvalCondOptions): boolean}
+};
+
+export type ConditionalOperatorOptions = {
   value: mixed,
   param: mixed,
   ...EvalCondOptions

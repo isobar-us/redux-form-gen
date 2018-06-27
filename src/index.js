@@ -8,16 +8,26 @@ import injectGenProps from './injectGenProps';
 
 import {
   isSectionEmpty,
+  isSectionEmptyIterator,
   isSectionFilled,
-  isFieldFilled,
+  isSectionFilledIterator,
   getSectionErrors,
-  getFieldErrors,
-  isNilOrEmpty
+  getSectionErrorsIterator,
+  isNilOrEmpty,
+  getFieldPath,
+  isFieldHidden,
+  isFieldVisible,
+  isFieldRequired,
+  isFieldDisabled,
+  isFieldEmpty,
+  isFieldFilled,
+  isFieldValid,
+  mapFieldChildren
 } from './validators';
 
 import {getDefaultValues, buildLookupTable} from './utils';
 
-import {consumeGenContext} from './contextUtils';
+import {consumeGenContext, GenContext} from './contextUtils';
 
 import {evalCond, evalCondValid} from './conditionalUtils';
 
@@ -37,16 +47,28 @@ export {
   injectGenProps,
   // validators
   isSectionEmpty,
+  isSectionEmptyIterator,
   isSectionFilled,
-  isFieldFilled,
+  isSectionFilledIterator,
   getSectionErrors,
-  getFieldErrors,
+  getSectionErrorsIterator,
   isNilOrEmpty,
+  // validator utils
+  getFieldPath,
+  isFieldHidden,
+  isFieldVisible,
+  isFieldRequired,
+  isFieldDisabled,
+  isFieldEmpty,
+  isFieldFilled,
+  isFieldValid,
+  mapFieldChildren,
   // utils
   getDefaultValues,
   buildLookupTable,
   // contextUtils
   consumeGenContext,
+  GenContext,
   // conditionalUtils
   evalCond,
   evalCondValid,

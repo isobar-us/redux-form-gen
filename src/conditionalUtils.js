@@ -4,19 +4,34 @@ import has from 'lodash/has';
 import hasIn from 'lodash/hasIn';
 import includes from 'lodash/includes';
 import omit from 'lodash/omit';
-import keys from 'lodash/keys';
 import isEqual from 'lodash/isEqual';
 import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import isString from 'lodash/isString';
-import {isNilOrEmpty, getFieldErrors} from './validators';
+import {isNilOrEmpty, isFieldFilled, isFieldValid} from './validators';
 
 import type {FieldType} from './types';
+import type {ConditionalOperators, EvalCondOptions, ConditionalObject} from './conditionalUtils.types';
 
+/*
+  Helpers
+ */
+
+// used for render lifecycle where we don't care about conditionalValid
 export const isCondField = (field: FieldType) =>
   has(field, 'conditionalVisible') || has(field, 'conditionalRequired') || has(field, 'conditionalDisabled');
-export const omitCondProps = (field: FieldType) => omit(field, 'conditionalVisible');
-import type {ConditionalOperators, EvalCondOptions, ConditionalObject} from './conditionalUtils.types';
+
+const getCondValueKey = ({cond, valueKey}) => (has(cond, 'questionId') ? cond.questionId : valueKey);
+
+const getOperator = (options, key) => {
+  const {customOperators} = options;
+  const operators = {...ops, ...(customOperators || {})};
+  const op = get(operators, key);
+  if (isNil(op)) {
+    console.error(`[FormGenerator] Unknown conditional operator "${key}". Condition:`, options.cond);
+  }
+  return op;
+};
 
 /*
   Conditional Operators
@@ -28,17 +43,72 @@ const ops: ConditionalOperators = {
     param.reduce((and, subCond) => and && evalCond({...options, cond: subCond}), true),
   or: ({value, param, ...options}) => param.reduce((or, subCond) => or || evalCond({...options, cond: subCond}), false),
   not: ({value, param, ...options}) => !evalCond({...options, cond: param}),
-  // lodash
-  filled: ({value, param, ...options}) => {
-    return param === true ? !isNilOrEmpty(value) : isNilOrEmpty(value); // TODO use lookupTable & customFieldTypes for _genIsFilled
-    // TODO ops.filled should use isFieldFilled just like condValidElseHandler
+  cond: ({value, param, ...options}) => evalCond({...options, cond: param}),
+  compare: (options) => {
+    const {value, param, data} = options;
 
-    // return
-    //   const {cond, data, lookupTable, customFieldTypes} = options;
-    //   const field = get(lookupTable, cond.questionId);
-    //   // if a dependent field doesn't have required:true, then it will always return true. we force it here.
-    //   return getFieldErrors({customFieldTypes, field: {...field, required: true}, data, lookupTable});
+    const conds = Object.keys(omit(param, ['questionId']));
+    return conds.length > 0
+      ? conds.reduce((result, key) => {
+          // will AND all the cond props
+          const operator = getOperator(options, key);
+          if (isNil(operator)) {
+            return true;
+          }
+          const remoteQuestionId = get(param, key);
+          const compareParam = get(
+            data,
+            getCondValueKey({
+              ...options,
+              cond: {
+                ...(remoteQuestionId && {questionId: remoteQuestionId})
+              }
+            })
+          );
+          return result && operator({...options, value, param: compareParam});
+        }, true)
+      : true;
   },
+  // generator hooks
+  filled: ({value, param, ...options}) => {
+    let fieldFilled = true;
+    if (has(options, 'lookupTable')) {
+      const {lookupTable} = options;
+      const field = get(lookupTable, getCondValueKey(options));
+      if (!isNil(field)) {
+        // if field is defined in the lookupTable, run isFieldFilled()
+        fieldFilled = isFieldFilled({...options, field, fieldOptions: null});
+      } else {
+        // if field is not defined in the lookupTable, just fall back to isNilOrEmpty
+        fieldFilled = !isNilOrEmpty(value);
+      }
+    } else {
+      console.warn('[Form Generator] attempted to check `filled` without a lookupTable. Condition:', options.cond); // TODO finalise this warning
+      fieldFilled = !isNilOrEmpty(value);
+    }
+    return param === true ? fieldFilled : !fieldFilled;
+  },
+  // TODO experimental operator to check if this or another field is valid...
+  // valid: ({value, param, ...options}) => {
+  //   const {cond, lookupTable} = options;
+  //   let field = options.field;
+  //
+  //   if (has(cond, 'questionId')) {
+  //     if (has(options, 'lookupTable')) {
+  //       field = get(lookupTable, cond.questionId);
+  //     } else {
+  //       console.warn('[Form Generator] attempted to check `valid` without a lookupTable. Condition:', options.cond); // TODO finalise this warning
+  //     }
+  //   }
+  //
+  //   const fieldValid = isFieldValid({
+  //     ...options,
+  //     field,
+  //     fieldOptions: null,
+  //   });
+  //   return param === true ? fieldValid : !fieldValid;
+  // },
+  // lodash
   includes: ({value, param}) => includes(value, param),
   // comparison
   greaterThan: ({value, param}) => {
@@ -76,24 +146,27 @@ ops.min = ops.greaterThanEqual;
 ops.max = ops.lessThanEqual;
 ops.value = ops.equals;
 
-const defaultElseHandler = ({value}) => !isNilOrEmpty(value); // TODO should point to ops.filled
+const defaultElseHandler = (options) => ops.filled({...options, param: true});
 
 const defaultValueKey = '_value';
 
-export const evalCond = (opts: EvalCondOptions) => {
-  const options = {elseHandler: defaultElseHandler, valueKey: defaultValueKey, ...opts};
-  const {cond, data, elseHandler, reduxFormDeep, valueKey} = options;
+export const evalCond = (options: EvalCondOptions) => {
+  options = {
+    elseHandler: defaultElseHandler,
+    valueKey: defaultValueKey,
+    ...options
+  };
+  const {cond, data, elseHandler} = options;
 
-  const value = has(cond, 'questionId')
-    ? reduxFormDeep ? get(data, `${cond.questionId}.input.value`) : get(data, cond.questionId)
-    : reduxFormDeep ? get(data, `${valueKey}.input.value`) : get(data, valueKey);
-  const conds = keys(omit(cond, 'questionId'));
+  // TODO add support for getFieldPath() when doing get(data, path) ?
+  const value = get(data, getCondValueKey(options));
+  const conds = Object.keys(omit(cond, 'questionId'));
   return conds.length > 0
     ? conds.reduce((result, key) => {
         // will AND all the cond props
-        const operator = get(ops, key);
+        const operator = getOperator(options, key);
         if (isNil(operator)) {
-          throw new Error(`[FormGenerator] Unknown conditional operator "${key}"`);
+          return true;
         }
         const param = get(cond, key);
         return result && operator({...options, value, param});
@@ -102,20 +175,27 @@ export const evalCond = (opts: EvalCondOptions) => {
 };
 
 const condValidElseHandler = (options) => {
-  const {cond, data, lookupTable, customFieldTypes} = options;
-  const field = get(lookupTable, cond.questionId);
+  const {cond, lookupTable} = options;
+  let field = options.field;
+  let fieldOptions = null;
 
-  const fieldErrors = getFieldErrors({
-    customFieldTypes,
-    field: {
-      ...field,
-      required: true // if a dependent field doesn't have required:true, then it will always return true. we force it here.
-    },
-    data,
-    lookupTable
+  if (has(cond, 'questionId')) {
+    if (has(options, 'lookupTable')) {
+      field = get(lookupTable, cond.questionId);
+      fieldOptions = null;
+    } else {
+      console.warn('[Form Generator] attempted to check `valid` without a lookupTable. Condition:', options.cond); // TODO finalise this warning
+    }
+  }
+
+  return isFieldValid({
+    ...options,
+    field,
+    fieldOptions
   });
 
-  return isNilOrEmpty(fieldErrors); // need to check if the errors object is empty. if empty, field is valid.
+  // TODO hook into experimental `valid` operator when ready
+  // return ops.valid({...options, param: true});
 };
 export const evalCondValid = (args: EvalCondOptions) =>
   evalCond({

@@ -1,6 +1,6 @@
 {
   "name": "@isobar-us/redux-form-gen",
-  "version": "0.8.1",
+  "version": "0.9.10",
   "description": "A pluggable form generator for redux-form",
   "main": "./lib/index.js",
   "files": [
@@ -26,6 +26,7 @@
     "test": "cross-env BABEL_ENV=commonjs jest",
     "test:cov": "npm test -- --coverage",
     "test:watch": "npm test -- --watch",
+    "coverage:report": "cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
     "format": "prettier-eslint \"+(src|stories|__tests__)/**/*.+(js)\" --ignore \"**/bundle.js\" --write",
     "prepublishOnly": "npm run clean && npm run check && npm run build --kill --print",
     "storybook": "start-storybook -p 6006",
@@ -53,8 +54,10 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "create-react-context": "^0.2.2",
     "lodash": "^4.17.4",
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "react-fast-compare": "^2.0.1"
   },
   "devDependencies": {
     "@storybook/react": "^3.2.16",
@@ -69,12 +72,14 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.3.13",
+    "codacy-coverage": "^2.0.3",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.4",
     "decamelize": "^2.0.0",
     "documentation": "^5.3.5",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-matchers": "^4.2.0",
     "eslint": "^4.8.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-react": "^5.0.0",
@@ -88,6 +93,7 @@
     "flow-copy-source": "^1.2.1",
     "husky": "^0.14.3",
     "jest": "^22.1.1",
+    "jest-enzyme": "^4.2.0",
     "node-sass": "^4.5.0",
     "prettier": "^1.8.2",
     "prettier-eslint-cli": "^4.4.0",

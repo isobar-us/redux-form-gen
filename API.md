@@ -21,6 +21,16 @@
   * [`FormGenerator : React.ComponentType<FormGeneratorProps>`](#formgenerator--reactcomponenttypeformgeneratorprops)
   * [`getSectionErrors: (options: SectionValidOptions) => Object`](#getsectionerrors-options-sectionvalidoptions--object)
   * [`isSectionFilled: (options: SectionFilledOptions) => boolean`](#issectionfilled-options-sectionfilledoptions--boolean)
+  * [`isSectionEmpty: (options: SectionEmptyOptions) => boolean`](#issectionempty-options-sectionemptyoptions--boolean)
+  * [`getFieldPath: (options: FieldValidatorOptions) => string`](#getfieldpath-options-fieldvalidatoroptions--string)
+  * [`isFieldHidden: (options: FieldValidatorOptions) => boolean`](#isfieldhidden-options-fieldvalidatoroptions--boolean)
+  * [`isFieldVisible: (options: FieldValidatorOptions) => boolean`](#isfieldvisible-options-fieldvalidatoroptions--boolean)
+  * [`isFieldRequired: (options: FieldValidatorOptions) => boolean`](#isfieldrequired-options-fieldvalidatoroptions--boolean)
+  * [`isFieldDisabled: (options: FieldValidatorOptions) => boolean`](#isfielddisabled-options-fieldvalidatoroptions--boolean)
+  * [`isFieldEmpty: (options: FieldValidatorOptions) => boolean`](#isfieldempty-options-fieldvalidatoroptions--boolean)
+  * [`isFieldFilled: (options: FieldValidatorOptions) => boolean`](#isfieldfilled-options-fieldvalidatoroptions--boolean)
+  * [`isFieldValid: (options: FieldValidatorOptions) => boolean`](#isfieldvalid-options-fieldvalidatoroptions--boolean)
+  * [`mapFieldChildren: (options: FieldValidatorOptions) => Array<FieldType>`](#mapfieldchildren-options-fieldvalidatoroptions--arrayfieldtype)
   * [`getDefaultValues: (options: GetDefaultValuesOptions) => Object`](#getdefaultvalues-options-getdefaultvaluesoptions--object)
   * [`injectGenProps: (React.ComponentType<ReduxForm>) => React.ComponentType`](#injectgenprops-reactcomponenttypereduxform--reactcomponenttype)
   * [`buildLookupTable: (options: BuildLookupTableOptions) => LookupTable`](#buildlookuptable-options-buildlookuptableoptions--lookuptable)
@@ -31,6 +41,7 @@
     * [`customQuestionProps?: { [key: string]: Object }`](#customquestionprops--key-string-object-)
     * [`visibleDepth?: string`](#visibledepth-string)
     * [`customFieldTypes?: CustomFieldTypes`](#customfieldtypes-customfieldtypes)
+    * [`customOperators?: CustomOperators`](#customoperators-customoperators)
     * [`display?: 'stacked' | 'inline'`](#display-stacked--inline)
     * [`disabled?: boolean`](#disabled-boolean)
     * [`lookupTable: LookupTable`](#lookuptable-lookuptable)
@@ -41,6 +52,8 @@
     * [`conditionalVisible?: ConditionalObject`](#conditionalvisible-conditionalobject)
     * [`conditionalRequired?: ConditionalObject`](#conditionalrequired-conditionalobject)
     * [`conditionalDisabled?: ConditionalObject`](#conditionaldisabled-conditionalobject)
+    * [`requiredMessage?: string`](#requiredmessage-string)
+    * [`invalidMessage?: string`](#invalidmessage-string)
   * [`ConditionalObject`](#conditionalobject)
     * [`questionId: string`](#questionid-string)
     * [`equals?: mixed`](#equals-mixed)
@@ -76,6 +89,7 @@
     * [`_genSectionErrors?: Function`](#_gensectionerrors-function)
     * [`_genTraverseChildren?: Function`](#_gentraversechildren-function)
     * [`_genSkipChildren?: boolean`](#_genskipchildren-boolean)
+    * [`_genSkipCache?: boolean`](#_genskipcache-boolean)
     * [`_genHidden?: boolean`](#_genhidden-boolean)
     * [(...) props for `_genFieldComponent`](#-props-for-_genfieldcomponent)
 
@@ -149,6 +163,26 @@ These are the library exports.
 
 ### `isSectionFilled: (options: SectionFilledOptions) => boolean`
 
+### `isSectionEmpty: (options: SectionEmptyOptions) => boolean`
+
+### `getFieldPath: (options: FieldValidatorOptions) => string`
+
+### `isFieldHidden: (options: FieldValidatorOptions) => boolean`
+
+### `isFieldVisible: (options: FieldValidatorOptions) => boolean`
+
+### `isFieldRequired: (options: FieldValidatorOptions) => boolean`
+
+### `isFieldDisabled: (options: FieldValidatorOptions) => boolean`
+
+### `isFieldEmpty: (options: FieldValidatorOptions) => boolean`
+
+### `isFieldFilled: (options: FieldValidatorOptions) => boolean`
+
+### `isFieldValid: (options: FieldValidatorOptions) => boolean`
+
+### `mapFieldChildren: (options: FieldValidatorOptions) => Array<FieldType>`
+
 ### `getDefaultValues: (options: GetDefaultValuesOptions) => Object`
 
 ### `injectGenProps: (React.ComponentType<ReduxForm>) => React.ComponentType`
@@ -196,6 +230,8 @@ GenField
 ### `visibleDepth?: string`
 
 ### `customFieldTypes?: CustomFieldTypes`
+
+### `customOperators?: CustomOperators`
 
 ### `display?: 'stacked' | 'inline'`
 
@@ -358,6 +394,10 @@ Use the provided `iterator` to traverse over complex children.
 ### `_genSkipChildren?: boolean`
 
 skip rendering of `childFields`
+
+### `_genSkipCache?: boolean`
+
+skip clearing/restoring the field value when change in visibility happens
 
 ### `_genHidden?: boolean`
 

@@ -36,6 +36,7 @@ export type FieldOptions = {
   _genSectionErrors?: Function,
   _genTraverseChildren?: Function,
   _genSkipChildren?: boolean,
+  _genSkipCache?: boolean,
   _genHidden?: boolean
 };
 

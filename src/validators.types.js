@@ -1,11 +1,13 @@
-import type {FieldType, FieldsType} from './types';
+import type {FieldType, FieldsType, FieldOptions, CustomFieldTypes} from './types';
+import type {CustomOperators} from './conditionalUtils.types';
 
 /**
  * [ValidatorOptions description]
  */
 type ValidatorOptions = { // eslint-disable-line no-unused-vars
   data: Object,
-  customFieldTypes?: Object,
+  customFieldTypes?: CustomFieldTypes,
+  customOperators?: CustomOperators,
   lookupTable: Object,
   pathPrefix?: string,
   parentQuestionId?: string,
@@ -15,14 +17,21 @@ type ValidatorOptions = { // eslint-disable-line no-unused-vars
   }
 };
 
+export type FieldValidatorOptions = {
+  field: FieldType,
+  fieldOptions?: FieldOptions,
+  ...ValidatorOptions
+};
+
 /**
  * Options passed into isSectionValid()
  * @extends ValidatorOptions
  */
 export type SectionValidOptions = {
   fields: FieldsType,
-  errors?: Object
-  /* :: ...ValidatorOptions */
+  errors?: Object,
+  onSetError: Function,
+  ...ValidatorOptions
 };
 
 /**
@@ -51,4 +60,14 @@ export type SectionFilledOptions = {
 export type FieldFilledOptions = {
   field: FieldType
   /* :: ...ValidatorOptions */
+};
+
+export type SectionEmptyOptions = {
+  fields: FieldsType,
+  ...ValidatorOptions
+};
+
+export type FieldEmptyOptions = {
+  field: FieldType,
+  ...ValidatorOptions
 };

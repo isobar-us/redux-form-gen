@@ -2,22 +2,27 @@
 import set from 'lodash/set';
 import has from 'lodash/has';
 import isNil from 'lodash/isNil';
-import compact from 'lodash/compact';
+import pick from 'lodash/pick';
 import {getFieldOptions} from './defaultFieldTypes';
 import defaultsDeep from 'lodash/defaultsDeep';
+import {isFieldHidden, getFieldPath, resolveFieldOptions, mapFieldChildren} from './validators';
 
-import type {
-  BuildLookupTableOptions,
-  GetDefaultValuesOptions,
-  GetDefaultValueOptions,
-  HasDefaultValueOptions
-} from './utils.types';
+import type {BuildLookupTableOptions, GetDefaultValuesOptions, GetDefaultValueOptions} from './utils.types';
+import type {GenContextProps} from './contextUtils.types';
+
+export const getGenContextOptions = (gen: GenContextProps) =>
+  pick(gen, ['customFieldTypes', 'customOperators', 'lookupTable']);
 
 export const buildLookupTable = (options: BuildLookupTableOptions, table: Object = {}) => {
-  const {fields, customFieldTypes} = options;
+  const {fields} = options;
   if (fields) {
     fields.map((field) => {
-      const fieldOptions = getFieldOptions({field, customFieldTypes});
+      const fieldOptions = getFieldOptions({...options, field});
+
+      /* TODO use questionRef for unique ids?
+         - this would allow for multiple fields to reference the same questionId
+         - would need to transform questionRef => questionId when running evalCond using lookupTable?
+      */
 
       if (!isNil(fieldOptions)) {
         // only parse valid field types
@@ -85,22 +90,18 @@ export const buildLookupTable = (options: BuildLookupTableOptions, table: Object
   return table;
 };
 
-export const getDefaultValueHelper = ({field, fieldOptions}: HasDefaultValueOptions) => {
-  if (has(field, 'defaultValue')) {
-    return {
-      hasDefaultValue: true,
-      defaultValue: field.defaultValue
-    };
-  } else if (has(fieldOptions, '_genDefaultValue')) {
-    return {
-      hasDefaultValue: true,
-      defaultValue: fieldOptions._genDefaultValue
-    };
-  }
-  return {
-    hasDefaultValue: false,
-    defaultValue: ''
-  };
+export const hasFieldDefaultValue = (options: GetDefaultValueOptions) => {
+  const {field} = options;
+  const fieldOptions = resolveFieldOptions(options);
+  return has(field, 'defaultValue') || has(fieldOptions, '_genDefaultValue');
+};
+
+export const getFieldDefaultValue = (options: GetDefaultValueOptions) => {
+  const {field} = options;
+  const fieldOptions = resolveFieldOptions(options);
+  return has(field, 'defaultValue')
+    ? field.defaultValue
+    : has(fieldOptions, '_genDefaultValue') ? fieldOptions._genDefaultValue : '';
 };
 
 export const getDefaultValues = (options: GetDefaultValuesOptions) => {
@@ -123,52 +124,63 @@ const getDefaultValue = (options: GetDefaultValueOptions) => {
     // defaultValues: {},
     ...options,
     data: options.initialValues || {},
-    defaultValues: defaultsDeep(options.defaultValues, options.initialValues)
+    defaultValues: defaultsDeep(options.defaultValues, options.initialValues),
+    fieldOptions: resolveFieldOptions(options)
   };
 
-  // needs lookupTable and conditionalVisible support
+  // TODO does this need conditionalVisible (with lookupTable) support?
+  // should a field still generate a defaultValue even if not visible? I think so...
+  // so most likely don't need that
 
-  const {field, customFieldTypes, pathPrefix} = options;
+  const {field, fieldOptions} = options;
   let {defaultValues} = options;
 
-  const fieldOptions = getFieldOptions({field, customFieldTypes});
   if (!isNil(fieldOptions)) {
     // only parse valid field types
 
-    if (!fieldOptions._genHidden) {
+    if (!isFieldHidden(options)) {
       // don't generate defaultValues for _genHidden fields.
-      const fieldPath = has(field, 'questionId') ? mergePaths(pathPrefix, field.questionId) : pathPrefix;
+      const fieldPath = getFieldPath(options);
       if (has(field, 'questionId') && !has(defaultValues, fieldPath)) {
         // might need isNilOrEmpty(get(defaultValues, fieldPath)) in the future
-        const {hasDefaultValue, defaultValue} = getDefaultValueHelper({field, fieldOptions});
-        if (hasDefaultValue) {
-          set(defaultValues, fieldPath, defaultValue);
+        if (hasFieldDefaultValue(options)) {
+          set(defaultValues, fieldPath, getFieldDefaultValue(options));
         }
       }
     }
 
-    if (has(field, 'childFields') && Array.isArray(field.childFields)) {
-      getDefaultValues({...options, fields: field.childFields});
-    }
-
-    if (fieldOptions._genTraverseChildren) {
-      fieldOptions._genTraverseChildren({
-        ...options,
-        iterator: getDefaultValue
-      });
-    } else if (has(fieldOptions, '_genChildren') && Array.isArray(fieldOptions._genChildren)) {
-      getDefaultValues({...options, fields: fieldOptions._genChildren});
-    }
+    mapFieldChildren({...options, fieldOptions: null}, getDefaultValue);
   }
   return defaultValues;
 };
 
 // used to merge existing and null/undefined paths together correctly
-export const mergePaths = (...paths: Array<string>) => compact(paths).join('.');
+export const mergePaths = (...paths: Array<string>) => paths.filter((v) => v).join('.');
 
-// export const traverseStructure = ({iterator, fields, parentField, values, fieldTypes}) => {
-//   fields.map((field) => {
-//     const fieldOptions = fieldTypes[field.type](field);
-//
-//   });
-// };
+export function isShallowEqual(a: Object, b: Object) {
+  for (let key in a) if (!(key in b) || a[key] !== b[key]) return false;
+
+  for (let key in b) if (!(key in a) || a[key] !== b[key]) return false;
+
+  return true;
+}
+
+// used for testing perf
+export const shallowDiff = (a: Object, b: Object, breakOnFirst: boolean = false) => {
+  for (let key in a) {
+    if (!(key in b) || a[key] !== b[key]) {
+      console.warn(key, a[key], b[key]);
+      if (breakOnFirst) {
+        return;
+      }
+    }
+  }
+  for (let key in b) {
+    if (!(key in a) || a[key] !== b[key]) {
+      console.warn(key, a[key], b[key]);
+      if (breakOnFirst) {
+        return;
+      }
+    }
+  }
+};

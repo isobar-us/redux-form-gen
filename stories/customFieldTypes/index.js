@@ -14,6 +14,7 @@ import dateType from './types/dateType';
 import dateUnknownType from './types/dateUnknownType';
 import staticType from './types/staticType';
 import dividerType from './types/dividerType';
+import persistTextType from './types/persistTextType';
 
 export default {
   columns: columnsType,
@@ -21,6 +22,7 @@ export default {
   dateUnknown: dateUnknownType,
   divider: dividerType,
   checkbox: defaultFieldTypes.text,
+  persistText: persistTextType,
   static: staticType
 };
 

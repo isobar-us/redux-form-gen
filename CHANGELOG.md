@@ -6,6 +6,103 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.9.10] - 2018-05-02
+
+### Added
+
+* Internal values cache will now clear if form is reset.
+
+### Fixed
+
+* Performance has been increased by adding some update checks
+* Moved internal values cache out of state (perf)
+* Moved context into state (perf)
+
+## [v0.9.9] - 2018-04-10
+
+### Fixed
+
+* Prevented internal bleed of `fieldOptions` between util functions
+* Fixed detection of `_genHidden` in `isFieldVisible()`
+
+## [v0.9.8] - 2018-03-06
+
+### Fixed
+
+* Allow `_genSectionErrors` to run for any field, regardless of if it has a `questionId` #20
+* Check for `!isNil` before running `_genIsFilled` and `_genIsValid`
+
+## [v0.9.7] - 2018-02-15
+
+### Fixed
+
+* `isFieldValid()` now runs both `_genIsValid` and `conditionalValid` and logical ANDs the results
+
+## [v0.9.6] - 2018-02-15
+
+### Fixed
+
+* make sure all `Gen...` components extract options from gen context
+
+## [v0.9.5] - 2018-02-14
+
+### Fixed
+
+* pass `customOperators` and `lookupTable` down to `getFieldOptions()`
+
+## [v0.9.4] - 2018-02-14
+
+### Added
+
+* `_genSkipCache` field option to opt-out of the clear/restore functionality when a field changes visibility #17
+* `compare` operator to compare the value of one questionId to another questionId #18
+* `cond` operator to run conditional objects (useful in combination with `compare`) #18
+* `customOperators` prop for `<FormGenerator />` and all utils. Allows you to specify you own operators for conditional objects. #18
+
+## [v0.9.3] - 2018-02-13
+
+### Fixed
+
+* Fixed issue where `filled` wperator was not executing if `lookupTable` was provided, but the remote field was not in the table.
+
+## [Unreleased]
+
+## [v0.9.2] - 2018-02-13
+
+### Fixed
+
+* FormGenerator now passes down `lookupTable` to `GenCondEval` via context. #16
+
+## [v0.9.1] - 2018-02-11
+
+### Fixed
+
+* Moved `create-react-context` from devDependencies to dependencies
+
+## [v0.9.0] - 2018-02-11
+
+🚨 Use v0.9.1 🚨
+
+### Changed
+
+* ⚠️ **[Breaking]** `isFieldFilled()` has been renamed to `isSectionFilledIterator()`
+* ⚠️ **[Breaking]** `isFieldEmpty()` has been renamed to `isSectionEmptyIterator()`
+* ⚠️ **[Breaking]** `getFieldErrors()` has been renamed to `getSectionErrorsIterator()`
+
+### Added
+
+* New context API
+  * new export `GenContext` follows the new `createReactContext()` pattern
+* New util functions #13
+  * `isFieldVisible(options)` - runs `field.conditionalVisible`
+  * `isFieldHidden(options)` - checks for `_genHidden`
+  * `isFieldDisabled(options)` - checks `field.disabled` or runs `field.conditionalDisabled`
+  * `isFieldRequired(options)` - checks `field.required` or runs `field.conditionalRequired`. also takes into account the disabled state. a field that is disabled can't be required.
+  * `isFieldFilled(options)` - checks for `_genIsFilled` or runs `!isNilOrEmpty(value)`
+  * `isFieldEmpty(options)` - checks for `!_genIsFilled` or runs `isNilOrEmpty(value)`
+  * `isFieldValid(options)` - checks for `_genIsValid` or runs `field.conditionalValid`
+  * `mapFieldChildren(options, iterator)` - maps over all children (`field.childFields`, `_genChildren`, and `_genTraverseChildren`)
+
 ## [v0.8.1] - 2018-01-17
 
 ### Fixed
@@ -270,7 +367,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.1...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.10...HEAD
+
+[v0.9.10]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.9...v0.9.10
+[v0.9.9]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.8...v0.9.9
+[v0.9.8]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.7...v0.9.8
+[v0.9.7]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.6...v0.9.7
+[v0.9.6]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.5...v0.9.6
+[v0.9.5]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.4...v0.9.5
+[v0.9.4]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.3...v0.9.4
+[v0.9.3]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.2...v0.9.3
+[v0.9.2]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.1...v0.9.2
+[v0.9.1]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.0...v0.9.1
+[v0.9.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.1...v0.9.0
 
 [v0.8.1]: https://github.com/isobar-us/redux-form-gen/compare/v0.8.0...v0.8.1
 [v0.8.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.7.2...v0.8.0
