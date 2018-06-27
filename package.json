@@ -56,7 +56,7 @@
     "create-react-context": "^0.2.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "react-fast-compare": "^1.0.0"
+    "react-fast-compare": "^2.0.1"
   },
   "devDependencies": {
     "@storybook/react": "^3.2.16",
