@@ -299,6 +299,8 @@ export const getSectionErrors = (options: SectionValidOptions) => {
     // customFieldTypes
     // data
     // onSetError
+    excludeInvalid: false,
+    excludeRequired: false,
     errors: {},
     deep: true,
     ...options
@@ -320,6 +322,8 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
     // customFieldTypes
     // data
     // onSetError
+    excludeInvalid: false,
+    excludeRequired: false,
     deep: false,
     errors: {},
     messages: {
@@ -331,7 +335,7 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
     fieldOptions: resolveFieldOptions(options)
   };
 
-  const {field, messages, deep, fieldOptions, onSetError} = options;
+  const {field, messages, deep, fieldOptions, onSetError, excludeInvalid, excludeRequired} = options;
   let {errors} = options;
 
   const requiredMessage = has(field, 'requiredMessage') ? field.requiredMessage : messages.requiredMessage;
@@ -346,7 +350,7 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
       if (has(fieldOptions, 'name')) {
         const path = getFieldPath(options);
 
-        if (required && !isFieldFilled(options)) {
+        if (!excludeRequired && required && !isFieldFilled(options)) {
           set(errors, path, requiredMessage);
           onSetError &&
             onSetError({
@@ -354,7 +358,7 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
               path,
               message: requiredMessage
             });
-        } else if (!isFieldValid(options)) {
+        } else if (!excludeInvalid && !isFieldValid(options)) {
           set(errors, path, invalidMessage);
           onSetError &&
             onSetError({

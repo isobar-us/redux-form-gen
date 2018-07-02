@@ -24,6 +24,8 @@ export type SectionValidOptions = {
   fields: FieldsType,
   errors?: Object,
   onSetError: Function,
+  excludeInvalid: Boolean,
+  excludeRequired: Boolean,
   ...ValidatorOptions
 };
 
@@ -31,6 +33,8 @@ export type FieldValidOptions = {
   field: FieldType,
   errors?: Object,
   onSetError: Function,
+  excludeInvalid: Boolean,
+  excludeRequired: Boolean,
   ...ValidatorOptions
 };
 
