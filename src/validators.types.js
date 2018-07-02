@@ -30,6 +30,7 @@ export type SectionValidOptions = {
 export type FieldValidOptions = {
   field: FieldType,
   errors?: Object,
+  onSetError: Function,
   ...ValidatorOptions
 };
 

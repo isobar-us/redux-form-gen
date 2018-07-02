@@ -487,6 +487,66 @@ describe('getSectionErrors', () => {
     });
   });
 
+  describe('onSetError callback', () => {
+    const callbackFields = [
+      {
+        type: 'text',
+        questionId: 'requiredText',
+        required: true
+      },
+      {
+        type: 'text',
+        questionId: 'invalidText',
+        conditionalValid: {
+          equals: 'foo'
+        }
+      },
+      {
+        type: 'text',
+        questionId: 'validText'
+      }
+    ];
+
+    const lookupTable = buildLookupTable({fields: callbackFields});
+
+    it('should call onSetError for each error', () => {
+      const errorSpy = jest.fn();
+      const data = {
+        invalidText: 'bar'
+      };
+      const callbackErrors = getSectionErrors({
+        fields: callbackFields,
+        data: data,
+        lookupTable,
+        onSetError: errorSpy
+      });
+
+      expect(callbackErrors).toEqual({
+        requiredText: REQUIRED_MESSAGE,
+        invalidText: INVALID_MESSAGE
+      });
+
+      expect(errorSpy.mock.calls).toMatchSnapshot();
+    });
+
+    it('should not call onSetError if there are no errors', () => {
+      const errorSpy = jest.fn();
+      const data = {
+        requiredText: 'foo',
+        invalidText: 'foo'
+      };
+      const callbackErrors = getSectionErrors({
+        fields: callbackFields,
+        data: data,
+        lookupTable,
+        onSetError: errorSpy
+      });
+
+      expect(callbackErrors).toEqual({});
+      expect(errorSpy.mock.calls.length).toBe(0);
+    });
+  });
+
   describe('isNilOrEmpty', () => {
     // true
     it('should return true for no param', () => {

@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getSectionErrors onSetError callback should call onSetError for each error 1`] = `
+Array [
+  Array [
+    Object {
+      "message": "Required Field",
+      "path": "requiredText",
+      "type": "required",
+    },
+  ],
+  Array [
+    Object {
+      "message": "Invalid Field",
+      "path": "invalidText",
+      "type": "invalid",
+    },
+  ],
+]
+`;

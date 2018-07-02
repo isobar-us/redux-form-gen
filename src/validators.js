@@ -319,6 +319,7 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
     // field
     // customFieldTypes
     // data
+    // onSetError
     deep: false,
     errors: {},
     messages: {
