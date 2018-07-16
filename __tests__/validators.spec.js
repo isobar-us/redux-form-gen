@@ -547,6 +547,62 @@ describe('getSectionErrors', () => {
     });
   });
 
+  describe('excludeInvalid / excludeRequired', () => {
+    const visFields = [
+      {
+        type: 'text',
+        questionId: 'requiredText',
+        required: true
+      },
+      {
+        type: 'text',
+        questionId: 'invalidText',
+        conditionalValid: {
+          equals: 'foo'
+        }
+      },
+      {
+        type: 'text',
+        questionId: 'validText'
+      }
+    ];
+
+    const lookupTable = buildLookupTable({fields: visFields});
+
+    it('should exclude invalid errors', () => {
+      const data = {
+        invalidText: 'bar'
+      };
+      const errorsRequired = getSectionErrors({
+        fields: visFields,
+        data: data,
+        lookupTable,
+        excludeInvalid: true
+      });
+
+      expect(errorsRequired).toEqual({
+        requiredText: REQUIRED_MESSAGE
+      });
+    });
+
+    it('should exclude required errors', () => {
+      const data = {
+        invalidText: 'bar'
+      };
+
+      const errorsInvalid = getSectionErrors({
+        fields: visFields,
+        data: data,
+        lookupTable,
+        excludeRequired: true
+      });
+
+      expect(errorsInvalid).toEqual({
+        invalidText: INVALID_MESSAGE
+      });
+    });
+  });
+
   describe('isNilOrEmpty', () => {
     // true
     it('should return true for no param', () => {
