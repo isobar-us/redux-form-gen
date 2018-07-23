@@ -102,7 +102,7 @@
 
 * `type: string` - the type of the field. you can add more type using `customFieldTypes` prop on the `<FormGenerator />`.
 * `label: string` - the label for the field
-* `childFields: [FieldType]` - an array of child fields. If the parent field is invisible, childFields will also be invisible. useful for the `section` and `group` types.
+* `childFields: [FieldType]` - an array of child fields. If the parent field is invisible, `childFields` will also be invisible. useful for the `section` and `group` types.
 * `conditionalVisible`: [`ConditionalObject`](#conditionalobject) - the evaluated ConditionalObject controls whether a field and it's childFields are visible
 
 ### GenericFieldProps
@@ -254,11 +254,11 @@ A dot-notation string representing the redux-form Field `name` prop.
 
 ### `childFields?: Array<FieldType>`
 
-An array of childFields. These fields will show/hide if the parent is visible/hidden.
+An array of `childFields`. These fields will show/hide if the parent is visible/hidden.
 
 ### `conditionalVisible?: ConditionalObject`
 
-Controls whether a field and it\'s childFields are visible
+Controls whether a field and it\'s `childFields` are visible
 
 ### `conditionalRequired?: ConditionalObject`
 
