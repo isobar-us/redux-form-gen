@@ -379,15 +379,15 @@ In this example, we have a min/max fields which reference each other for their u
   }
 ```
 
-### value : alias of `equals`
+### `value` : alias of `equals`
 
-### lt : alias of `lessThan`
+### `lt` : alias of `lessThan`
 
-### gt : alias of `greaterThan`
+### `gt` : alias of `greaterThan`
 
-### max : alias of `lessThanEqual`
+### `max` : alias of `lessThanEqual`
 
-### min : alias of `greaterThanEqual`
+### `min` : alias of `greaterThanEqual`
 
 ## `FieldOptions`
 
