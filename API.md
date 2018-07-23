@@ -52,6 +52,7 @@
     * [`conditionalVisible?: ConditionalObject`](#conditionalvisible-conditionalobject)
     * [`conditionalRequired?: ConditionalObject`](#conditionalrequired-conditionalobject)
     * [`conditionalDisabled?: ConditionalObject`](#conditionaldisabled-conditionalobject)
+    * [`conditionalValid?: ConditionalObject`](#conditionalvalid-conditionalobject)
     * [`requiredMessage?: string`](#requiredmessage-string)
     * [`invalidMessage?: string`](#invalidmessage-string)
   * [`ConditionalObject`](#conditionalobject)
@@ -101,7 +102,7 @@
 
 * `type: string` - the type of the field. you can add more type using `customFieldTypes` prop on the `<FormGenerator />`.
 * `label: string` - the label for the field
-* `childFields: [FieldType]` - an array of child fields. If the parent field is invisible, childFields will also be invisible. useful for the `section` and `group` types.
+* `childFields: [FieldType]` - an array of child fields. If the parent field is invisible, `childFields` will also be invisible. useful for the `section` and `group` types.
 * `conditionalVisible`: [`ConditionalObject`](#conditionalobject) - the evaluated ConditionalObject controls whether a field and it's childFields are visible
 
 ### GenericFieldProps
@@ -227,6 +228,8 @@ GenField
 
 ### `customQuestionProps?: { [key: string]: Object }`
 
+For advanced use cases only, this object has keys which represent `questionId`s, and the values are a props object which will be spread onto the matching field. This should really only be used when passing custom event handlers. 99% of the time you should implement this inside of your custom field type definition.
+
 ### `visibleDepth?: string`
 
 ### `customFieldTypes?: CustomFieldTypes`
@@ -237,6 +240,8 @@ GenField
 
 ### `disabled?: boolean`
 
+Will pass the `disabled` prop to all fields in the form.
+
 ### `lookupTable: LookupTable`
 
 ## `FieldType`
@@ -245,18 +250,34 @@ GenField
 
 ### `questionId?: string`
 
+A dot-notation string representing the redux-form Field `name` prop.
+
 ### `childFields?: Array<FieldType>`
+
+An array of `childFields`. These fields will show/hide if the parent is visible/hidden.
 
 ### `conditionalVisible?: ConditionalObject`
 
+Controls whether a field and it\'s `childFields` are visible
+
 ### `conditionalRequired?: ConditionalObject`
+
+Controls whether a field is required
 
 ### `conditionalDisabled?: ConditionalObject`
 
+Controls whether a field is disabled
+
+### `conditionalValid?: ConditionalObject`
+
+Used to check if a field is valid
+
 ### `requiredMessage?: string`
+
 If the field is required, this will override the global `REQUIRED_MESSAGE`
 
 ### `invalidMessage?: string`
+
 If the field is invalid, this will override the global `INVALID_MESSAGE`
 
 ## `ConditionalObject`
@@ -331,15 +352,42 @@ check if the value looks like an email address
 
 text the value against the regex param
 
-### value : alias of `equals`
+### `compare: ConditionalObject`
 
-### lt : alias of `lessThan`
+The `compare` operator is useful when comparing the value of a field to the value of another field instead of a fixed value. It accepts all the operators, except instead of providing a fixed value, you provide a questionId as the value. the compare operator will lookup the data for that questionId and evaluate the conditional object.
 
-### gt : alias of `greaterThan`
+In this example, we have a min/max fields which reference each other for their upper/lower bounds.
 
-### max : alias of `lessThanEqual`
+```
+  {
+    type: 'text',
+    questionId: 'minQuestionId',
+    conditionalValid: {
+      compare: {
+        lessThanEqual: 'maxQuestionId'
+      }
+    }
+  },
+  {
+    type: 'text',
+    questionId: 'maxQuestionId',
+    conditionalValid: {
+      compare: {
+        greaterThanEqual: 'minQuestionId'
+      }
+    }
+  }
+```
 
-### min : alias of `greaterThanEqual`
+### `value` : alias of `equals`
+
+### `lt` : alias of `lessThan`
+
+### `gt` : alias of `greaterThan`
+
+### `max` : alias of `lessThanEqual`
+
+### `min` : alias of `greaterThanEqual`
 
 ## `FieldOptions`
 
