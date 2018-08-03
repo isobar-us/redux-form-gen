@@ -23,7 +23,8 @@ const arrayType = ({field, values, ...itemProps}) => ({
             ...options,
             pathPrefix: mergePaths(options.pathPrefix, `${arrayField.questionId}[${index}]`),
             field: field.item,
-            data: {...data, ...arrayItemValues}, // spread across, to merge scopes
+            // Don't merge scopes anymore since default is local scope
+            // data: {...data, ...arrayItemValues}, // spread across, to merge scopes
             itemProps: {
               index,
               array: arrayValues

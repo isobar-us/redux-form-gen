@@ -35,8 +35,11 @@ export const isNilOrEmpty = (value: mixed) =>
  * @return {[type]}         [description]
  */
 export const getFieldPath = (options: FieldValidatorOptions) => {
+  // TODO write tests
   const {pathPrefix, field} = options;
-  return has(field, 'questionId') ? mergePaths(pathPrefix, field.questionId) : null; // TODO [test] make sure pathPrefix works
+  return has(field, 'questionId')
+    ? field.globalScope ? field.questionId : mergePaths(pathPrefix, field.questionId)
+    : null;
 };
 
 // TODO maybe describe this as `isRenderable` or `canRender`?
@@ -181,12 +184,13 @@ export const isFieldValid = (options: FieldValidatorOptions) => {
     fieldValid = fieldValid && fieldOptions._genIsValid(options);
   }
   if (has(field, 'conditionalValid')) {
+    const path = getFieldPath(options);
     fieldValid =
       fieldValid &&
       evalCondValid({
         ...options,
         cond: field.conditionalValid,
-        ...(field.questionId && {valueKey: field.questionId})
+        ...(path && {valueKey: path})
       });
   }
 
@@ -202,14 +206,15 @@ export const isFieldValid = (options: FieldValidatorOptions) => {
  * @param  {[type]} iterator [description]
  * @return {[type]}          [description]
  */
-export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Function) => {
+export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Function): Array<Object> => {
   let fieldOptions = resolveFieldOptions(options);
   options = omit(options, 'fieldOptions');
   const {field} = options;
+  const path = getFieldPath(options);
 
   const parentOptions = {
     ...(field && {parent: field}),
-    ...(field.questionId && {parentQuestionId: field.questionId})
+    ...(path ? {parentQuestionId: path} : null) // this passes the correctly scoped path
   };
 
   // TODO figure out what to do about childFields in addition to special children, _genSkipChildren

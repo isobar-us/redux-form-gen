@@ -11,7 +11,13 @@ import isString from 'lodash/isString';
 import {isNilOrEmpty, isFieldFilled, isFieldValid} from './validators';
 
 import type {FieldType} from './types';
-import type {ConditionalOperators, EvalCondOptions, ConditionalObject} from './conditionalUtils.types';
+import type {
+  ConditionalOperators,
+  EvalCondOptions,
+  ConditionalObject,
+  ConditionalDependency,
+  FieldDependencyOptions
+} from './conditionalUtils.types';
 
 /*
   Helpers
@@ -160,7 +166,7 @@ export const evalCond = (options: EvalCondOptions) => {
 
   // TODO add support for getFieldPath() when doing get(data, path) ?
   const value = get(data, getCondValueKey(options));
-  const conds = Object.keys(omit(cond, 'questionId'));
+  const conds = Object.keys(omit(cond, 'questionId', 'globalScope'));
   return conds.length > 0
     ? conds.reduce((result, key) => {
         // will AND all the cond props
@@ -208,16 +214,43 @@ export default {
   evalCondValid
 };
 
-// TODO consider renaming to getCondDependentFieldNames or something similar
-export const condDependentFields = (cond: ConditionalObject) => {
+export const getQuestion = (item: ConditionalDependency) => {
+  return {
+    questionId: item.questionId,
+    globalScope: has(item, 'globalScope') ? item.globalScope : false
+  };
+};
+
+export const getConditionalQuestions = (cond: ConditionalObject, deps: Array<ConditionalDependency> = []) => {
   if (has(cond, 'questionId')) {
-    return [cond.questionId];
-  } else if (has(cond, 'and') && Array.isArray(cond.and)) {
-    return cond.and.reduce((a, subCond) => a.concat(condDependentFields(subCond)), []);
-  } else if (has(cond, 'or') && Array.isArray(cond.or)) {
-    return cond.or.reduce((a, subCond) => a.concat(condDependentFields(subCond)), []);
-  } else if (has(cond, 'not') && cond.not) {
-    return condDependentFields(cond.not);
+    deps.push(getQuestion(cond));
   }
-  return [];
+  if (has(cond, 'and') && Array.isArray(cond.and)) {
+    cond.and.forEach((subCond) => getConditionalQuestions(subCond, deps));
+  }
+  if (has(cond, 'or') && Array.isArray(cond.or)) {
+    return cond.or.forEach((subCond) => getConditionalQuestions(subCond, deps));
+  }
+  if (has(cond, 'not') && cond.not) {
+    return getConditionalQuestions(cond.not, deps);
+  }
+  return deps;
+};
+
+export const getFieldDependencies = ({field, parentQuestionId}: FieldDependencyOptions) => {
+  const deps = [];
+  if (has(field, 'questionId')) {
+    deps.push(getQuestion(field));
+  }
+  if (parentQuestionId) {
+    deps.push({
+      questionId: parentQuestionId
+      // TODO how to manage scope
+      // pass the parentGlobalScope boolean?
+    });
+  }
+  field.conditionalVisible && getConditionalQuestions(field.conditionalVisible, deps);
+  field.conditionalRequired && getConditionalQuestions(field.conditionalRequired, deps);
+  field.conditionalDisabled && getConditionalQuestions(field.conditionalDisabled, deps);
+  return deps;
 };

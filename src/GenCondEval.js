@@ -8,7 +8,7 @@ import set from 'lodash/set';
 import GenField from './GenField';
 import omit from 'lodash/omit';
 import {evalCond} from './conditionalUtils';
-import {getGenContextOptions} from './utils';
+import {getGenContextOptions, mergePaths} from './utils';
 import isDeepEqual from 'react-fast-compare';
 
 import {Props} from './GenCondEval.types';
@@ -74,16 +74,20 @@ class GenCondEval extends Component<Props> {
 
 export default consumeReduxFormContext(
   consumeGenContext(
-    connect((state, {_reduxForm, names}) => {
+    connect((state, {_reduxForm, dependentFields}) => {
       const {form, sectionPrefix} = _reduxForm;
       const formValues = getFormValues(form)(state);
-      const sectionPrefixValues = sectionPrefix ? get(formValues, sectionPrefix) : {};
 
-      // merge section data scope with the global scope
-      const mergedData = {...formValues, ...sectionPrefixValues};
+      // TODO maybe put this logic in a selector?
+      const data = dependentFields.reduce((values, {questionId, globalScope}) => {
+        const path = globalScope ? questionId : mergePaths(sectionPrefix, questionId);
+        const value = get(formValues, path);
+        return set(values, path, value);
+      }, {});
 
       return {
-        data: names.reduce((values, name) => set(values, name, get(mergedData, name)), {})
+        sectionPrefix,
+        data
       };
     })(GenCondEval)
   )

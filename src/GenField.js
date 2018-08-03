@@ -13,7 +13,7 @@ import GenCondEval from './GenCondEval';
 import GenCondClearField from './GenCondClearField';
 import Frag from './Frag';
 
-import {isCondField, condDependentFields} from './conditionalUtils';
+import {isCondField, getFieldDependencies} from './conditionalUtils';
 import {getGenContextOptions} from './utils';
 
 import {getFieldOptions} from './defaultFieldTypes';
@@ -57,7 +57,7 @@ class GenField extends Component<Props> {
   };
 
   render() {
-    const {gen, field, parentQuestionId, visible = true, /* disabled = false, */ path} = this.props || {};
+    const {gen, field, parentQuestionId, visible = true, /* disabled = false, */ path} = this.props;
 
     const fieldOptions = getFieldOptions({
       ...this.props,
@@ -88,7 +88,6 @@ class GenField extends Component<Props> {
     const fieldComponent =
       !isNil(fieldOptions._genFieldComponent) &&
       !isNil(options.component) &&
-      (!isNil(options.name) || !isNil(options.names)) &&
       React.createElement(fieldOptions._genFieldComponent, {
         ...options,
         component: GenCondClearField,
@@ -114,20 +113,13 @@ class GenField extends Component<Props> {
         component
       });
 
-    // find `cond` prefixed props automatically
-    const condDependentFieldNames = [
-      ...(field.questionId ? [field.questionId] : []),
-      ...(parentQuestionId ? [parentQuestionId] : []),
-      ...(field.conditionalVisible ? condDependentFields(field.conditionalVisible) : []),
-      ...(field.conditionalRequired ? condDependentFields(field.conditionalRequired) : []),
-      ...(field.conditionalDisabled ? condDependentFields(field.conditionalDisabled) : [])
-    ];
+    const dependentFields = getFieldDependencies(this.props);
 
     return (
       (isCondField(field) && // a wrapper to evaluate conditional visibility
-        (condDependentFieldNames.length > 0 ? (
+        (dependentFields.length > 0 ? (
           <GenCondEval
-            names={condDependentFieldNames}
+            dependentFields={dependentFields}
             field={field}
             {...parentQuestionId && {parentQuestionId}}
             parentVisible={visible}

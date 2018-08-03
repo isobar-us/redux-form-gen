@@ -134,6 +134,27 @@ describe('<FormGenerator/>', () => {
     expect(wrapper.find('input').props().disabled).toBeUndefined();
   });
 
+  it('should attach props to fields via customQuestionProps', () => {
+    const customQuestionProps = {
+      bar: {
+        customProp: true
+      }
+    };
+    const fields = [
+      {
+        type: 'text',
+        questionId: 'bar'
+      }
+    ];
+    const wrapper = mount(
+      <FormDecorator>
+        <FormGenerator fields={fields} customQuestionProps={customQuestionProps} />
+      </FormDecorator>
+    );
+
+    expect(wrapper.find(TextField).props().customProp).toBe(true);
+  });
+
   describe('type text', () => {
     it('should render field and label', () => {
       const wrapper = mount(

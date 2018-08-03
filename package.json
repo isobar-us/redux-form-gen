@@ -59,7 +59,7 @@
     "react-fast-compare": "^2.0.1"
   },
   "devDependencies": {
-    "@storybook/react": "^3.2.16",
+    "@storybook/react": "^3.4.8",
     "@storybook/storybook-deployer": "^2.0.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.25.0",
@@ -86,8 +86,8 @@
     "eslint-plugin-promise": "^3.0.0",
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-standard": "^3.0.1",
-    "flow-bin": "^0.60.1",
-    "flow-copy-source": "^1.2.1",
+    "flow-bin": "^0.77.0",
+    "flow-copy-source": "^2.0.2",
     "husky": "^0.14.3",
     "jest": "^22.1.1",
     "jest-enzyme": "^4.2.0",

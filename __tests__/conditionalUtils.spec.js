@@ -1,4 +1,4 @@
-import {evalCond, evalCondValid, condDependentFields} from '../src/conditionalUtils';
+import {evalCond, evalCondValid, getConditionalQuestions} from '../src/conditionalUtils';
 
 import {buildLookupTable} from '../src/utils';
 
@@ -859,8 +859,8 @@ describe('evalCond()', () => {
   });
 });
 
-describe('condDependentFields()', () => {
-  it('should pull all dependent questionIds', () => {
+describe('getConditionalQuestions()', () => {
+  it('should get all dependent questions', () => {
     const cond = {
       and: [
         {
@@ -877,13 +877,34 @@ describe('condDependentFields()', () => {
               }
             }
           ]
+        },
+        {
+          questionId: 'four',
+          globalScope: true
         }
       ]
     };
 
-    const dependentFields = condDependentFields(cond);
+    const dependentFields = getConditionalQuestions(cond);
 
-    expect(dependentFields).toEqual(['one', 'two', 'three']);
+    expect(dependentFields).toEqual([
+      {
+        questionId: 'one',
+        globalScope: false
+      },
+      {
+        questionId: 'two',
+        globalScope: false
+      },
+      {
+        questionId: 'three',
+        globalScope: false
+      },
+      {
+        questionId: 'four',
+        globalScope: true
+      }
+    ]);
   });
 });
 

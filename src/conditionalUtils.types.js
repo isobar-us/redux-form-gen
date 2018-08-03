@@ -1,3 +1,4 @@
+import type {FieldType} from './types';
 export type ConditionalObject = {
   questionId: string,
   equals?: mixed,
@@ -21,6 +22,16 @@ export type ConditionalObject = {
   pobox: boolean,
   email: boolean,
   regex: boolean
+};
+
+export type ConditionalDependency = {
+  questionId: string,
+  globalScope?: Boolean
+};
+
+export type FieldDependencyOptions = {
+  field: FieldType,
+  parentQuestionId: String
 };
 
 export type EvalCondOptions = {
