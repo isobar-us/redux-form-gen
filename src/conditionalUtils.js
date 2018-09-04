@@ -39,6 +39,8 @@ const getOperator = (options, key) => {
   return op;
 };
 
+const isNilOrEmptyString = (v) => isNil(v) || v === '';
+
 /*
   Conditional Operators
  */
@@ -118,20 +120,32 @@ const ops: ConditionalOperators = {
   includes: ({value, param}) => includes(value, param),
   // comparison
   greaterThan: ({value, param}) => {
-    const nvalue = isNil(value) ? 0 : value; // treat nil as 0
-    return isNumber(nvalue) ? nvalue > param : parseFloat(nvalue) > param;
+    if (isNilOrEmptyString(value)) {
+      return false;
+    }
+    value = isNumber(value) ? value : parseFloat(value);
+    return value > param;
   },
   lessThan: ({value, param}) => {
-    const nvalue = isNil(value) ? 0 : value; // treat nil as 0
-    return isNumber(nvalue) ? nvalue < param : parseFloat(nvalue) < param;
+    if (isNilOrEmptyString(value)) {
+      return false;
+    }
+    value = isNumber(value) ? value : parseFloat(value);
+    return value < param;
   },
   greaterThanEqual: ({value, param}) => {
-    const nvalue = isNil(value) ? 0 : value; // treat nil as 0
-    return isNumber(nvalue) ? nvalue >= param : parseFloat(nvalue) >= param;
+    if (isNilOrEmptyString(value)) {
+      return false;
+    }
+    value = isNumber(value) ? value : parseFloat(value);
+    return value >= param;
   },
   lessThanEqual: ({value, param}) => {
-    const nvalue = isNil(value) ? 0 : value; // treat nil as 0
-    return isNumber(nvalue) ? nvalue <= param : parseFloat(nvalue) <= param;
+    if (isNilOrEmptyString(value)) {
+      return false;
+    }
+    value = isNumber(value) ? value : parseFloat(value);
+    return value <= param;
   },
   // length
   length: ({value, param}) => (isNil(value) ? false : hasIn(value, 'length') ? value.length === param : true),
