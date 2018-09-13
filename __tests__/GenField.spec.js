@@ -25,6 +25,11 @@ const FormGenDecorator = ({children, formProps, genProps}) => (
   </Provider>
 );
 
+const ReduxFormDecorator = ({children, formProps}) => (
+  <Provider store={store}>
+    <Form {...formProps}>{children}</Form>
+  </Provider>
+);
 // reset the redux store after each test
 beforeEach(() => {
   store = createStore(reducer, {});
@@ -50,7 +55,11 @@ describe('GenField', () => {
   it('should throw an error if not rendered inside a FormGenerator', () => {
     startErrorSupression();
     expect(() => {
-      mount(<GenField />);
+      mount(
+        <ReduxFormDecorator>
+          <GenField />
+        </ReduxFormDecorator>
+      );
     }).toThrowErrorMatchingSnapshot();
     stopErrorSuppression();
   });
@@ -90,7 +99,7 @@ describe('GenField', () => {
       </FormGenDecorator>
     );
     expect(consoleWarnSpy.mock.calls.length).toBe(0);
-    expect(consoleErrorSpy.mock.calls.length).toBe(2);
+    expect(consoleErrorSpy.mock.calls.length).toBe(1);
     expect(consoleErrorSpy.mock.calls).toMatchSnapshot(); // path error
     stopErrorSuppression();
   });

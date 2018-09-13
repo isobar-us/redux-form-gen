@@ -576,3 +576,48 @@ describe('<FormGenerator/>', () => {
     });
   });
 });
+
+describe('data scoping', () => {
+  it('should reference global scope from within conditionals', () => {
+    const fields = [
+      {
+        type: 'text',
+        questionId: 'globalText'
+      },
+      {
+        type: 'array',
+        questionId: 'array',
+        defaultValue: [{}],
+        item: {
+          type: 'arrayItem',
+          childFields: [
+            {
+              type: 'text',
+              questionId: 'arrayText',
+              conditionalVisible: {
+                questionId: 'globalText',
+                globalScope: true,
+                equals: 'foo'
+              }
+            }
+          ]
+        }
+      }
+    ];
+
+    const wrapper = mount(
+      <FormDecorator
+        initialValues={getDefaultValues({
+          fields,
+          initialValues: {
+            globalText: 'bar'
+          }
+        })}
+      >
+        <FormGenerator fields={fields} />
+      </FormDecorator>
+    );
+
+    expect(wrapper.find('.section--hidden').length).toBe(1);
+  });
+});

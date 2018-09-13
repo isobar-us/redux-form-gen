@@ -7,7 +7,7 @@ type ValidatorOptions = {
   customOperators?: CustomOperators,
   lookupTable: Object,
   pathPrefix?: string,
-  parentQuestionId?: string,
+  parentPath?: string,
   messages?: {
     requiredMessage?: string,
     invalidMessage?: string

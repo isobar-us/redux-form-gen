@@ -31,7 +31,7 @@ export type ConditionalDependency = {
 
 export type FieldDependencyOptions = {
   field: FieldType,
-  parentQuestionId: String
+  parentPath: String
 };
 
 export type EvalCondOptions = {

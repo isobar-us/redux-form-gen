@@ -251,16 +251,12 @@ export const getConditionalQuestions = (cond: ConditionalObject, deps: Array<Con
   return deps;
 };
 
-export const getFieldDependencies = ({field, parentQuestionId}: FieldDependencyOptions) => {
+export const getFieldDependencies = ({field, parentPath}: FieldDependencyOptions) => {
   const deps = [];
-  if (has(field, 'questionId')) {
-    deps.push(getQuestion(field));
-  }
-  if (parentQuestionId) {
+  if (parentPath) {
     deps.push({
-      questionId: parentQuestionId
-      // TODO how to manage scope
-      // pass the parentGlobalScope boolean?
+      questionId: parentPath,
+      globalScope: true // parent path is pre-calculated at global scope
     });
   }
   field.conditionalVisible && getConditionalQuestions(field.conditionalVisible, deps);

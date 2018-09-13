@@ -342,10 +342,40 @@ class Wizard extends React.Component {
   }
 }
 
+const editorExample = [
+  {
+    type: 'text',
+    questionId: 'text',
+    label: 'Global Text'
+  },
+  {
+    type: 'section',
+    label: 'Section Label',
+    questionId: 'section',
+    childFields: [
+      {
+        type: 'text',
+        questionId: 'globalText',
+        globalScope: true
+      },
+      {
+        type: 'text',
+        questionId: 'text',
+        label: 'Section Text',
+        conditionalVisible: {
+          questionId: 'text',
+          globalScope: true,
+          equals: 'yes'
+        }
+      }
+    ]
+  }
+];
+
 class FormEditor extends React.Component {
   state = {
-    structure: basicInfoExample,
-    rawStructure: JSON.stringify(basicInfoExample, null, 2),
+    structure: editorExample,
+    rawStructure: JSON.stringify(editorExample, null, 2),
     error: null
   };
 

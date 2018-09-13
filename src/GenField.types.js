@@ -7,5 +7,5 @@ export type Props = {
   path: string,
   disabled?: boolean,
   visible?: boolean,
-  parentQuestionId?: string
+  parentPath?: string
 };
