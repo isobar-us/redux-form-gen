@@ -47,13 +47,17 @@ console.log('Current Version:', currentVersion);
       initial: 0
     },
     {
-      type: (prev) => prev === 'other' ? 'text' : null,
+      type: (prev) => (prev === 'other' ? 'text' : null),
       name: 'newVersion',
       message: 'Enter a custom version:'
     }
   ]);
   if (options.releaseType !== 'other') {
     options.newVersion = semver.inc(currentVersion, options.releaseType);
+  }
+
+  if (!options.releaseType || !options.newVersion) {
+    return; // exit if not all the options are filled out
   }
 
   // update package.json
