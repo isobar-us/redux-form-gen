@@ -232,16 +232,9 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', lessThan: 5},
-          data: {} // nil will result in false
+          data: {} // nil as 0
         })
-      ).toBe(false);
-
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', lessThan: 5},
-          data: {foo: ''} // empty string will result in false
-        })
-      ).toBe(false);
+      ).toBe(true);
     });
 
     it('should return false if foo is not less than 5', () => {
@@ -262,14 +255,7 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', lessThan: -5},
-          data: {} // nil will result in false
-        })
-      ).toBe(false);
-
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', lessThan: -5},
-          data: {foo: ''} // empty string will result in false
+          data: {} // nil as 0
         })
       ).toBe(false);
     });
@@ -294,16 +280,9 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', greaterThan: -5},
-          data: {} // nil will result in false
+          data: {} // nil as 0
         })
-      ).toBe(false);
-
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', greaterThan: -5},
-          data: {foo: ''} // empty string will result in false
-        })
-      ).toBe(false);
+      ).toBe(true);
     });
 
     it('should return false if foo is not greater than 5', () => {
@@ -324,14 +303,7 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', greaterThan: 5},
-          data: {} // nil will result in false
-        })
-      ).toBe(false);
-
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', greaterThan: 5},
-          data: {foo: ''} // empty string will result in false
+          data: {} // nil as 0
         })
       ).toBe(false);
     });
@@ -356,16 +328,9 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', lessThanEqual: 5},
-          data: {} // nil will result in false
+          data: {} // nil as 0
         })
-      ).toBe(false);
-
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', lessThanEqual: 5},
-          data: {foo: ''} // empty string will result in false
-        })
-      ).toBe(false);
+      ).toBe(true);
     });
 
     it('should return false if foo is not less than 5', () => {
@@ -386,14 +351,7 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', lessThanEqual: -5},
-          data: {} // nil will result in false
-        })
-      ).toBe(false);
-
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', lessThanEqual: -5},
-          data: {foo: ''} // empty string will result in false
+          data: {} // nil as 0
         })
       ).toBe(false);
     });
@@ -432,16 +390,9 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', greaterThanEqual: -5},
-          data: {} // nil will result in false
+          data: {} // nil as 0
         })
-      ).toBe(false);
-
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', greaterThanEqual: -5},
-          data: {foo: ''} // empty string will result in false
-        })
-      ).toBe(false);
+      ).toBe(true);
     });
 
     it('should return false if foo is not greater than 5', () => {
@@ -462,14 +413,7 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', greaterThanEqual: 5},
-          data: {} // nil will result in false
-        })
-      ).toBe(false);
-
-      expect(
-        evalCond({
-          cond: {questionId: 'foo', greaterThanEqual: 5},
-          data: {foo: ''} // empty string will result in false
+          data: {} // nil as 0
         })
       ).toBe(false);
     });
