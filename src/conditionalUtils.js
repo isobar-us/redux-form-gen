@@ -115,25 +115,29 @@ const ops: ConditionalOperators = {
     if (isNilOrEmpty(value)) {
       return false;
     }
-    return isNumber(value) ? value > param : parseFloat(value) > param;
+    const parsedValue = isNumber(value) ? value : parseFloat(value);
+    return parsedValue > param;
   },
   lessThan: ({value, param}) => {
     if (isNilOrEmpty(value)) {
       return false;
     }
-    return isNumber(value) ? value < param : parseFloat(value) < param;
+    const parsedValue = isNumber(value) ? value : parseFloat(value);
+    return parsedValue < param;
   },
   greaterThanEqual: ({value, param}) => {
     if (isNilOrEmpty(value)) {
       return false;
     }
-    return isNumber(value) ? value >= param : parseFloat(value) >= param;
+    const parsedValue = isNumber(value) ? value : parseFloat(value);
+    return parsedValue >= param;
   },
   lessThanEqual: ({value, param}) => {
     if (isNilOrEmpty(value)) {
       return false;
     }
-    return isNumber(value) ? value <= param : parseFloat(value) <= param;
+    const parsedValue = isNumber(value) ? value : parseFloat(value);
+    return parsedValue <= param;
   },
   // length
   length: ({value, param}) => (isNil(value) ? false : hasIn(value, 'length') ? value.length === param : true),
