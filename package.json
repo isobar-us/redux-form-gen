@@ -1,6 +1,6 @@
 {
   "name": "@isobar-us/redux-form-gen",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "A pluggable form generator for redux-form",
   "main": "./lib/index.js",
   "files": [
