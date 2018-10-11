@@ -211,7 +211,7 @@ export const evalCondValid = (options: EvalCondOptions) => {
   const value = get(data, getCondValueKey(options));
 
   // can not validate if the field is empty, so return true
-  if (isNilOrEmpty(value)) {
+  if (isNil(value) || value === '') {
     return true;
   }
 
