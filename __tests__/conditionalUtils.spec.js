@@ -232,7 +232,14 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', lessThan: 5},
-          data: {} // nil as 0
+          data: {}
+        })
+      ).toBe(false);
+
+      expect(
+        evalCondValid({
+          cond: {questionId: 'foo', lessThan: 5},
+          data: {}
         })
       ).toBe(true);
     });
@@ -255,9 +262,16 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', lessThan: -5},
-          data: {} // nil as 0
+          data: {}
         })
       ).toBe(false);
+
+      expect(
+        evalCondValid({
+          cond: {questionId: 'foo', lessThan: -5},
+          data: {}
+        })
+      ).toBe(true);
     });
   });
 
@@ -280,7 +294,14 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', greaterThan: -5},
-          data: {} // nil as 0
+          data: {}
+        })
+      ).toBe(false);
+
+      expect(
+        evalCondValid({
+          cond: {questionId: 'foo', greaterThan: -5},
+          data: {}
         })
       ).toBe(true);
     });
@@ -303,9 +324,16 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', greaterThan: 5},
-          data: {} // nil as 0
+          data: {}
         })
       ).toBe(false);
+
+      expect(
+        evalCondValid({
+          cond: {questionId: 'foo', greaterThan: 5},
+          data: {}
+        })
+      ).toBe(true);
     });
   });
 
@@ -328,7 +356,14 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', lessThanEqual: 5},
-          data: {} // nil as 0
+          data: {}
+        })
+      ).toBe(false);
+
+      expect(
+        evalCondValid({
+          cond: {questionId: 'foo', lessThanEqual: 5},
+          data: {}
         })
       ).toBe(true);
     });
@@ -351,9 +386,16 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', lessThanEqual: -5},
-          data: {} // nil as 0
+          data: {}
         })
       ).toBe(false);
+
+      expect(
+        evalCondValid({
+          cond: {questionId: 'foo', lessThanEqual: -5},
+          data: {}
+        })
+      ).toBe(true);
     });
   });
 
@@ -390,7 +432,14 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', greaterThanEqual: -5},
-          data: {} // nil as 0
+          data: {}
+        })
+      ).toBe(false);
+
+      expect(
+        evalCondValid({
+          cond: {questionId: 'foo', greaterThanEqual: -5},
+          data: {}
         })
       ).toBe(true);
     });
@@ -413,9 +462,16 @@ describe('evalCond()', () => {
       expect(
         evalCond({
           cond: {questionId: 'foo', greaterThanEqual: 5},
-          data: {} // nil as 0
+          data: {}
         })
       ).toBe(false);
+
+      expect(
+        evalCondValid({
+          cond: {questionId: 'foo', greaterThanEqual: 5},
+          data: {}
+        })
+      ).toBe(true);
     });
   });
 
