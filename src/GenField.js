@@ -95,8 +95,6 @@ class GenField extends Component<Props> {
     // todo figure out how to differentiate between path in FML and path in data.
     const {gen, field, pathPrefix, parentPath, data, path} = this.props;
 
-    // console.log('render field', this.props);
-
     // Conditional Evaluation
     const evalOptions = {
       data,

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {consumeReduxFormContext, GenContext} from './contextUtils';
 import {buildLookupTable, isShallowEqual} from './utils';
+import Frag from './Frag';
 
 import GenField from './GenField';
 
@@ -105,10 +106,12 @@ class FormGenerator extends Component<Props, State> {
 
     return fields ? (
       <GenContext.Provider value={this.state}>
-        <div className='generated-form'>
-          {fields.map((field, index) => <GenField key={index} field={field} path={`${path}[${index}]`} />)}
-        </div>
-        {children}
+        <Frag>
+          <div className='generated-form'>
+            {fields.map((field, index) => <GenField key={index} field={field} path={`${path}[${index}]`} />)}
+          </div>
+          {children}
+        </Frag>
       </GenContext.Provider>
     ) : null;
   }
