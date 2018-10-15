@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import FieldMetaMessages from './FieldMetaMessages';
-import Frag from '../../Frag';
+import Fragment from 'react-dot-fragment';
 
 class TextareaField extends Component {
   render() {
     const {input, disabled} = this.props;
     return (
-      <Frag>
+      <Fragment>
         <textarea {...input} disabled={disabled}>
           {input.value}
         </textarea>
         <FieldMetaMessages {...this.props.meta} />
-      </Frag>
+      </Fragment>
     );
   }
 }

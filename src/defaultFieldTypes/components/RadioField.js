@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import cn from 'classnames';
 import FieldMetaMessages from './FieldMetaMessages';
-import Frag from '../../Frag';
+import Fragment from 'react-dot-fragment';
 
 class RadioField extends Component {
   onChange = (e) => {
@@ -20,7 +20,7 @@ class RadioField extends Component {
     let extraInputProps = Object.assign({}, this.props.input, {onChange: this.onChange});
 
     return (
-      <Frag>
+      <Fragment>
         <div
           className={cn('wrapper', {
             'wrapper--stacked': display === 'stacked',
@@ -46,7 +46,7 @@ class RadioField extends Component {
           })}
         </div>
         <FieldMetaMessages {...this.props.meta} />
-      </Frag>
+      </Fragment>
     );
   }
 }

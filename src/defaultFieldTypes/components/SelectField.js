@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {isNilOrEmpty} from '../../validators';
 import FieldMetaMessages from './FieldMetaMessages';
-import Frag from '../../Frag';
+import Fragment from 'react-dot-fragment';
 
 class SelectField extends Component {
   render() {
     const {input, options} = this.props;
     return (
-      <Frag>
+      <Fragment>
         <select {...input} value={`${input.value}`}>
           {isNilOrEmpty(input.value) && <option value={''} disabled />}
           {options &&
@@ -18,7 +18,7 @@ class SelectField extends Component {
             ))}
         </select>
         <FieldMetaMessages {...this.props.meta} />
-      </Frag>
+      </Fragment>
     );
   }
 }

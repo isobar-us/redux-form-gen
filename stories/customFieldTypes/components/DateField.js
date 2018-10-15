@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import FieldMetaMessages from '../../../src/defaultFieldTypes/components/FieldMetaMessages';
-import Frag from '../../../src/Frag';
+import Fragment from 'react-dot-fragment';
 
 class DateField extends Component {
   render() {
     const {input} = this.props;
     return (
-      <Frag>
+      <Fragment>
         <input {...input} type='date' />
         <FieldMetaMessages {...this.props.meta} />
-      </Frag>
+      </Fragment>
     );
   }
 }
