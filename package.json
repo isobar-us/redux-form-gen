@@ -1,6 +1,6 @@
 {
   "name": "@isobar-us/redux-form-gen",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "A pluggable form generator for redux-form",
   "main": "./lib/index.js",
   "files": [
@@ -31,6 +31,7 @@
     "storybook": "start-storybook -p 6006",
     "start": "npm run storybook",
     "build-storybook": "build-storybook",
+    "prep-release": "node scripts/prep-release.js",
     "precommit": "npm run lint -q",
     "prepush": "npm run check -q"
   },
@@ -73,6 +74,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.3.13",
+    "bluebird": "^3.5.1",
     "codacy-coverage": "^2.0.3",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.4",
@@ -96,6 +98,7 @@
     "node-sass": "^4.5.0",
     "prettier": "^1.8.2",
     "prettier-eslint-cli": "^4.4.0",
+    "prompts": "^1.0.0",
     "raf": "^3.3.2",
     "react": "^16.5.1",
     "react-codemirror": "^1.0.0",
@@ -106,6 +109,7 @@
     "redux-form": "^7.0.4",
     "rimraf": "^2.5.4",
     "sass-loader": "^6.0.6",
+    "semver": "^5.5.1",
     "style-loader": "^0.19.0",
     "webpack": "^3.3.0"
   },

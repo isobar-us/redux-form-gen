@@ -39,8 +39,6 @@ const getOperator = (options, key) => {
   return op;
 };
 
-const isNilOrEmptyString = (v) => isNil(v) || v === '';
-
 /*
   Conditional Operators
  */
@@ -120,32 +118,32 @@ const ops: ConditionalOperators = {
   includes: ({value, param}) => includes(value, param),
   // comparison
   greaterThan: ({value, param}) => {
-    if (isNilOrEmptyString(value)) {
+    if (isNilOrEmpty(value)) {
       return false;
     }
-    value = isNumber(value) ? value : parseFloat(value);
-    return value > param;
+    const parsedValue = isNumber(value) ? value : parseFloat(value);
+    return parsedValue > param;
   },
   lessThan: ({value, param}) => {
-    if (isNilOrEmptyString(value)) {
+    if (isNilOrEmpty(value)) {
       return false;
     }
-    value = isNumber(value) ? value : parseFloat(value);
-    return value < param;
+    const parsedValue = isNumber(value) ? value : parseFloat(value);
+    return parsedValue < param;
   },
   greaterThanEqual: ({value, param}) => {
-    if (isNilOrEmptyString(value)) {
+    if (isNilOrEmpty(value)) {
       return false;
     }
-    value = isNumber(value) ? value : parseFloat(value);
-    return value >= param;
+    const parsedValue = isNumber(value) ? value : parseFloat(value);
+    return parsedValue >= param;
   },
   lessThanEqual: ({value, param}) => {
-    if (isNilOrEmptyString(value)) {
+    if (isNilOrEmpty(value)) {
       return false;
     }
-    value = isNumber(value) ? value : parseFloat(value);
-    return value <= param;
+    const parsedValue = isNumber(value) ? value : parseFloat(value);
+    return parsedValue <= param;
   },
   // length
   length: ({value, param}) => (isNil(value) ? false : hasIn(value, 'length') ? value.length === param : true),
@@ -217,11 +215,20 @@ const condValidElseHandler = (options) => {
   // TODO hook into experimental `valid` operator when ready
   // return ops.valid({...options, param: true});
 };
-export const evalCondValid = (args: EvalCondOptions) =>
-  evalCond({
+export const evalCondValid = (options: EvalCondOptions) => {
+  const {data} = options;
+  const value = get(data, getCondValueKey(options));
+
+  // can not validate if the field is empty, so return true
+  if (isNil(value) || value === '') {
+    return true;
+  }
+
+  return evalCond({
     elseHandler: condValidElseHandler,
-    ...args
+    ...options
   });
+};
 
 export default {
   evalCond,

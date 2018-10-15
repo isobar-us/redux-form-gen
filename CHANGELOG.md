@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.11.0] - 2018-10-11
+
+### Changed
+
+* ⚠️ **[Breaking]** evalCondValid() now returns `true` if the value is `nil` or empty string #31
+  * This should create more consistency in the usage of operators between `conditionalValid` and other conditional props
+
 ## [v0.10.0] - 2018-08-28
 
 ### Changed
@@ -388,7 +395,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.11.0...HEAD
+
+[v0.11.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.10.0...v0.11.0
 
 [v0.10.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.9.12...v0.10.0
 
