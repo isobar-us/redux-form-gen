@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import has from 'lodash/has';
 import cn from 'classnames';
 import {consumeGenContext} from './contextUtils';
-import Frag from './Frag';
+import Fragment from 'react-dot-fragment';
 
 import type {Props} from './GenWrapper.types.js';
 
@@ -32,10 +32,10 @@ class GenWrapper extends Component<Props> {
       </div>
     ) : (
       // if either the label or component is missing, don't treat as an input-container. just render what you have.
-      <Frag>
+      <Fragment>
         {labelComponent && labelComponent}
         {component && component}
-      </Frag>
+      </Fragment>
     );
   }
 }

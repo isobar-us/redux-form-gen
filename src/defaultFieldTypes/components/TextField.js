@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 import FieldMetaMessages from './FieldMetaMessages';
-import Frag from '../../Frag';
+import Fragment from 'react-dot-fragment';
 
 class TextField extends Component {
   render() {
     const {input, disabled} = this.props;
     return (
-      <Frag>
+      <Fragment>
         <input {...input} disabled={disabled} type='text' />
         <FieldMetaMessages {...this.props.meta} />
-      </Frag>
+      </Fragment>
     );
   }
 }

@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {FormSection} from 'redux-form';
 
-import Frag from '../../Frag';
+import Fragment from 'react-dot-fragment';
 import {consumeGenContext} from '../../contextUtils';
 import GenField from '../../GenField';
 import {getDefaultValues, getGenContextOptions} from '../../utils';
@@ -38,14 +38,14 @@ class GenArray extends Component {
   render() {
     const {fields, item, itemProps} = this.props;
     return (
-      <Frag>
+      <Fragment>
         {fields.map((name, index) => (
           <FormSection name={name} key={name}>
             <GenField {...{arrayItemProps: {array: fields, index}, field: item, path: `${itemProps.path}.item`}} />
           </FormSection>
         ))}
         {this.isAddButtonEnabled() && this.renderAddButton()}
-      </Frag>
+      </Fragment>
     );
   }
 }

@@ -6208,6 +6208,10 @@ react-dom@^16.0.0-rc.3:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-dot-fragment@^0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/react-dot-fragment/-/react-dot-fragment-0.2.7.tgz#f342ff7b0314bdb1ddecc603f500106791c80f95"
+
 react-fast-compare@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.1.tgz#92c91ac4814aa8cfcfb04780ad1bfff2bbe3a3c6"

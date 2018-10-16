@@ -11,7 +11,7 @@ import isNil from 'lodash/isNil';
 import {consumeGenContext} from './contextUtils';
 import GenCondEval from './GenCondEval';
 import GenCondClearField from './GenCondClearField';
-import Frag from './Frag';
+import Fragment from 'react-dot-fragment';
 
 import {isCondField, condDependentFields} from './conditionalUtils';
 import {getGenContextOptions} from './utils';
@@ -147,11 +147,11 @@ class GenField extends Component<Props> {
           {/* hide if invisible */}
           <div className={cn({'wrapper--hidden-path': !isPathVisible})}>
             {wrapperComponent || (
-              <Frag>
+              <Fragment>
                 {labelComponent && labelComponent}
                 {fieldComponent && fieldComponent}
                 {component && component}
-              </Frag>
+              </Fragment>
             )}
           </div>
           {!fieldOptions._genSkipChildren &&
