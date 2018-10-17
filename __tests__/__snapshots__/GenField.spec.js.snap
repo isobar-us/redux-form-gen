@@ -52,13 +52,6 @@ Array [
       "type": "text",
     },
   ],
-  Array [
-    "Missing path for ",
-    Object {
-      "questionId": "foo",
-      "type": "text",
-    },
-  ],
 ]
 `;
 

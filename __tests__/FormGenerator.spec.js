@@ -134,6 +134,27 @@ describe('<FormGenerator/>', () => {
     expect(wrapper.find('input').props().disabled).toBeUndefined();
   });
 
+  it('should attach props to fields via customQuestionProps', () => {
+    const customQuestionProps = {
+      bar: {
+        customProp: true
+      }
+    };
+    const fields = [
+      {
+        type: 'text',
+        questionId: 'bar'
+      }
+    ];
+    const wrapper = mount(
+      <FormDecorator>
+        <FormGenerator fields={fields} customQuestionProps={customQuestionProps} />
+      </FormDecorator>
+    );
+
+    expect(wrapper.find(TextField).props().customProp).toBe(true);
+  });
+
   describe('type text', () => {
     it('should render field and label', () => {
       const wrapper = mount(
@@ -553,5 +574,50 @@ describe('<FormGenerator/>', () => {
         ]
       });
     });
+  });
+});
+
+describe('data scoping', () => {
+  it('should reference global scope from within conditionals', () => {
+    const fields = [
+      {
+        type: 'text',
+        questionId: 'globalText'
+      },
+      {
+        type: 'array',
+        questionId: 'array',
+        defaultValue: [{}],
+        item: {
+          type: 'arrayItem',
+          childFields: [
+            {
+              type: 'text',
+              questionId: 'arrayText',
+              conditionalVisible: {
+                questionId: 'globalText',
+                globalScope: true,
+                equals: 'foo'
+              }
+            }
+          ]
+        }
+      }
+    ];
+
+    const wrapper = mount(
+      <FormDecorator
+        initialValues={getDefaultValues({
+          fields,
+          initialValues: {
+            globalText: 'bar'
+          }
+        })}
+      >
+        <FormGenerator fields={fields} />
+      </FormDecorator>
+    );
+
+    expect(wrapper.find('.section--hidden').length).toBe(1);
   });
 });

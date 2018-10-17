@@ -15,7 +15,7 @@ type DefaultOptions = {
   customFieldTypes?: CustomFieldTypes,
   lookupTable: LookupTable,
   pathPrefix?: string,
-  parentQuestionId?: string
+  parentPath?: string
 };
 
 export type GetDefaultValueOptions = {

@@ -35,8 +35,11 @@ export const isNilOrEmpty = (value: mixed) =>
  * @return {[type]}         [description]
  */
 export const getFieldPath = (options: FieldValidatorOptions) => {
+  // TODO write tests
   const {pathPrefix, field} = options;
-  return has(field, 'questionId') ? mergePaths(pathPrefix, field.questionId) : null; // TODO [test] make sure pathPrefix works
+  return has(field, 'questionId')
+    ? field.globalScope ? field.questionId : mergePaths(pathPrefix, field.questionId)
+    : null;
 };
 
 // TODO maybe describe this as `isRenderable` or `canRender`?
@@ -65,7 +68,7 @@ export const isFieldVisible = (options: FieldValidatorOptions) => {
     ...options,
     fieldOptions: resolveFieldOptions(options)
   };
-  const {field, parentQuestionId} = options;
+  const {field, parentPath} = options;
 
   const hidden = isFieldHidden(options);
   if (hidden) {
@@ -76,7 +79,7 @@ export const isFieldVisible = (options: FieldValidatorOptions) => {
     ? evalCond({
         ...options,
         cond: field.conditionalVisible,
-        ...(parentQuestionId && {valueKey: parentQuestionId})
+        ...(parentPath && {valueKey: parentPath})
       })
     : true;
 };
@@ -87,7 +90,7 @@ export const isFieldVisible = (options: FieldValidatorOptions) => {
  * @return {Boolean}         [description]
  */
 export const isFieldDisabled = (options: FieldValidatorOptions) => {
-  const {field, parentQuestionId} = options;
+  const {field, parentPath} = options;
   let fieldOptions = resolveFieldOptions(options);
 
   return (
@@ -97,7 +100,7 @@ export const isFieldDisabled = (options: FieldValidatorOptions) => {
       evalCond({
         ...options,
         cond: field.conditionalDisabled,
-        ...(parentQuestionId && {valueKey: parentQuestionId})
+        ...(parentPath && {valueKey: parentPath})
       }))
   );
 };
@@ -109,7 +112,7 @@ export const isFieldDisabled = (options: FieldValidatorOptions) => {
  * @return {Boolean}         [description]
  */
 export const isFieldRequired = (options: FieldValidatorOptions) => {
-  const {field, parentQuestionId} = options;
+  const {field, parentPath} = options;
   let disabled = resolveDisabled(options);
   // let {disabled} = options;
   // if (isNil(disabled)) {
@@ -122,7 +125,7 @@ export const isFieldRequired = (options: FieldValidatorOptions) => {
       evalCond({
         ...options,
         cond: field.conditionalRequired,
-        ...(parentQuestionId && {valueKey: parentQuestionId})
+        ...(parentPath && {valueKey: parentPath})
       }))
   );
 };
@@ -181,12 +184,13 @@ export const isFieldValid = (options: FieldValidatorOptions) => {
     fieldValid = fieldValid && fieldOptions._genIsValid(options);
   }
   if (has(field, 'conditionalValid')) {
+    const path = getFieldPath(options);
     fieldValid =
       fieldValid &&
       evalCondValid({
         ...options,
         cond: field.conditionalValid,
-        ...(field.questionId && {valueKey: field.questionId})
+        ...(path && {valueKey: path})
       });
   }
 
@@ -202,14 +206,15 @@ export const isFieldValid = (options: FieldValidatorOptions) => {
  * @param  {[type]} iterator [description]
  * @return {[type]}          [description]
  */
-export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Function) => {
+export const mapFieldChildren = (options: FieldValidatorOptions, iterator: Function): Array<Object> => {
   let fieldOptions = resolveFieldOptions(options);
   options = omit(options, 'fieldOptions');
   const {field} = options;
+  const path = getFieldPath(options); // calculates path at the correct scope
 
   const parentOptions = {
     ...(field && {parent: field}),
-    ...(field.questionId && {parentQuestionId: field.questionId})
+    ...(path ? {parentPath: path} : null) // this passes the correctly scoped path
   };
 
   // TODO figure out what to do about childFields in addition to special children, _genSkipChildren
@@ -292,7 +297,7 @@ export const resolveDisabled = (options: FieldValidatorOptions) => resolve('disa
 // # Valid
 // ####################################################
 
-// options = {fields, data, lookupTable, customFieldTypes, parentQuestionId, onSetError, errors = {}}
+// options = {fields, data, lookupTable, customFieldTypes, parentPath, onSetError, errors = {}}
 export const getSectionErrors = (options: SectionValidOptions) => {
   options = {
     // fields
@@ -385,7 +390,7 @@ export const getSectionErrorsIterator = (options: FieldValidOptions) => {
 // # Filled
 // ####################################################
 
-// options = {field, data, lookupTable, customFieldTypes, parentQuestionId}
+// options = {field, data, lookupTable, customFieldTypes, parentPath}
 export const isSectionFilledIterator = (options: FieldFilledOptions) => {
   options = {
     // field

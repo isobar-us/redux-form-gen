@@ -1,4 +1,4 @@
-import {buildLookupTable, getDefaultValues} from '../src/utils';
+import {buildLookupTable, getDefaultValues, mergePaths} from '../src/utils';
 import exampleFieldTypes from '../stories/customFieldTypes';
 // import defaultsDeep from 'lodash/defaultsDeep';
 
@@ -187,5 +187,12 @@ describe('getDefaultValues()', () => {
       child_array_id: [],
       text_id: 'some default'
     });
+  });
+});
+
+describe('mergePaths()', () => {
+  it('should properly filter out null and undefined paths', () => {
+    const merged = mergePaths('one', null, 'three', undefined); // eslint-disable-line no-undefined
+    expect(merged).toEqual('one.three');
   });
 });
