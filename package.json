@@ -57,9 +57,8 @@
     "create-react-context": "^0.2.3",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "re-reselect": "^2.1.0",
-    "react-fast-compare": "^2.0.2",
-    "reselect": "^3.0.1"
+    "react-dot-fragment": "^0.2.7",
+    "react-fast-compare": "^2.0.1"
   },
   "devDependencies": {
     "@storybook/react": "^3.4.8",

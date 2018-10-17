@@ -1,16 +1,16 @@
 import React from 'react';
 import GenField from '../../GenField';
 import {FormSection} from 'redux-form';
-import Frag from '../../Frag';
+import Fragment from 'react-dot-fragment';
 
 export const SectionLabel = (props) => {
   const {field, path} = props;
   const label = field.label ? <div className='generated-form__header'>{field.label}</div> : null;
 
-  const Wrapper = field.questionId ? FormSection : Frag;
+  const Wrapper = field.questionId ? FormSection : Fragment;
 
   return (
-    <Frag>
+    <Fragment>
       {label}
       <Wrapper name={field.questionId}>
         {field.childFields &&
@@ -18,7 +18,7 @@ export const SectionLabel = (props) => {
             <GenField key={index} field={{...field}} path={`${path}.childFields[${index}]`} />
           ))}
       </Wrapper>
-    </Frag>
+    </Fragment>
   );
 };
 
