@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.12.0-rc.0] - 2018-10-17
+
+### Changed
+
+* ⚠️ **[Breaking]** Changed the way that data is scoped
+  * You can now specify `globalScope` next to a `questionId` in either field or conditional objects to change the base scope. By default the scope will be prefixed based on it's parent (such as an `array` or `section` type)
+* Using an polyfill for `React.Fragment` so now the library should work in React < 16
+
+### Added
+
+* The `section` type can now accept a `questionId` in order to wrap it's children in a `<FormSection>`. This will prefix all it's childFields.
+
 ## [v0.11.0] - 2018-10-11
 
 ### Changed
