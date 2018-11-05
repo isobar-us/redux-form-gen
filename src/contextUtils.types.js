@@ -5,3 +5,7 @@ export type GenContextProps = {
   getCachedValue: Function,
   setCachedValue: Function
 };
+
+export type ReduxFormContextType = {
+  _reduxForm: mixed
+};
