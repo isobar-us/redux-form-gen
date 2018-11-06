@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.12.0-rc.1] - 2018-11-6
+
+### Fixed
+
+* Issue where `FormGenerator` and `GenField` were blocking context updates for components using the old context API (before `React.createContext()`) #36
+
+### Added
+
+* `consumeReduxFormContext()` now takes a second parameter to subscribe to select parts of the `_reduxForm` context. #36
+
 ## [v0.12.0-rc.0] - 2018-10-17
 
 ### Changed
@@ -407,7 +417,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.12.0-rc.1...HEAD
+
+[v0.12.0-rc.1]: https://github.com/isobar-us/redux-form-gen/compare/v0.12.0-rc.0...v0.12.0-rc.1
+[v0.12.0-rc.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.11.0...v0.12.0-rc.0
 
 [v0.11.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.10.0...v0.11.0
 
