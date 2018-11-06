@@ -21,7 +21,7 @@ import type {Props} from './GenField.types';
 import type {FieldOptions} from './types';
 import {getFieldPath} from './validators';
 
-const propsToNotUpdateFor = ['_reduxForm'];
+const propsToNotUpdateFor = [];
 import isDeepEqual from 'react-fast-compare';
 
 import {connect} from 'react-redux';
@@ -229,8 +229,7 @@ const GenFieldWrapped = consumeReduxFormContext(
   consumeGenContext(
     connect(
       (state, props) => {
-        const {_reduxForm, field} = props;
-        const {form, sectionPrefix} = _reduxForm;
+        const {form, sectionPrefix, field} = props;
 
         let calculatedProps = {};
 
@@ -254,12 +253,13 @@ const GenFieldWrapped = consumeReduxFormContext(
         };
       },
       null,
-      // omit _reduxForm and dispatch from props
-      (stateProps, dispatchProps, {_reduxForm, ...ownProps}) => {
+      // omit _reduxForm props and dispatch from props
+      (stateProps, dispatchProps, {form, sectionPrefix, ...ownProps}) => {
         return Object.assign({}, ownProps, stateProps);
       }
     )(GenField)
-  )
+  ),
+  ['form', 'sectionPrefix']
 );
 
 export default GenFieldWrapped;

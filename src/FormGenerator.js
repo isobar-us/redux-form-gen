@@ -13,8 +13,6 @@ import get from 'lodash/get';
 
 import type {Props, State} from './FormGenerator.types';
 
-const propsToNotUpdateFor = ['_reduxForm'];
-
 class FormGenerator extends Component<Props, State> {
   static propTypes = {
     fields: PropTypes.array.isRequired, // an array of field objects
@@ -52,7 +50,7 @@ class FormGenerator extends Component<Props, State> {
   };
 
   componentWillMount = () => {
-    if (!this.props._reduxForm) {
+    if (!this.props.form) {
       throw new Error('FormGenerator must be inside a component decorated with reduxForm()');
     }
 
@@ -65,24 +63,9 @@ class FormGenerator extends Component<Props, State> {
     }
 
     // clear cache if form has been reset
-    if (this.props._reduxForm.anyTouched && !nextProps._reduxForm.anyTouched) {
+    if (this.props.anyTouched && !nextProps.anyTouched) {
       this.clearCachedValues();
     }
-  }
-
-  shouldComponentUpdate(nextProps: Props) {
-    const nextPropsKeys = Object.keys(nextProps);
-    const thisPropsKeys = Object.keys(this.props);
-
-    return !!(
-      this.props.children ||
-      nextProps.children ||
-      nextPropsKeys.length !== thisPropsKeys.length ||
-      nextPropsKeys.some((prop) => {
-        return !~propsToNotUpdateFor.indexOf(prop) && this.props[prop] !== nextProps[prop];
-      }) ||
-      (this.props._reduxForm.anyTouched && !nextProps._reduxForm.anyTouched)
-    );
   }
 
   updateContext = (props: Props) => {
@@ -92,7 +75,7 @@ class FormGenerator extends Component<Props, State> {
     }
 
     this.setState({
-      ...omit(props, '_reduxForm', 'children'),
+      ...omit(props, 'form', 'anyTouched', 'children'),
       getCachedValue: this.getCachedValue,
       setCachedValue: this.setCachedValue,
       wasGenerated: true,
@@ -117,4 +100,4 @@ class FormGenerator extends Component<Props, State> {
   }
 }
 
-export default consumeReduxFormContext(FormGenerator);
+export default consumeReduxFormContext(FormGenerator, ['form', 'anyTouched']);
