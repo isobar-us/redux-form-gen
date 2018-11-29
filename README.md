@@ -38,11 +38,11 @@ npm install --save @isobar-us/redux-form-gen
 ### 🏖 Code Sandboxes 🏖
 
 <!-- EXAMPLE-LINKS-LIST:START -->
-* [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0-rc.1/examples/basic)
-* [All Fields Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0-rc.1/examples/all-fields)
-* [Conditional Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0-rc.1/examples/conditional)
-* [Wizard Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0-rc.1/examples/wizard)
-* [Reactstrap Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0-rc.1/examples/reactstrap) (uses `customFieldTypes`)
+* [Basic Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0/examples/basic)
+* [All Fields Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0/examples/all-fields)
+* [Conditional Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0/examples/conditional)
+* [Wizard Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0/examples/wizard)
+* [Reactstrap Example](https://codesandbox.io/s/github/isobar-us/redux-form-gen/tree/v0.12.0/examples/reactstrap) (uses `customFieldTypes`)
 <!-- EXAMPLE-LINKS-LIST:END -->
 
 ### Simple Usage

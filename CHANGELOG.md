@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [v0.12.0] - 2018-11-29
+
+### Changed
+
+* ⚠️ **[Breaking]** Changed the way that data is scoped
+  * You can now specify `globalScope` next to a `questionId` in either field or conditional objects to change the base scope. By default the scope will be prefixed based on it's parent (such as an `array` or `section` type)
+* Using an polyfill for `React.Fragment` so now the library should work in React < 16
+
+### Fixed
+
+* Issue where `FormGenerator` and `GenField` were blocking context updates for components using the old context API (before `React.createContext()`) #36
+
+### Added
+
+* `consumeReduxFormContext()` now takes a second parameter to subscribe to select parts of the `_reduxForm` context. #36
+
 ## [v0.12.0-rc.1] - 2018-11-6
 
 ### Fixed
@@ -28,12 +44,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * The `section` type can now accept a `questionId` in order to wrap it's children in a `<FormSection>`. This will prefix all it's childFields.
 
+---
+
 ## [v0.11.0] - 2018-10-11
 
 ### Changed
 
 * ⚠️ **[Breaking]** evalCondValid() now returns `true` if the value is `nil` or empty string #31
   * This should create more consistency in the usage of operators between `conditionalValid` and other conditional props
+
+---
 
 ## [v0.10.0] - 2018-08-28
 
@@ -42,6 +62,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * ⚠️ **[Breaking]** For number comparison operators, return false for nil or empty string values #28
   * This change effects the following conditional operators:
   * `lessThan`, `greaterThan`, `lessThanEqual`, `greaterThanEqual`
+
+---
 
 ## [v0.9.12] - 2018-07-16
 
@@ -417,8 +439,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * first release
 
-[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.12.0-rc.1...HEAD
+[Unreleased]: https://github.com/isobar-us/redux-form-gen/compare/v0.12.0...HEAD
 
+[v0.12.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.11.0...v0.12.0
 [v0.12.0-rc.1]: https://github.com/isobar-us/redux-form-gen/compare/v0.12.0-rc.0...v0.12.0-rc.1
 [v0.12.0-rc.0]: https://github.com/isobar-us/redux-form-gen/compare/v0.11.0...v0.12.0-rc.0
 
