@@ -192,7 +192,7 @@ describe('getDefaultValues()', () => {
 
 describe('mergePaths()', () => {
   it('should properly filter out null and undefined paths', () => {
-    const merged = mergePaths('one', null, 'three', undefined); // eslint-disable-line no-undefined
-    expect(merged).toEqual('one.three');
+    const merged = mergePaths('one', null, 0, 1, 'three', undefined); // eslint-disable-line no-undefined
+    expect(merged).toEqual('one.0.1.three');
   });
 });

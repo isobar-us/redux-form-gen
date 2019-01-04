@@ -155,7 +155,7 @@ const getDefaultValue = (options: GetDefaultValueOptions) => {
 };
 
 // used to merge existing and null/undefined paths together correctly
-export const mergePaths = (...paths: Array<string>) => paths.filter((v) => v).join('.');
+export const mergePaths = (...paths: Array<string>) => paths.filter((v) => !isNil(v)).join('.');
 
 export function isShallowEqual(a: Object, b: Object) {
   for (let key in a) if (!(key in b) || a[key] !== b[key]) return false;
